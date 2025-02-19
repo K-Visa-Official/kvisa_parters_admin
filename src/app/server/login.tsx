@@ -1,8 +1,10 @@
+const baseurl = process.env.NEXT_PUBLIC_SERVICE_VISA_URL; 
+
 
 /* 로그인 */
 export async function loginApi(email:string , password:string) {
     try {
-      const response = await fetch("/api/login", {
+      const response = await fetch(baseurl +"/api/login/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({email , password}), // { email, password } 전송
@@ -14,7 +16,6 @@ export async function loginApi(email:string , password:string) {
   
       return await response.json();
     } catch (error) {
-      console.error("로그인 API 에러:", error);
       throw error;
     }
 }

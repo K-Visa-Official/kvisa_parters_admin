@@ -1,0 +1,112 @@
+.modalBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modaltotal {
+    width: 800px;
+    height: 648px;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.modaltitle {
+    width: 800px;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+    border-bottom: 1px solid #ebecf1;
+}
+
+.modaluser {
+    width: 800px;
+    height: 107px;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    font-weight: normal;
+    color: #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modalcard {
+    width: 370px;
+    height: 62px;
+    border: solid 1px #ebecf1;
+    background-color: #fff;
+    font-size: 14px;
+    color: #000;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 30px;
+    border-radius: 5px;
+}
+
+.posttotal {
+    width: 64px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-right: 30px;
+}
+
+.postbox {
+    width: 64px;
+    height: 29px;
+    border-radius: 5px;
+    background-color: #1c68ff;
+    font-size: 12px;
+    font-weight: 500;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contenttotal {
+    width: 740px;
+    height: 46px;
+    border-radius: 10px 10px 0px 0px;
+    background-color: #f5f6f9;
+    margin-left: 30px;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    font-size: 14px;
+    color: #000;
+    font-weight: 500;
+}
+
+.contentinner{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contentlist{
+    width: 740px;
+    height: 60px;
+    margin-left: 30px;
+    display: flex;
+    flex-direction: row;
+    font-size: 14px;
+    color: #000;
+    font-weight: 500;
+}

@@ -1,0 +1,32 @@
+.active {
+    width: 195px;
+    height: 40px;
+    padding: 8px 50px 8px 10px;
+    border-radius: 5px;
+    background-color: #f0f5ff;
+    margin-left: 15px;
+    font-size: 15px;
+    font-weight: 600;
+    font-stretch: normal;
+    color: #1c68ff;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+}
+.active_none {
+    width: 195px;
+    height: 40px;
+    padding: 8px 50px 8px 10px;
+    border-radius: 5px;
+    background-color: #fff;
+    margin-left: 15px;
+    font-size: 15px;
+    font-weight: 600;
+    font-stretch: normal;
+    color: #84848f;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+}
