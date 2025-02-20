@@ -30,7 +30,7 @@ export default function UserListtotla() {
         }
 
         fetchUsers();
-    }, []);
+    }, [modal]);
 
     if (isLoading) {
         return <p>로딩 중...</p>;
@@ -46,6 +46,10 @@ export default function UserListtotla() {
                 <span>전체 {users.length}개</span>
                 <button className={styles.btn_post}
                     style={{ background: "white", border: "1px solid #1c68ff" }}
+                    onClick={() => (
+                        setLanguage("post") , 
+                        setModal(true)
+                    )}
                 >업체 리스트 추가</button>
             </div>
 

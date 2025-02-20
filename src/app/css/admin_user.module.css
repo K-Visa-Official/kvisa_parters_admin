@@ -13,18 +13,21 @@
     border-radius: 12px;
     overflow: auto;
 }
+
 .totalinner::-webkit-scrollbar {
     /* width: 1px; 스크롤바의 너비 */
     height: 10px;
 }
 
 .totalinner::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.1); /* 스크롤 손잡이 배경 색상 */
+    background-color: rgba(0, 0, 0, 0.1);
+    /* 스크롤 손잡이 배경 색상 */
     border-radius: 4px;
 }
 
 .totalinner::-webkit-scrollbar-track {
-    background-color: #f1f1f1; /* 스크롤 트랙 배경 색상 */
+    background-color: #f1f1f1;
+    /* 스크롤 트랙 배경 색상 */
 }
 
 .titlebox {
@@ -60,7 +63,11 @@
     padding-left: 30px;
     gap: 10px;
 }
-
+.inputboxpost::placeholder {
+    color: #bcbdc4;
+    font-size: 14px;
+    font-weight: 500;
+}
 .inputbox::placeholder {
     font-size: 12px;
     font-weight: 500;
@@ -89,7 +96,7 @@
     cursor: pointer;
 }
 
-.listtop{
+.listtop {
     width: 1470px;
     height: 50px;
     border-radius: 10px 10px 0px 0px;
@@ -99,18 +106,21 @@
     flex-direction: row;
     justify-content: space-between;
 }
-.listfirst{
+
+.listfirst {
     height: 100%;
     display: flex;
-    justify-content:center;
+    justify-content: center;
     align-items: center;
     font-size: 14px;
     font-weight: 500;
     color: #000;
-    flex-grow: 0; /* 늘어나지 않도록 설정 */
-    flex-shrink: 0; 
+    flex-grow: 0;
+    /* 늘어나지 않도록 설정 */
+    flex-shrink: 0;
 }
-.listtotal{
+
+.listtotal {
     width: 1470px;
     height: 50px;
     display: flex;
@@ -119,9 +129,12 @@
     font-weight: 500;
     color: #000;
 }
-.secondtext{
+
+.secondtext {
     font-size: 12px;
     font-weight: 500;
     line-height: 1.33;
     color: #84848f;
 }
+
+
