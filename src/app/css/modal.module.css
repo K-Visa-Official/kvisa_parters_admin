@@ -283,6 +283,7 @@
     background-color: white;
     border: solid 1px #ebecf1;
     border-radius: 5px;
+    position: fixed;
 }
 
 .postcontentboxse {

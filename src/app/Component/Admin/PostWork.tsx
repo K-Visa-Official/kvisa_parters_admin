@@ -501,7 +501,7 @@ export default function PostWork({ onClose, n = 0, la }: WorkPostProps) {
 
                                                 {/* 답변 목록 */}
                                                 {question.answers.map((answer, aIndex) => (
-                                                    <div key={aIndex} style={{ marginTop: "20px", marginLeft: "30px", marginRight: "40px", display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                                                    <div key={aIndex} style={{ marginTop: question.isExpanded? "20px" : "20px", marginLeft: "30px", marginRight: "40px", display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                                                         {/* 답변 수정 */}
                                                         <div className={styles.quinbox}>
                                                             <input type="text" value={answer.answer} placeholder="내용을 입력해주세요"
