@@ -1,0 +1,165 @@
+.innerbox {
+    width: 375px;
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: white;
+    flex-direction: column;
+}
+
+.headerbox {
+    width: 100%;
+    height: 60px;
+    padding: 0px 15px;
+    border-bottom: 1px solid #ebecf1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.contentsbox {
+    width: 100%;
+    height: auto;
+    padding: 0px 15px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.cardbox {
+    margin-top: 25px;
+    width: 343px;
+    height: 110px;
+    padding: 25px 15px;
+    border-radius: 10px;
+    border: solid 1px #ebecf1;
+    background-color: #fff;
+    display: flex;
+    flex-direction: row;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 50%;
+}
+
+.title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 30px;
+    color: #000;
+}
+
+.post {
+    margin-top: 20px;
+    height: 280px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    /* .nextstep이 절대 위치로 겹칠 수 있도록 설정 */
+
+}
+
+.postimg {
+    width: 345px;
+    height: 200px;
+    display: block;
+    /* 하단 여백 방지 */
+    border-radius: 10px 10px 0 0;
+    /* 위쪽 모서리만 둥글게 */
+}
+
+.nextstep {
+    position: absolute;
+    /* 이미지 위에 겹치도록 설정 */
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    /* 중앙 정렬 */
+    width: 100%;
+    height: 56px;
+    border-radius: 0 0 10px 10px;
+    background-image: linear-gradient(to bottom, #1c68ff, #053cf0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.footer {
+    position: fixed; /* 화면 하단에 고정 */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 110px;
+    background-color: #fff;
+    padding: 10px 15px;
+    border-top: 1px solid #ebecf1;
+    font-size: 12px;
+    font-weight: 500;
+    color: #84848f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 100; /* 다른 요소 위에 표시 */
+}
+
+.nextStep {
+    width: 345px;
+    height: 56px;
+    margin-top: 10px;
+    border-radius: 5px;
+    background-image: linear-gradient(to left, #02f, #3d7dff);
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.qubox{
+    padding: 35px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100%;
+    font-size: 18px;
+    color: #444;
+    border-bottom: 1px solid #ebecf1;
+}
+.qutitle{
+    font-size: 16px;
+    color: #969696;
+}
+.titlesub{
+    font-size: 20px;
+    font-weight: 600;
+    color: #000;
+    margin-top: 10px;
+}
+
+.quinput {
+    background-color: white;
+    border: none;
+    width: 100%;
+    height: 50ㅔㅌ;
+    border-radius: 5px;
+    outline: none;
+    color: black;
+}
+
+@media screen and (max-width: 414px) {
+    .innerbox {
+        width: 100%;
+    }
+}

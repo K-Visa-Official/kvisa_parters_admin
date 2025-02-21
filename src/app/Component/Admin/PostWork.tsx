@@ -6,11 +6,14 @@ import { useState } from "react";
 import FilterInputBox from "../Common/FilterInputBox";
 import Modal from "../Common/Modal";
 import { useRef } from "react";
+import { registerWork , workchangeimage} from "@/app/server/work";
+
 
 interface WorkPostProps {
     onClose: () => void;
     n?: number;
     la?: string;
+    max:number;
 }
 
 interface Answer {
@@ -25,12 +28,12 @@ interface Question {
     isExpanded: boolean;
 }
 
-export default function PostWork({ onClose, n = 0, la }: WorkPostProps) {
+export default function PostWork({ onClose, n = 0, la , max }: WorkPostProps) {
     const [work, setWork] = useState<string | "업무를 선택해주세요">("업무를 선택해주세요");
     const [content, setContent] = useState<string | "">("");
     const [active, setActive] = useState<boolean>(false); // 로딩 상태
     const [file, setFile] = useState<File | null>(null);
-    const [state, setState] = useState<number | 3>(3);
+    const [state, setState] = useState<number | 1>(1);
     const [alert, setAlert] = useState<boolean>(false); // 로딩 상태
     const [file_detail, setFile_Detail] = useState<File | null>(null);
     const [questionsac, setQuestionsac] = useState<boolean>(false); // 로딩 상태
@@ -111,7 +114,7 @@ export default function PostWork({ onClose, n = 0, la }: WorkPostProps) {
     // 답변 삭제 함수
     const removeAnswer = (qIndex: number, aIndex: number) => {
         const updatedQuestions = [...questions];
-        
+
         // 해당 질문의 answers 배열에서 특정 답변을 삭제
         updatedQuestions[qIndex].answers = updatedQuestions[qIndex].answers
             .filter((_, ansIndex) => ansIndex !== aIndex)
@@ -119,11 +122,11 @@ export default function PostWork({ onClose, n = 0, la }: WorkPostProps) {
                 ...answer,
                 sort: index + 1, // 삭제 후 sort 값 재정렬 (1부터 시작)
             }));
-    
+
         setQuestions(updatedQuestions);
     };
 
-    function NextStep() {
+    const NextStep = async () => { 
         if (state === 1) {
             if (work === "업무를 선택해주세요" || content === "" || file === null) {
                 setAlert(true)
@@ -143,10 +146,11 @@ export default function PostWork({ onClose, n = 0, la }: WorkPostProps) {
         else if (state === 3) {
 
             const transformedData = {
-                user: n, // 사용자 ID
+                user_id: n, // 사용자 ID
                 language: la === "ko" ? 0 : 1, // 언어 코드
                 choice: work, // 선택된 업무
                 work_detail: content, // 업무에 대한 상세 설명
+                order: max + 1, // 답변 타입
                 questions: questions.map((question) => ({
                     question: question.question, // 질문 텍스트
                     answer_type: question.answer_type, // 답변 타입
@@ -157,7 +161,41 @@ export default function PostWork({ onClose, n = 0, la }: WorkPostProps) {
                 })),
             };
 
-            console.log(transformedData)
+            try {
+                // 업무 등록 요청
+                const response = await registerWork(transformedData);
+               
+                if (response?.id) {
+                    const formData = new FormData();
+                    formData.append("id", response.id);
+                    if (file) {
+                        formData.append("detail_url", file);
+                    }
+                    if (file_detail) {
+                        formData.append("detail_second", file_detail); // 오타 수정
+                    }
+                    for (let [key, value] of formData.entries()) {
+                        console.log(key, value);
+                    }
+                    // 파일 업로드 처리
+                    const result = await workchangeimage(formData);
+                 
+                    // if (result && result.message) {
+
+                    //     console.log(2)
+                        onClose() // 모달 닫기
+                    //     console.log("File upload successful");
+                    // } else {
+                    //     console.error("File upload failed", result);
+                    // }
+                } else {
+                    console.error("Response does not contain id");
+                }
+            } catch (error) {
+                console.error("Error during registration:", error);
+                // 실패 시 알림을 표시하지 않음
+                setAlert(false);
+            }
         }
     }
 
@@ -184,7 +222,7 @@ export default function PostWork({ onClose, n = 0, la }: WorkPostProps) {
                 </div>
                 {/* {modalactive && <Modal t={"회원가입에 실패하였습니다"} s={"정보를 확인해주세요"} c={"확인"} onClose={() => setModalActive(false)} />} */}
                 {state === 1 ?
-                    <div className={styles.postcontentbox}>
+                    <div className={styles.postcontentbox} style={{ marginTop:"30px"}}>
 
                         <div className={styles.worktitle}>
                             <div className={styles.woti}>
@@ -422,75 +460,74 @@ export default function PostWork({ onClose, n = 0, la }: WorkPostProps) {
                         <div className={styles.postcontentbox} style={{ width: "100%", marginLeft: "0px" }} >
                             <div className={styles.qubox}>
                                 <div style={{ marginTop: "30px", height: "100%" }}>
-                                    <div style={{ height: "auto", width: "100%"  }}>
+                                    <div style={{ height: "auto", width: "100%" }}>
                                         {/* 질문 목록 */}
                                         {questions.map((question, qIndex) => (
-                                            <div key={qIndex} style={{  borderBottom:"1px solid #bfbfbf" , paddingBottom:"30px" , marginTop:"15px"}}>
+                                            <div key={qIndex} style={{ borderBottom: "1px solid #bfbfbf", paddingBottom: "30px", marginTop: "15px" }}>
                                                 {/* 질문 수정 */}
                                                 <div style={{ marginLeft: "30px", marginRight: "30px", display: "flex", justifyContent: "space-between", flexDirection: "row" }}>
 
                                                     <FilterInputBox w={750} h={50} mt={0} bg={"#f5f6f9"} p={"질문을 입력해주세요"} v={question.question}
                                                         onChange={(e) => updateQuestion(qIndex, e.target.value)}
                                                     />
-                                                    <div style={{ height: "auto", zIndex: "2", width: "200px" }}>
-                                                        <div className={styles.wochqu} onClick={() => {
-                                                            const updatedQuestions = [...questions];
-                                                            updatedQuestions[qIndex].isExpanded = !updatedQuestions[qIndex].isExpanded;
-                                                            setQuestions(updatedQuestions);
-                                                        }}>
-                                                            <p style={{ marginLeft: "15px", color: "black" }}>{
-                                                                question.answer_type === 0 ? "단문형" :
-                                                                    question.answer_type === 1 ? "단일선택" : "복수선택"
-
-                                                            }</p>
+                                                    <div style={{ height: "auto", width: "200px", position: "relative" }}>
+                                                        <div
+                                                            className={styles.wochqusd}
+                                                            onClick={() => {
+                                                                const updatedQuestions = [...questions];
+                                                                updatedQuestions[qIndex].isExpanded = !updatedQuestions[qIndex].isExpanded;
+                                                                setQuestions(updatedQuestions);
+                                                            }}
+                                                        >
+                                                            <p style={{ marginLeft: "15px", color: "black" }}>
+                                                                {question.answer_type === 0 ? "단일선택" :
+                                                                    question.answer_type === 1 ? "복수선택" :
+                                                                        question.answer_type === 2 ? "단문형" : "장문형"}
+                                                            </p>
                                                             <Image
                                                                 aria-hidden
                                                                 src={"/admin/arrow_active.png"}
                                                                 alt="etc icon"
                                                                 width={16}
                                                                 height={16}
-                                                                style={{ rotate: "0deg", marginRight: "20px" }}
+                                                                style={{
+                                                                    transform: question.isExpanded ? "rotate(180deg)" : "rotate(0deg)",
+                                                                    marginRight: "20px",
+                                                                    transition: "0.3s"
+                                                                }}
                                                             />
                                                         </div>
+
+                                                        {/* isExpanded가 true일 때만 absolute 툴팁이 표시됨 */}
                                                         {question.isExpanded && (
-                                                            <div className={styles.tooltipBox}>
-                                                                <div
-                                                                    className={styles.wochqu}
-                                                                    style={{ background: "white" }}
-                                                                    onClick={() => {
-                                                                        const updatedQuestions = [...questions];
-                                                                        updatedQuestions[qIndex].answer_type = 1;
-                                                                        setQuestions(updatedQuestions);
-                                                                        updatedQuestions[qIndex].isExpanded = false
-                                                                    }}
-                                                                >
-                                                                    <p style={{ marginLeft: "15px" }}>단일선택</p>
-                                                                </div>
-                                                                <div className={styles.wochqu}
-                                                                    style={{ background: "white", borderTop: "solid 1px #ebecf1" }}
-                                                                    onClick={() => {
-                                                                        const updatedQuestions = [...questions];
-                                                                        updatedQuestions[qIndex].answer_type = 2;
-                                                                        setQuestions(updatedQuestions);
-                                                                        updatedQuestions[qIndex].isExpanded = false
-                                                                    }}
-                                                                >
-                                                                    <p style={{ marginLeft: "15px" }}>복수선택</p>
-                                                                </div>
-                                                                <div className={styles.wochqu}
-                                                                    style={{ background: "white", borderTop: "solid 1px #ebecf1" }}
-                                                                    onClick={() => {
-                                                                        const updatedQuestions = [...questions];
-                                                                        updatedQuestions[qIndex].answer_type = 3;
-                                                                        setQuestions(updatedQuestions);
-                                                                        updatedQuestions[qIndex].isExpanded = false
-                                                                    }}
-                                                                >
-                                                                    <p style={{ marginLeft: "15px" }}>단문형</p>
-                                                                </div>
+                                                            <div className={styles.tooltipBoxqus}>
+                                                                {[
+                                                                    { value: 0, label: "단일선택" },
+                                                                    { value: 1, label: "복수선택" },
+                                                                    { value: 2, label: "단문형" },
+                                                                    { value: 3, label: "장문형" }
+                                                                ].map(option => (
+                                                                    <div
+                                                                        key={option.value}
+                                                                        className={styles.wochqusd}
+                                                                        style={{ background: "white", borderTop: "solid 1px #ebecf1" }}
+                                                                        onClick={() => {
+                                                                            const updatedQuestions = [...questions];
+                                                                            updatedQuestions[qIndex].answer_type = option.value;
+                                                                            updatedQuestions[qIndex].isExpanded = false;
+                                                                            if (option.value === 2 || option.value === 3) {
+                                                                                updatedQuestions[qIndex].answers = [
+                                                                                  { answer: "", sort: 1 }  // 기본 답변 추가
+                                                                                ];
+                                                                              }
+                                                                            setQuestions(updatedQuestions);
+                                                                        }}
+                                                                    >
+                                                                        <p style={{ marginLeft: "15px" }}>{option.label}</p>
+                                                                    </div>
+                                                                ))}
                                                             </div>
-                                                        )}
-                                                    </div>
+                                                        )}</div>
                                                 </div>
 
 
@@ -498,31 +535,52 @@ export default function PostWork({ onClose, n = 0, la }: WorkPostProps) {
                                                 {/* <button onClick={() => removeQuestion(qIndex)}>삭제</button> */}
 
 
-
-                                                {/* 답변 목록 */}
-                                                {question.answers.map((answer, aIndex) => (
-                                                    <div key={aIndex} style={{ marginTop: question.isExpanded? "20px" : "20px", marginLeft: "30px", marginRight: "40px", display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-                                                        {/* 답변 수정 */}
-                                                        <div className={styles.quinbox}>
-                                                            <input type="text" value={answer.answer} placeholder="내용을 입력해주세요"
-                                                                className={styles.quinput}
-                                                                onChange={(e) =>
-                                                                    updateAnswer(qIndex, aIndex, e.target.value)
-                                                                } />
-                                                        </div>
-
-                                                        {/* 답변 삭제 */}
-                                                        <div className={styles.anbox}>
-                                                            <div className={styles.aninner} onClick={() => removeAnswer(qIndex, aIndex)}>
-                                                                내용에서 제거
+                                                {/* 🛠 단문형이면 input 박스, 아니면 기존의 답변 리스트 */}
+                                                {question.answer_type === 2 ? (
+                                                    <div style={{ marginTop: "20px", marginLeft: "30px", marginRight: "40px", display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                                                        <input type="text"
+                                                            value={question.answers[0]?.answer || ""}
+                                                            placeholder="내용을 입력해주세요"
+                                                            className={styles.quinput}
+                                                            style={{ background: "#f5f6f9", height: "50px" , padding:20 }}
+                                                            onChange={(e) => updateAnswer(qIndex, 0, e.target.value)}
+                                                        />
+                                                    </div>
+                                                ) : question.answer_type === 3 ? (
+                                                    <div style={{ marginTop: "20px", marginLeft: "30px", marginRight: "40px", display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                                                        <textarea
+                                                            value={question.answers[0]?.answer || ""}
+                                                            placeholder="내용을 입력해주세요"
+                                                            className={styles.quinput}
+                                                            style={{ background: "#f5f6f9", height: "100px", resize: "none" ,padding:20 }}
+                                                            onChange={(e) => updateAnswer(qIndex, 0, e.target.value)}
+                                                        />
+                                                    </div>
+                                                ) : (
+                                                    // 단일선택/복수선택 (기존 리스트)
+                                                    question.answers.map((answer, aIndex) => (
+                                                        <div key={aIndex} style={{ marginTop: "20px", marginLeft: "30px", marginRight: "40px", display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                                                            <div className={styles.quinbox}>
+                                                                <input type="text"
+                                                                    value={answer.answer}
+                                                                    placeholder="내용을 입력해주세요"
+                                                                    className={styles.quinput}
+                                                                    onChange={(e) => updateAnswer(qIndex, aIndex, e.target.value)}
+                                                                />
+                                                            </div>
+                                                            <div className={styles.anbox}>
+                                                                <div className={styles.aninner} onClick={() => removeAnswer(qIndex, aIndex)}>
+                                                                    내용에서 제거
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        {/* <button onClick={() => removeAnswer(qIndex, aIndex)}>삭제</button> */}
-                                                    </div>
-                                                ))}
-                                                {/* 답변 추가 */}
-                                                <div className={styles.addcon} onClick={() => addAnswer(qIndex)}>내용 추가하기</div>
-                                                {/* <button onClick={() => addAnswer(qIndex)}>답변 추가</button> */}
+                                                    ))
+                                                )}
+
+                                                {/* 단문형이 아닐 경우에만 "내용 추가하기" 버튼 표시 */}
+                                                {question.answer_type !== 2 && question.answer_type !== 3 && (
+                                                    <div className={styles.addcon} onClick={() => addAnswer(qIndex)}>내용 추가하기</div>
+                                                )}
 
                                             </div>
                                         ))}

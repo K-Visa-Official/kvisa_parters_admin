@@ -18,6 +18,8 @@ export default function UserPost({ onClose, n = 0 }: UserPostProps) {
     const [password, setPassword] = useState<string | null>(null);
     const [company, setCompany] = useState<string | null>(null);
     const [intro, setIntro] = useState<string | null>(null);
+    const [company_ch, setCompany_ch] = useState<string | null>(null);
+    const [intro_ch, setIntro_ch] = useState<string | null>(null);
     const [name, setName] = useState<string | null>(null);
     const [tel, setTel] = useState<string | null>(null);
     const [bank, setBank] = useState<string | null>(null);
@@ -38,6 +40,8 @@ export default function UserPost({ onClose, n = 0 }: UserPostProps) {
             password: password,
             bu_name: company,
             bu_intro: intro,
+            bu_name_ch: company_ch,
+            bu_intro_ch: intro_ch,
             bu_tel_first: tel,
             bu_tel_name: name,
             bu_bank_name: bank,
@@ -65,6 +69,7 @@ export default function UserPost({ onClose, n = 0 }: UserPostProps) {
             for (let [key, value] of formData.entries()) {
                 console.log(key, value);
             }
+            
             const result = await registerUser(formData);
 
             console.log(result.message)
@@ -208,6 +213,24 @@ export default function UserPost({ onClose, n = 0 }: UserPostProps) {
                         </div>
                         <FilterInputBox w={620} h={50} mt={0} bg={"#f5f6f9"} p={"업체소개를 적어주세요"} v={intro}
                             onChange={(e) => setIntro(e.target.value)}
+                        />
+                    </div>
+
+                    <div className={styles.conti}>
+                        <div className={styles.contititle}>
+                            회사/업체명<br/>(중국어)
+                        </div>
+                        <FilterInputBox w={620} h={50} mt={0} bg={"#f5f6f9"} p={"업체명 입력"} v={company_ch}
+                            onChange={(e) => setCompany_ch(e.target.value)}
+                        />
+                    </div>
+
+                    <div className={styles.conti}>
+                        <div className={styles.contititle} >
+                            업체소개 문구<br/>(중국어)
+                        </div>
+                        <FilterInputBox w={620} h={50} mt={0} bg={"#f5f6f9"} p={"업체소개를 적어주세요"} v={intro_ch}
+                            onChange={(e) => setIntro_ch(e.target.value)}
                         />
                     </div>
 

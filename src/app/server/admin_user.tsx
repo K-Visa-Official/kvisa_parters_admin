@@ -57,7 +57,7 @@ export async function getUser(id: number): Promise<UserList> {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer " + localStorage.getItem("token"),
+        // "Authorization": "Bearer " + localStorage.getItem("token"),
       },
     });
 

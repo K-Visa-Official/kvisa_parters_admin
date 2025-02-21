@@ -169,6 +169,7 @@
     overflow-x: hidden;
     overflow-y: auto;
 }
+
 .postcontentbox::-webkit-scrollbar {
     display: none;
 }
@@ -283,8 +284,8 @@
     background-color: white;
     border: solid 1px #ebecf1;
     border-radius: 5px;
-    position: fixed;
 }
+
 
 .postcontentboxse {
     width: 100%;
@@ -427,17 +428,45 @@
     color: #000;
     border-radius: 5px;
 }
-.adddn{
+
+.adddn {
     width: 200px;
     height: 46px;
     margin-top: 30px;
     margin-left: 30px;
     border-radius: 5px;
-    border: solid 1px #84848f;   
+    border: solid 1px #84848f;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 15px;
     font-weight: 600;
     color: #191919;
+}
+
+
+.wochqusd{
+    width: 196px;
+    height: 50px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f5f6f9;
+    color: #bcbdc4;
+    font-size: 14px;
+    font-weight: 500;
+    position: relative; /* 추가: absolute 툴팁 위치 기준 */
+}
+
+.tooltipBoxqus {
+    position: absolute;  /* 부모(.wochqu) 기준으로 위치 고정 */
+    top: 100%;           /* 버튼 바로 아래에 위치 */
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border: solid 1px #ebecf1;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10; /* 다른 요소 위에 표시 */
 }
