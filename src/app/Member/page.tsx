@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams , useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { getUser, getUserApi } from "@/app/server/admin_user";
 import { UserList, WorkResponse } from "../type/user";
 import { useState, useEffect } from "react";
@@ -33,6 +33,7 @@ export default function CaseStoriesDetailPage() {
         fetchUser();
     }, [parm.get("member")]);
 
+    console.log(work)
 
     return (
         <div
@@ -71,90 +72,90 @@ export default function CaseStoriesDetailPage() {
                     />
                 </div>
 
-                
-                    {state === 1 ?
-                        <div className={styles.contentsbox}>
 
-                            <div className={styles.cardbox}>
-                                <img src
-                                    ={user ? user?.bu_logo : "/common/ic_nonprofile.svg"}
-                                    className={styles.logo}
-                                />
-                                <div style={{
-                                    display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", width: "250px", height: "60px", color: "black",
-                                    fontSize: "20px", marginLeft: "10px"
-                                }}>
-                                    <p style={{ fontWeight: "600" }}>{parm.get("language") === "0" ? user?.bu_name : user?.bu_name_ch}</p>
-                                    <p style={{ color: "#84848f", fontSize: "15px", fontWeight: "500" }}>{parm.get("language") === "0" ? user?.bu_intro : user?.bu_intro_ch}</p>
-                                </div>
+                {state === 1 ?
+                    <div className={styles.contentsbox}>
+
+                        <div className={styles.cardbox}>
+                            <img src
+                                ={user ? user?.bu_logo : "/common/ic_nonprofile.svg"}
+                                className={styles.logo}
+                            />
+                            <div style={{
+                                display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", width: "250px", height: "60px", color: "black",
+                                fontSize: "20px", marginLeft: "10px"
+                            }}>
+                                <p style={{ fontWeight: "600" }}>{parm.get("language") === "0" ? user?.bu_name : user?.bu_name_ch}</p>
+                                <p style={{ color: "#84848f", fontSize: "15px", fontWeight: "500" }}>{parm.get("language") === "0" ? user?.bu_intro : user?.bu_intro_ch}</p>
                             </div>
-                            <p className={styles.title}>
-                                {Korean.title} <br />
-                                {Korean.title_second}</p>
-
-                            {work?.map((user, index) => (
-                                <>
-                                    <div className={styles.post} onClick={() => (
-                                        setUrl(user.detail_second),
-                                        setState(2),
-                                        setPk(user?.id)
-                                    )}
-                                        key={index}
-                                    >
-                                        <img src={user?.detail} className={styles.postimg} />
-                                        <div className={styles.nextstep}>
-                                            바로가기
-                                            <Image
-                                                aria-hidden
-                                                src="/member/next_white.png"
-                                                alt="다음"
-                                                width={16}
-                                                height={16}
-                                                style={{ marginLeft: "5px" }}
-                                            />
-                                        </div>
-
-                                    </div>
-                                    <p style={{ marginTop: "15px", fontSize: "18px", color: "black", fontWeight: "600" }}>{user?.choice}</p>
-
-                                    <p style={{ marginTop: "6px", fontSize: "13px", color: "#84848f", fontWeight: "500" }}>{user?.work_detail}</p>
-                                </>
-                            ))}
-
-                            <div className={styles.post}>
-                                <div className={styles.postimg} style={{ color: "black" }}>CRM 이미지</div>
-                                {/* <img src={user?.detail} className={styles.postimg} /> */}
-                                <div className={styles.nextstep}>
-                                    바로가기
-                                    <Image
-                                        aria-hidden
-                                        src="/member/next_white.png"
-                                        alt="다음"
-                                        width={16}
-                                        height={16}
-                                        style={{ marginLeft: "5px" }}
-                                    />
-                                </div>
-
-                            </div>
-                            <p style={{ marginTop: "15px", fontSize: "18px", color: "black", fontWeight: "600" }}>{Korean.progress}</p>
-
-                            <p style={{ marginTop: "6px", fontSize: "13px", color: "#84848f", fontWeight: "500" }}>{Korean?.progress_first}<br />{Korean.progress_second}</p>
                         </div>
-                        :
-                        <>
-                            <img src={url} style={{ width: "100%", height: "auto" }} />
-                            <div className={styles.footer} 
-                            onClick={() => router.push(`/Progress/?&progress=${pk}`)}
-                            >
-                                <p>위 내용을 확인하였고, 내용에 동의합니다.</p>
-                                <div className={styles.nextStep}>
-                                맞춤형 상담폼 접수하기
-                                </div>
-                            </div>
-                        </>
+                        <p className={styles.title}>
+                            {Korean.title} <br />
+                            {Korean.title_second}</p>
 
-                    }
+                        {work?.map((user, index) => (
+                            <>
+                                <div className={styles.post} onClick={() => (
+                                    setUrl(user.detail_second),
+                                    setState(2),
+                                    setPk(user?.id)
+                                )}
+                                    key={index}
+                                >
+                                    <img src={user?.detail} className={styles.postimg} />
+                                    <div className={styles.nextstep}>
+                                        바로가기
+                                        <Image
+                                            aria-hidden
+                                            src="/member/next_white.png"
+                                            alt="다음"
+                                            width={16}
+                                            height={16}
+                                            style={{ marginLeft: "5px" }}
+                                        />
+                                    </div>
+
+                                </div>
+                                <p style={{ marginTop: "15px", fontSize: "18px", color: "black", fontWeight: "600" }}>{user?.choice}</p>
+
+                                <p style={{ marginTop: "6px", fontSize: "13px", color: "#84848f", fontWeight: "500" }}>{user?.work_detail}</p>
+                            </>
+                        ))}
+
+                        <div className={styles.post}>
+                            <div className={styles.postimg} style={{ color: "black" }}>CRM 이미지</div>
+                            {/* <img src={user?.detail} className={styles.postimg} /> */}
+                            <div className={styles.nextstep}>
+                                바로가기
+                                <Image
+                                    aria-hidden
+                                    src="/member/next_white.png"
+                                    alt="다음"
+                                    width={16}
+                                    height={16}
+                                    style={{ marginLeft: "5px" }}
+                                />
+                            </div>
+
+                        </div>
+                        <p style={{ marginTop: "15px", fontSize: "18px", color: "black", fontWeight: "600" }}>{Korean.progress}</p>
+
+                        <p style={{ marginTop: "6px", fontSize: "13px", color: "#84848f", fontWeight: "500" }}>{Korean?.progress_first}<br />{Korean.progress_second}</p>
+                    </div>
+                    :
+                    <>
+                        <img src={url} style={{ width: "100%", height: "auto" }} />
+                        <div className={styles.footer}
+                            onClick={() => router.push(`/Progress/?&progress=${pk}`)}
+                        >
+                            <p>위 내용을 확인하였고, 내용에 동의합니다.</p>
+                            <div className={styles.nextStep}>
+                                맞춤형 상담폼 접수하기
+                            </div>
+                        </div>
+                    </>
+
+                }
 
 
 

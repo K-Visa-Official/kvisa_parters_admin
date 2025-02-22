@@ -95,7 +95,8 @@
 }
 
 .footer {
-    position: fixed; /* 화면 하단에 고정 */
+    position: fixed;
+    /* 화면 하단에 고정 */
     bottom: 0;
     left: 0;
     width: 100%;
@@ -110,7 +111,8 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    z-index: 100; /* 다른 요소 위에 표시 */
+    z-index: 100;
+    /* 다른 요소 위에 표시 */
 }
 
 .nextStep {
@@ -126,7 +128,8 @@
     justify-content: center;
     align-items: center;
 }
-.qubox{
+
+.qubox {
     padding: 35px 15px;
     display: flex;
     justify-content: center;
@@ -137,11 +140,13 @@
     color: #444;
     border-bottom: 1px solid #ebecf1;
 }
-.qutitle{
+
+.qutitle {
     font-size: 16px;
     color: #969696;
 }
-.titlesub{
+
+.titlesub {
     font-size: 20px;
     font-weight: 600;
     color: #000;
@@ -157,6 +162,47 @@
     outline: none;
     color: black;
 }
+
+.endbox {
+    width: 100%;
+    height: 600px;
+    border-radius: 10px;
+    background-color: #fff;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+}
+
+.endheader {
+    width: 100%;
+    height: 60px;
+    border-radius: 10px 10px 0 0;
+    background-color: #fff;
+    border-bottom: 1px solid #ebecf1;
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    color: #000;
+    justify-content: space-between;
+}
+
+.endcontentbox {
+    width: 345px;
+    height: 380px;
+    margin-top: 20px;
+    border-radius: 5px;
+    background-color: #f5f6f9;
+}
+
+.endcontenttitle {
+    font-size: 15px;
+    font-weight: 600;
+    color: #000;
+    margin-top: 20px;
+    margin-left: 15px;
+}
+
 
 @media screen and (max-width: 414px) {
     .innerbox {

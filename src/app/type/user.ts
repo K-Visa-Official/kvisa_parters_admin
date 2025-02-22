@@ -34,7 +34,7 @@ export interface WorkResponse {
   detail: string;
   detail_second: string;
   order: number;
-  bu_logo: string;
+  bu_logo?: string;
 }
 
 export interface Answer {
