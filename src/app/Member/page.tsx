@@ -10,7 +10,7 @@ import { Korean } from "../type/typedef";
 
 
 
-export default function CaseStoriesDetailPage() {
+export default function Member() {
     const parm = useSearchParams();
     const router = useRouter()
     const [user, setUser] = useState<UserList>();
