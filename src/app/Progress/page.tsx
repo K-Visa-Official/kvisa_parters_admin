@@ -217,7 +217,7 @@ import { Korean , Ch } from "../type/typedef";
                             <div style={{ display: "flex", justifyContent: "space-between", flexDirection: "row", marginTop: "10px", marginLeft: "15px" }}>
                                 <p style={{ fontSize: "13px", color: "#33405a" }}>
                                 {parm.get("language") === "0" ? Korean.safety : Ch?.safety}
-                                    {/* 입력하신 정보는 안전하게 보관됩니다. */}
+                                   
                                     </p>
                                 <p style={{ color: "black", marginRight: "15px", fontSize: "18px", fontWeight: "bold" }}>
                                 {Math.floor((finalData.filter(a => a.answer != "").length / finalData.length) * 100)}%</p>

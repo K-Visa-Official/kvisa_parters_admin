@@ -104,8 +104,8 @@ function CaseStoriesDetailPage() {
                                 {parm.get("language") === "0" ? Korean.title : Ch.title} <br />
                                 {parm.get("language") === "0" ? Korean.title_second : Ch.title_second}</p>
 
-                            {work?.map((user, index) => (
-                                <div key={user.id}>
+                            {work?.map((user) => (
+                                <div key={user.id} > 
                                     {work[0]?.choice === undefined ?
                                         null
                                         :

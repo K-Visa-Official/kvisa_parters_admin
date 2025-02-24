@@ -24,7 +24,6 @@ export enum Korean {
     progress_first = "케이비자 고객님들의 진행상황을",
     progress_second = "손쉽게 확인하세요",
 
-    safety_intro = "입력하신 정보는 안전하게 보관됩니다." , 
     
     safety = "입력하신 정보는 안전하게 보관됩니다." , 
     enter = "접수하기" , 
