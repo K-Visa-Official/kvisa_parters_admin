@@ -14,7 +14,8 @@ export default function UserBox() {
     const searchParams = useSearchParams();
     const subkind = searchParams.get('user-ch');
     const [active, setActive] = useState<string>(subkind ? subkind : User.total);
-
+    const [search, setSearch] = useState<boolean>(false); // 로딩 상태
+    
     return (
         <div className={styles.total}>
             <div className={styles.totalinner}>
@@ -52,14 +53,16 @@ export default function UserBox() {
                         onChange={(e) => setCreate(e.target.value)}
                     />
 
-                    <button className={styles.btn} style={{ background:"black" , border:"none" }}>조회</button>
+                    <button className={styles.btn} style={{ background:"black" , border:"none" }}
+                        onClick={()=> setSearch(!search)}
+                    >조회</button>
                     <button className={styles.btn} style={{ background:"#fff" , border:"1px solid #e6eaee" , color:"#000" }}>초기화</button>
                     
                 </div>
 
 
                 {active === User.total ? 
-                    <UserListtotla/>
+                    <UserListtotla search ={search}/>
                     :
                     <>2</> 
                 }

@@ -4,15 +4,24 @@ import styles from "@/app/css/admin_user.module.css";
 import { UserList, AllUserResponse } from "@/app/type/user";
 import Image from "next/image";
 import PostModal from "../Common/PostModal";
+import useAdminStore from "@/app/store/adminuser";
 
-export default function UserListtotla() {
+
+interface ModalProps {
+    search?: boolean;
+  }
+
+const UserListtotla: React.FC<ModalProps> = ({ search }) => {
+    const { title, created_at, seTitle, setCreate } = useAdminStore(); 
     const [users, setUsers] = useState<UserList[]>([]); // 유저 데이터 상태
     const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태
     const [error, setError] = useState<string | null>(null); // 에러 상태
     const [language, setLanguage] = useState<string | "ko">("ko"); // 에러 상태
     const [modal, setModal] = useState<boolean>(false); // 로딩 상태
     const [pk, setPk] = useState<number>(0); // 로딩 상태
+    const [page, setPage] = useState<number>(1); // 로딩 상태
 
+       
     const list = ["순번", "가입일", "회사/업체명", "업체 소개문구", "담당자", "계정정보", "입금계좌", "중국어 업무", "한국어 업무",
         // "접수 현황", "a"
     ];
@@ -20,9 +29,10 @@ export default function UserListtotla() {
     useEffect(() => {
         async function fetchUsers() {
             try {
-                const data: AllUserResponse = await alluserApi("", ""); // 파라미터 값은 실제로 적절하게 설정
+                const data: AllUserResponse = await alluserApi(title, created_at ,page); // 파라미터 값은 실제로 적절하게 설정
                 setUsers(data.results); // 받은 데이터로 상태 업데이트
                 setIsLoading(false);
+                console.log(data)
             } 
             catch (e) {
                 console.log(e)
@@ -32,7 +42,7 @@ export default function UserListtotla() {
         }
 
         fetchUsers();
-    }, [modal]);
+    }, [modal,search]);
 
     if (isLoading) {
         return <p>로딩 중...</p>;
@@ -228,6 +238,8 @@ export default function UserListtotla() {
                     </div>
                 </div>
             ))}
+
+            
             {modal ?
                 <PostModal la={language} pk={pk} onClose={() => setModal(false)} /> :
                 <></>
@@ -235,3 +247,5 @@ export default function UserListtotla() {
         </div>
     );
 }
+
+export default UserListtotla;

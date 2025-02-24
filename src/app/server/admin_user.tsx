@@ -3,10 +3,9 @@ import useAuthStore from "../store/user";
 import {  AllUserResponse , UserList , WorkResponse} from "../type/user";
 
 // ✅ API 함수
-export async function alluserApi(a:string,b:string): Promise<AllUserResponse> {
+export async function alluserApi(a:string,b:string , c:number): Promise<AllUserResponse> {
   try {
-    
-    const response = await fetch(baseurl + '/api/user/all?&business=' + a + "&create_at=" + b, {
+    const response = await fetch(baseurl + '/api/user/all?&business=' + a + "&create_at=" + b + "&page=" + c, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -15,7 +14,7 @@ export async function alluserApi(a:string,b:string): Promise<AllUserResponse> {
     });
 
     if (!response.ok) {
-      useAuthStore.getState().logout();
+      // useAuthStore.getState().logout();
       throw new Error("유저 목록 불러오기 실패");
     }
 
