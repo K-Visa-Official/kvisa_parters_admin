@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams , useRouter } from "next/navigation";
-import { useState, useEffect  } from "react";
+import { useState, useEffect , Suspense } from "react";
 import styles from "@/app/css/user_detail.module.css";
 import Image from "next/image";
 import { readlist, work_detail , registerProcess } from "../server/work";
@@ -118,6 +118,7 @@ export default function Progress() {
 
     return (
         <>
+         <Suspense>
             {modal ?
                 <div
                     style={{
@@ -314,6 +315,7 @@ export default function Progress() {
                     </div>
                 </div>
             }
+        </Suspense>
         </>
     );
 }

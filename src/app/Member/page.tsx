@@ -3,7 +3,7 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import { getUser, getUserApi } from "@/app/server/admin_user";
 import { UserList, WorkResponse } from "../type/user";
-import { useState, useEffect  } from "react";
+import { useState, useEffect, Suspense  } from "react";
 import styles from "@/app/css/user_detail.module.css";
 import Image from "next/image";
 import { Korean } from "../type/typedef";
@@ -44,6 +44,7 @@ export default function CaseStoriesDetailPage() {
 
     return (
         <>
+        <Suspense>
         <div
             style={{
                 display: "flex",
@@ -178,6 +179,7 @@ export default function CaseStoriesDetailPage() {
 
 
         </div>
+        </Suspense>
         </>
     );
 }
