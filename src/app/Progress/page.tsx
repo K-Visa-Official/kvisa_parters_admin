@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams , useRouter } from "next/navigation";
-import { useState, useEffect , Suspense } from "react";
+import { useState, useEffect  } from "react";
 import styles from "@/app/css/user_detail.module.css";
 import Image from "next/image";
 import { readlist, work_detail , registerProcess } from "../server/work";
