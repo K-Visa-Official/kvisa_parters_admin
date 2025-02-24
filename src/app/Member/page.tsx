@@ -20,18 +20,34 @@ export default function Member() {
     const [work, setWork] = useState<WorkResponse[] | []>([]);
 
     useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const data = await getUser(Number(parm.get("member")));
-                const data_sec = await getUserApi(Number(parm.get("member")), parm.get("language") === "0" ? 0 : 1);
-                setUser(data);
-                setWork(data_sec)
-            } catch (error) {
-                console.error("유저 데이터를 불러오는 중 오류 발생:", error);
-            }
-        };
-        fetchUser();
-    }, [parm.get("member")]);
+            const progressParam = parm.get("member");
+            const language = parm.get("language");
+            const fetchUser = async () => {
+                try {
+                    const data = await getUser(Number(progressParam));
+                    const data_sec = await getUserApi(Number(progressParam),language === "0" ? 0 : 1);
+                    setUser(data);
+                    setWork(data_sec)
+                } catch (error) {
+                    console.error("유저 데이터를 불러오는 중 오류 발생:", error);
+                }
+            };
+            fetchUser();
+        }, [parm]); // parm 객체가 아닌 `parm.get("progress")`를 의존성 배열에 넣기
+
+    // useEffect(() => {
+    //     const fetchUser = async () => {
+    //         try {
+    //             const data = await getUser(Number(parm.get("member")));
+    //             const data_sec = await getUserApi(Number(parm.get("member")), parm.get("language") === "0" ? 0 : 1);
+    //             setUser(data);
+    //             setWork(data_sec)
+    //         } catch (error) {
+    //             console.error("유저 데이터를 불러오는 중 오류 발생:", error);
+    //         }
+    //     };
+    //     fetchUser();
+    // }, [parm.get("member")]);
 
     // console.log(work[0]?.choice)
 
