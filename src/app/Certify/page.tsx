@@ -3,7 +3,7 @@
 // import { useSearchParams,  } from "next/navigation";
 // import { getUser, getUserApi } from "@/app/server/admin_user";
 // import { UserList, WorkResponse } from "../type/user";
-import { useState, useEffect } from "react";
+import { useState, useEffect , Suspense } from "react";
 import styles from "@/app/css/user_detail.module.css";
 import Image from "next/image";
 import FilterInputBox from "../Component/Common/FilterInputBox";
@@ -13,7 +13,7 @@ import { change_name } from "../server/work";
 
 
 
-export default function Certify() {
+function Certify() {
     const parm = useSearchParams();
     const [name, setName] = useState<string>("");
     const [modal, setModal] = useState<boolean>(false);
@@ -463,3 +463,13 @@ export default function Certify() {
         </div>
     );
 }
+
+const OAuthTokenPage = () => {
+    return (
+      <Suspense>
+        <Certify />
+      </Suspense>
+    );
+  };
+  
+  export default OAuthTokenPage;
