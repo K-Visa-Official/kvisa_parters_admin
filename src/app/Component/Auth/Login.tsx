@@ -10,21 +10,19 @@ import Modal from '../Common/Modal';
 
 export default function Login() {
     const { email, setEmail, password, setPassword, login , isLoggedIn } = useAuthStore();
-    const [loading, setLoading] = useState<boolean | false>(false); // 로딩 상태
+    // const [loading, setLoading] = useState<boolean | false>(false); // 로딩 상태
     const [modal, setModal] = useState<boolean | false>(false); // 로딩 상태
-    const [error, setError] = useState<string | "">("");; // 에러 메시지 상태
+    // const [error, setError] = useState<string | "">("");; // 에러 메시지 상태
     const router = useRouter()
 
     const handleLogin = async () => {
         if (!email || !password) {
-            setError("이메일과 비밀번호를 입력하세요.");
 
             setModal(true)
             return;
         }
 
         try {
-            setLoading(true);
             const success: boolean = await login();
 
             if(success){
@@ -36,7 +34,8 @@ export default function Login() {
             
 
         } catch (error) {
-            setError("로그인 실패. 아이디와 비밀번호를 확인하세요.");
+            console.log(error)
+            // setError("로그인 실패. 아이디와 비밀번호를 확인하세요.");
         }
     };
 

@@ -23,10 +23,11 @@ const useAdminStore = create<AdminFilter>((set, get) => ({
   fetchAllUsers: async (): Promise<boolean> => {
     try {
       const { title, created_at } = get(); // 현재 상태 가져오기
-      const response = await alluserApi(title, created_at);
+      await alluserApi(title, created_at);
 
       return true;
     } catch (error) {
+      console.error("로그인 실패:", error); // 오류 로그 추가
       // console.error("유저 데이터 가져오기 실패:", error);
       return false;
     }

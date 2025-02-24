@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import styles from "@/app/css/admin_user.module.css";
 import { useState } from "react";
-import { usePathname } from "next/navigation";
+// import { usePathname } from "next/navigation";
 
 interface FilterInputBoxProps {
     w: number;
@@ -35,7 +35,6 @@ export default function FilterInputBox({
             e.target.value = formattedValue;
             if (onChange) onChange(e);
         };
-        const par = usePathname()
         
 
     return (

@@ -45,6 +45,7 @@ const PostModal: React.FC<ModalProps> = ({ onClose, la, pk = 0 }) => {
           }
         }
       } catch (error) {
+        console.log(error)
       }
     };
     fetchUser();

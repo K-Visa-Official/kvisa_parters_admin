@@ -1,20 +1,20 @@
 "use client"
 import { Category } from "@/app/type/typedef";
 import Image from 'next/image';
-import { useSearchParams, useRouter , usePathname } from 'next/navigation';
-import { useState } from "react";
+import {  useRouter , usePathname } from 'next/navigation';
+// import { useState } from "react";
 import styles from "@/app/css/common.module.css";
 
 
-interface EnterBtnProps {
-    // tabActive: string;
-    // h?: number;
-    // mt?: number;
-    // t: string;
-    // c: string;
-    // ts?: number;
-    // onClick?: () => void;
-}
+// interface EnterBtnProps {
+//     // tabActive: string;
+//     // h?: number;
+//     // mt?: number;
+//     // t: string;
+//     // c: string;
+//     // ts?: number;
+//     // onClick?: () => void;
+// }
 
 export default function Sidebar() {
     const router = useRouter()

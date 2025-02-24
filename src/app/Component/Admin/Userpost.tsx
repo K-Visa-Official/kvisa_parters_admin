@@ -10,10 +10,10 @@ import Modal from "../Common/Modal";
 
 interface UserPostProps {
     onClose: () => void;
-    n?: number;
+    // n?: number;
 }
 
-export default function UserPost({ onClose, n = 0 }: UserPostProps) {
+export default function UserPost({ onClose }: UserPostProps) {
     const [email, setEmail] = useState<string | null>(null);
     const [password, setPassword] = useState<string | null>(null);
     const [company, setCompany] = useState<string | null>(null);
@@ -66,9 +66,9 @@ export default function UserPost({ onClose, n = 0 }: UserPostProps) {
                 formData.append("bu_logo", file);
             }
 
-            for (let [key, value] of formData.entries()) {
-                console.log(key, value);
-            }
+            // for (let [key, value] of formData.entries()) {
+            //     console.log(key, value);
+            // }
             
             const result = await registerUser(formData);
 
@@ -79,6 +79,7 @@ export default function UserPost({ onClose, n = 0 }: UserPostProps) {
             }
             // console.log("회원가입 성공:", result);
         } catch (error) {
+            console.log(error)
             setModalActive(true)
         }
     }

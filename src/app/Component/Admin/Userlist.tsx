@@ -25,6 +25,7 @@ export default function UserListtotla() {
                 setIsLoading(false);
             } 
             catch (e) {
+                console.log(e)
                 setError("유저 목록을 불러오는 데 실패했습니다.");
                 setIsLoading(false);
             }

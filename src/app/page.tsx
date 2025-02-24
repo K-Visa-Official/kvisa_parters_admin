@@ -1,9 +1,9 @@
 'use client'
-import { useRouter , useSearchParams } from 'next/navigation';
+import { useRouter  } from 'next/navigation';
 import useAuthStore from "./store/user";
-import { useEffect , useState } from 'react';
+import { useEffect  } from 'react';
 import Sidebar from './Component/Common/Sidebar';
-import { Category } from "@/app/type/typedef";
+// import { Category } from "@/app/type/typedef";
 import UserBox from './Component/Admin/User';
 
 export default function Home() {

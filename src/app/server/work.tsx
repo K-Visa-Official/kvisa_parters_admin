@@ -1,7 +1,7 @@
 const baseurl = process.env.NEXT_PUBLIC_SERVICE_VISA_URL; 
 import useAuthStore from "../store/user";
 // import {  AllUserResponse , UserList , WorkPost} from "../type/user";
-import { Question_Post,WorkResponse , Question ,Answer  } from "../type/user";
+import { Question_Post,WorkResponse , Question   } from "../type/user";
 
 interface ProcessData {
   user_id: number;

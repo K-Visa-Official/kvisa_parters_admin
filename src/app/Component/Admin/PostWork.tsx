@@ -177,8 +177,8 @@ export default function PostWork({ onClose, n = 0, la , max }: WorkPostProps) {
                     // for (let [key, value] of formData.entries()) {
                     //     console.log(key, value);
                     // }
-                    // 파일 업로드 처리
-                    const result = await workchangeimage(formData);
+                    // 파일 업로드 처리 
+                    await workchangeimage(formData);
                  
                     // if (result && result.message) {
 
