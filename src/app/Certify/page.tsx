@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams,  } from "next/navigation";
+// import { useSearchParams,  } from "next/navigation";
 // import { getUser, getUserApi } from "@/app/server/admin_user";
 // import { UserList, WorkResponse } from "../type/user";
 import { useState, useEffect } from "react";

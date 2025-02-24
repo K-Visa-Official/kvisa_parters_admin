@@ -174,9 +174,9 @@ export default function PostWork({ onClose, n = 0, la , max }: WorkPostProps) {
                     if (file_detail) {
                         formData.append("detail_second", file_detail); // 오타 수정
                     }
-                    for (let [key, value] of formData.entries()) {
-                        console.log(key, value);
-                    }
+                    // for (let [key, value] of formData.entries()) {
+                    //     console.log(key, value);
+                    // }
                     // 파일 업로드 처리
                     const result = await workchangeimage(formData);
                  

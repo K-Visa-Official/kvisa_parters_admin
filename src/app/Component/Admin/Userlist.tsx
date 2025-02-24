@@ -23,7 +23,8 @@ export default function UserListtotla() {
                 const data: AllUserResponse = await alluserApi("", ""); // 파라미터 값은 실제로 적절하게 설정
                 setUsers(data.results); // 받은 데이터로 상태 업데이트
                 setIsLoading(false);
-            } catch (err) {
+            } 
+            catch (e) {
                 setError("유저 목록을 불러오는 데 실패했습니다.");
                 setIsLoading(false);
             }

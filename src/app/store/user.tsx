@@ -46,7 +46,9 @@ const useAuthStore = create<AuthStore>((set, get) => ({
       localStorage.setItem("expirationDate", expirationDate.toString());
 
       return true;
-    } catch (error) {
+    } 
+    catch (error) {
+      console.error("로그인 실패:", error); // 오류 로그 추가
       return false;
     }
   },
