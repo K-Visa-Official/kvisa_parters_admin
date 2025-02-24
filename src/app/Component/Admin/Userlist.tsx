@@ -12,7 +12,7 @@ interface ModalProps {
   }
 
 const UserListtotla: React.FC<ModalProps> = ({ search }) => {
-    const { title, created_at, seTitle, setCreate } = useAdminStore(); 
+    const { title, created_at } = useAdminStore(); 
     const [users, setUsers] = useState<UserList[]>([]); // 유저 데이터 상태
     const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태
     const [error, setError] = useState<string | null>(null); // 에러 상태

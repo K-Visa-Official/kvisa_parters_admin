@@ -74,6 +74,7 @@ export default function Certify() {
                     return response.text(); // 응답을 JSON으로 변환
                 })
                 .then(data => {
+                    console.log(data)
                     // alert("인증번호 발송")
                 }
                 )
