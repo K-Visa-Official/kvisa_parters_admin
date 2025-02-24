@@ -18,26 +18,32 @@ export default function CaseStoriesDetailPage() {
     const [pk, setPk] = useState<number | 1>(1);
     const [url, setUrl] = useState<string | "">("");
     const [work, setWork] = useState<WorkResponse[] | []>([]);
+    const [memberId, setMemberId] = useState<string | null>(null); 
 
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const data = await getUser(Number(parm.get("member")));
-                const data_sec = await getUserApi(Number(parm.get("member")), parm.get("language") === "0" ? 0 : 1);
+                const member = parm.get("member");
+                if (member !== memberId) {
+                    setMemberId(member);  // memberId가 바뀔 때 상태 업데이트
+                }
+                const data = await getUser(Number(member));  // 유저 데이터 가져오기
+                const data_sec = await getUserApi(Number(member), parm.get("language") === "0" ? 0 : 1);  // 추가 작업 데이터 가져오기
                 setUser(data);
                 setWork(data_sec)
             } catch (error) {
                 console.error("유저 데이터를 불러오는 중 오류 발생:", error);
             }
         };
-        fetchUser();
-    }, [parm.get("member")]);
+        if (parm.get("member")) {
+            fetchUser();
+        }
+    }, [parm, memberId]);
 
     // console.log(work[0]?.choice)
 
     return (
         <>
-        <Suspense fallback={<div>Loading...</div>}>
         <div
             style={{
                 display: "flex",
@@ -172,7 +178,6 @@ export default function CaseStoriesDetailPage() {
 
 
         </div>
-        </Suspense>
         </>
     );
 }

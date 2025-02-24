@@ -12,6 +12,7 @@ import { Question_Post, WorkResponse } from "../type/user";
 export default function Progress() {
     const parm = useSearchParams();
     const router = useRouter()
+    const [progressId, setProgressId] = useState<string | null>(null);
     const [work, setWork] = useState<Question_Post[]>([]);
     const [workdetail, setWorkDetail] = useState<WorkResponse[]>([]);
     const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: string[] }>({});
@@ -27,12 +28,17 @@ export default function Progress() {
             : (selectedAnswers[user.id] || []).join(", ") // 배열이면 , 로 합치기
     }));
 
+  
 
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const data = await readlist(Number(parm.get("progress")));
-                const data_detail = await work_detail(Number(parm.get("progress")));
+                const progress = parm.get("progress");
+                if (progress !== progressId) {
+                    setProgressId(progress); // progress가 바뀔 때마다 상태 업데이트
+                }
+                const data = await readlist(Number(progress));
+                const data_detail = await work_detail(Number(progress));
                 setWork(data);
                 setWorkDetail(data_detail)
             } catch (error) {
@@ -41,7 +47,7 @@ export default function Progress() {
         };
         fetchUser();
         console.log(Number(parm.get("progress")))
-    }, [parm.get("progress")]);
+    }, [parm, progressId]);
 
 
     // 답변 선택 (단일/복수 공통)
@@ -112,7 +118,6 @@ export default function Progress() {
 
     return (
         <>
-        <Suspense fallback={<div>Loading...</div>}>
             {modal ?
                 <div
                     style={{
@@ -309,7 +314,6 @@ export default function Progress() {
                     </div>
                 </div>
             }
-            </Suspense>
         </>
     );
 }
