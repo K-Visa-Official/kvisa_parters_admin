@@ -251,7 +251,7 @@ export default function Certify() {
                             height={50}
                             style={{ marginTop: "150px" }}
                         />
-                        <p style={{ marginTop:"15px" , fontWeight:"bold" , fontSize:"20px"}}> {parm.get("language") === "0" ? Korean.accept_eight : Ch.accept_eight}
+                        <p style={{ marginTop:"15px" , fontWeight:"bold" , fontSize:"20px"}}> {parm.get("language") === "0" ? Korean.accept_eight : Ch.accept_eleven}
                             {/* 접수가 완료되었습니다 */}
                             </p>
                         <p style={{ marginTop:"10px" , fontWeight:"500" , fontSize:"13px" , color:"#84848f"}}>
