@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams , useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect , Suspense } from "react";
 import styles from "@/app/css/user_detail.module.css";
 import Image from "next/image";
 import { readlist, work_detail , registerProcess } from "../server/work";
@@ -27,42 +27,24 @@ export default function Progress() {
             : (selectedAnswers[user.id] || []).join(", ") // 배열이면 , 로 합치기
     }));
 
-    useEffect(() => {
-        const progressParam = parm.get("progress");
-        if (progressParam) {
-            const fetchUser = async () => {
-                try {
-                    const data = await readlist(Number(progressParam));
-                    const data_detail = await work_detail(Number(progressParam));
-                    setWork(data);
-                    setWorkDetail(data_detail);
-                } catch (error) {
-                    console.log(error);
-                }
-            };
-            fetchUser();
-        }
-    }, [parm]); // parm 객체가 아닌 `parm.get("progress")`를 의존성 배열에 넣기
 
-    
-    // useEffect(() => {
-    //     const fetchUser = async () => {
-    //         try {
-    //             const data = await readlist(Number(parm.get("progress")));
-    //             const data_detail = await work_detail(Number(parm.get("progress")));
-    //             setWork(data);
-    //             setWorkDetail(data_detail)
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //     };
-    //     fetchUser();
-    //     console.log(Number(parm.get("progress")))
-    // }, [parm.get("progress")]);
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const data = await readlist(Number(parm.get("progress")));
+                const data_detail = await work_detail(Number(parm.get("progress")));
+                setWork(data);
+                setWorkDetail(data_detail)
+            } catch (error) {
+                console.log(error)
+            }
+        };
+        fetchUser();
+        console.log(Number(parm.get("progress")))
+    }, [parm.get("progress")]);
 
 
     // 답변 선택 (단일/복수 공통)
-    
     const handleAnswerSelect = (questionId: number, answer: string, answerType: number) => {
         setSelectedAnswers(prev => {
             const currentAnswers = prev[questionId] || [];
@@ -98,7 +80,7 @@ export default function Progress() {
             else{
                 
 
-                for(let i = 0 ; i < finalData.length ; i++){
+                for(var i = 0 ; i < finalData.length ; i++){
                     const response = await registerProcess(
                         {
                             "user" : workdetail[0]?.user.id ,
@@ -130,6 +112,7 @@ export default function Progress() {
 
     return (
         <>
+        <Suspense fallback={<div>Loading...</div>}></Suspense>
             {modal ?
                 <div
                     style={{
@@ -161,7 +144,7 @@ export default function Progress() {
                                 <p className={styles.endcontenttitle}>{workdetail[0]?.choice}</p>
 
                                 {finalData.map((user, index) => (
-                                    <div style={{ display: "flex", flexDirection: "column", marginTop: "20px" }} key={index}>
+                                    <div style={{ display: "flex", flexDirection: "column", marginTop: "20px" }}>
                                         <div style={{ display: "flex", flexDirection: "row", marginLeft: "15px" }}>
                                             <p style={{ color: "#1c68ff", fontSize: "14px", fontWeight: "bold" }}>Q{Number(index + 1)}</p>
                                             <p style={{

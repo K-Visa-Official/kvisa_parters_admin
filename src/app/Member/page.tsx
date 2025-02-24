@@ -3,14 +3,14 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import { getUser, getUserApi } from "@/app/server/admin_user";
 import { UserList, WorkResponse } from "../type/user";
-import { useState, useEffect } from "react";
+import { useState, useEffect , Suspense } from "react";
 import styles from "@/app/css/user_detail.module.css";
 import Image from "next/image";
 import { Korean } from "../type/typedef";
 
 
 
-export default function Member() {
+export default function CaseStoriesDetailPage() {
     const parm = useSearchParams();
     const router = useRouter()
     const [user, setUser] = useState<UserList>();
@@ -20,38 +20,24 @@ export default function Member() {
     const [work, setWork] = useState<WorkResponse[] | []>([]);
 
     useEffect(() => {
-            const progressParam = parm.get("member");
-            const language = parm.get("language");
-            const fetchUser = async () => {
-                try {
-                    const data = await getUser(Number(progressParam));
-                    const data_sec = await getUserApi(Number(progressParam),language === "0" ? 0 : 1);
-                    setUser(data);
-                    setWork(data_sec)
-                } catch (error) {
-                    console.error("유저 데이터를 불러오는 중 오류 발생:", error);
-                }
-            };
-            fetchUser();
-        }, [parm]); // parm 객체가 아닌 `parm.get("progress")`를 의존성 배열에 넣기
-
-    // useEffect(() => {
-    //     const fetchUser = async () => {
-    //         try {
-    //             const data = await getUser(Number(parm.get("member")));
-    //             const data_sec = await getUserApi(Number(parm.get("member")), parm.get("language") === "0" ? 0 : 1);
-    //             setUser(data);
-    //             setWork(data_sec)
-    //         } catch (error) {
-    //             console.error("유저 데이터를 불러오는 중 오류 발생:", error);
-    //         }
-    //     };
-    //     fetchUser();
-    // }, [parm.get("member")]);
+        const fetchUser = async () => {
+            try {
+                const data = await getUser(Number(parm.get("member")));
+                const data_sec = await getUserApi(Number(parm.get("member")), parm.get("language") === "0" ? 0 : 1);
+                setUser(data);
+                setWork(data_sec)
+            } catch (error) {
+                console.error("유저 데이터를 불러오는 중 오류 발생:", error);
+            }
+        };
+        fetchUser();
+    }, [parm.get("member")]);
 
     // console.log(work[0]?.choice)
 
     return (
+        <>
+        <Suspense fallback={<div>Loading...</div>}></Suspense>
         <div
             style={{
                 display: "flex",
@@ -111,11 +97,11 @@ export default function Member() {
 
                         {work?.map((user, index) => (
                             <>  
-                            {work[0]?.choice === undefined ? 
-                            <></>
-                            :
-                               <>
-                                <div className={styles.post} onClick={() => (
+                            {work[0]?.choice === undefined? 
+                                <></>
+                                :
+                                <>
+                                 <div className={styles.post} onClick={() => (
                                     setUrl(user.detail_second),
                                     setState(2),
                                     setPk(user?.id)
@@ -138,9 +124,10 @@ export default function Member() {
                                 </div>
                                 <p style={{ marginTop: "15px", fontSize: "18px", color: "black", fontWeight: "600" }}>{user?.choice}</p>
 
-                                <p style={{ marginTop: "6px", fontSize: "13px", color: "#84848f", fontWeight: "500" }}>{user?.work_detail}</p>
+                                <p style={{ marginTop: "6px", fontSize: "13px", color: "#84848f", fontWeight: "500" }}>{user?.work_detail}</p> 
                                 </>
                             }
+                               
                             </>
                         ))}
 
@@ -185,5 +172,6 @@ export default function Member() {
 
 
         </div>
+        </>
     );
 }
