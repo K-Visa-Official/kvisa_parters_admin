@@ -12,7 +12,7 @@ export default function UserListtotla() {
     const [language, setLanguage] = useState<string | "ko">("ko"); // 에러 상태
     const [modal, setModal] = useState<boolean>(false); // 로딩 상태
     const [pk, setPk] = useState<number>(0); // 로딩 상태
-    
+
     const list = ["순번", "가입일", "회사/업체명", "업체 소개문구", "담당자", "계정정보", "입금계좌", "중국어 업무", "한국어 업무",
         // "접수 현황", "a"
     ];
@@ -47,7 +47,7 @@ export default function UserListtotla() {
                 <button className={styles.btn_post}
                     style={{ background: "white", border: "1px solid #1c68ff" }}
                     onClick={() => (
-                        setLanguage("post") , 
+                        setLanguage("post"),
                         setModal(true)
                     )}
                 >업체 리스트 추가</button>
@@ -161,37 +161,52 @@ export default function UserListtotla() {
                     </div>
 
                     <div style={{ width: "120px", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
-                        {user.email}<br/>
+                        {user.email}<br />
                         <span className={styles.secondtext}>{user.email}@</span>
                     </div>
 
                     <div style={{ width: "164px", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
-                        {user.bu_bank_name}<br/>
+                        {user.bu_bank_name}<br />
                         <span className={styles.secondtext}>{user.bu_bank_number}</span>
                     </div>
                     <div style={{ width: "140px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                        <div style={{ height: "16px", borderBottom: "1px solid black", marginRight: "16px", cursor:"pointer" }} 
+                        <div style={{ height: "16px", borderBottom: "1px solid black", marginRight: "16px", cursor: "pointer" }}
                             onClick={() => (
-                                setLanguage("ch") , 
-                                setModal(true) ,
+                                setLanguage("ch"),
+                                setModal(true),
                                 setPk(user.id)
-                                )}
-                            >
+                            )}
+                        >
                             <span style={{ textDecoration: "underline" }}>{user.work_count_ch}</span>
                         </div>
-                        <button className={styles.btn} style={{ background: "black", border: "none" }}>링크복사</button>
+                        <button className={styles.btn} style={{ background: "black", border: "none" }}
+                           onClick={() => {
+                            const currentUrl = window.location.href; // 현재 페이지 URL 가져오기
+                            navigator.clipboard.writeText(currentUrl + 'Member?&member=' + user.id + '&language=0') // 클립보드에 복사
+                                .then(() => alert("링크가 복사되었습니다!")) // 성공 시 알림
+                                .catch(err => console.error("링크 복사 실패:", err));
+                            // console.log(currentUrl + 'Member?&member=' + user.id + '&language=0')
+
+                        }}>링크복사</button>
                     </div>
                     <div style={{ width: "140px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                        <div style={{ height: "16px", borderBottom: "1px solid black", marginRight: "16px" , cursor:"pointer" }}
+                        <div style={{ height: "16px", borderBottom: "1px solid black", marginRight: "16px", cursor: "pointer" }}
                             onClick={() => (
-                                setLanguage("ko") , 
+                                setLanguage("ko"),
                                 setModal(true),
                                 setPk(user.id)
                             )}
                         >
                             <span style={{ textDecoration: "underline" }}>{user.work_count}</span>
                         </div>
-                        <button className={styles.btn} style={{ background: "black", border: "none" }}>링크복사</button>
+                        <button className={styles.btn} style={{ background: "black", border: "none" }}
+                        onClick={() => {
+                            const currentUrl = window.location.href; // 현재 페이지 URL 가져오기
+                            navigator.clipboard.writeText(currentUrl + 'Member?&member=' + user.id + '&language=1') // 클립보드에 복사
+                                .then(() => alert("링크가 복사되었습니다!")) // 성공 시 알림
+                                .catch(err => console.error("링크 복사 실패:", err));
+
+                        }}>링크복사</button>
                     </div>
 
                     <div style={{ width: "90px", display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -211,10 +226,10 @@ export default function UserListtotla() {
                     </div>
                 </div>
             ))}
-             {modal ? 
-                    <PostModal la = {language} pk={pk} onClose={() => setModal(false)} />:
-                    <></>
-                }
+            {modal ?
+                <PostModal la={language} pk={pk} onClose={() => setModal(false)} /> :
+                <></>
+            }
         </div>
     );
 }

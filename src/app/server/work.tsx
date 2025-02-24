@@ -1,6 +1,6 @@
 const baseurl = process.env.NEXT_PUBLIC_SERVICE_VISA_URL; 
 import useAuthStore from "../store/user";
-import {  AllUserResponse , UserList , WorkPost} from "../type/user";
+// import {  AllUserResponse , UserList , WorkPost} from "../type/user";
 import { Question_Post,WorkResponse } from "../type/user";
 
 // 요청을 보내는 함수

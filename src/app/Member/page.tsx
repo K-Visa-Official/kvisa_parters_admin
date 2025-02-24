@@ -33,7 +33,7 @@ export default function CaseStoriesDetailPage() {
         fetchUser();
     }, [parm.get("member")]);
 
-    console.log(work)
+    // console.log(work[0]?.choice)
 
     return (
         <div
@@ -94,7 +94,11 @@ export default function CaseStoriesDetailPage() {
                             {Korean.title_second}</p>
 
                         {work?.map((user, index) => (
-                            <>
+                            <>  
+                            {work[0]?.choice === undefined ? 
+                            <></>
+                            :
+                               <>
                                 <div className={styles.post} onClick={() => (
                                     setUrl(user.detail_second),
                                     setState(2),
@@ -119,6 +123,8 @@ export default function CaseStoriesDetailPage() {
                                 <p style={{ marginTop: "15px", fontSize: "18px", color: "black", fontWeight: "600" }}>{user?.choice}</p>
 
                                 <p style={{ marginTop: "6px", fontSize: "13px", color: "#84848f", fontWeight: "500" }}>{user?.work_detail}</p>
+                                </>
+                            }
                             </>
                         ))}
 
