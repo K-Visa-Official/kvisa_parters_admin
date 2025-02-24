@@ -72,15 +72,13 @@ export default function UserPost({ onClose }: UserPostProps) {
             
             const result = await registerUser(formData);
 
-            console.log(result.message)
             if (result && result.message) {
                 onClose();  // 모달 닫기
-                console.log("test")
             }
             // console.log("회원가입 성공:", result);
         } catch (error) {
             console.log(error)
-            setModalActive(true)
+            // setModalActive(true)
         }
     }
 
