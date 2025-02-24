@@ -6,8 +6,12 @@ import { alluserApi } from "../server/admin_user";
 interface AdminFilter {
   title: string;
   created_at: string;
+
+  page: number;
+
   seTitle: (title: string) => void;
   setCreate: (created_at: string) => void;
+  setPage: (page: number) => void;
   fetchAllUsers: () => Promise<boolean>;
 }
 
@@ -15,15 +19,17 @@ const useAdminStore = create<AdminFilter>((set, get) => ({
 
   title: "",
   created_at: "",
+  page: 1,
 
 
   seTitle: (title) => set({ title }),
   setCreate: (created_at) => set({ created_at }),
+  setPage: (page) => set({ page }),
 
   fetchAllUsers: async (): Promise<boolean> => {
     try {
-      const { title, created_at } = get(); // 현재 상태 가져오기
-      await alluserApi(title, created_at);
+      const { title, created_at , page } = get(); // 현재 상태 가져오기
+      await alluserApi(title, created_at , page);
 
       return true;
     } catch (error) {
