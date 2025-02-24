@@ -1,10 +1,29 @@
 const baseurl = process.env.NEXT_PUBLIC_SERVICE_VISA_URL; 
 import useAuthStore from "../store/user";
 // import {  AllUserResponse , UserList , WorkPost} from "../type/user";
-import { Question_Post,WorkResponse } from "../type/user";
+import { Question_Post,WorkResponse , Question ,Answer  } from "../type/user";
+
+interface ProcessData {
+  user_id: number;
+  language: number; // 언어 코드 (예: 0: 한국어, 1: 영어)
+  choice: string; // 업무 선택
+  work_detail: string; // 업무 상세 설명
+  order: number; // 업무 순서
+  questions: Question[]; // 질문 목록
+}
+
+interface ProcessData_se {
+  user: number | null; // 사용자 ID (null 허용)
+  work: number | null; // 업무 ID (null 허용)
+  name: string;
+  tel: number;
+  marketing: "y" | "n";
+  questions: string;
+  answers: string;
+}
 
 // 요청을 보내는 함수
-export async function registerWork(payload: any) {
+export async function registerWork(payload: ProcessData) {
   try {
     const token = localStorage.getItem("token");
 
@@ -116,7 +135,7 @@ export async function work_detail(a:number): Promise<WorkResponse[]> {
   }
 }
 
-export async function registerProcess(payload: any) {
+export async function registerProcess(payload: ProcessData_se) {
   try {
     
     // 토큰이 없을 경우 에러 처리

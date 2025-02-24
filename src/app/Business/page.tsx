@@ -1,7 +1,7 @@
 'use client'
 import { useEffect } from "react";
 import useAuthStore from "../store/user";
-import { useRouter , useSearchParams } from 'next/navigation';
+import { useRouter  } from 'next/navigation';
 import Sidebar from "../Component/Common/Sidebar";
 
 export default function Business_Main() {

@@ -83,7 +83,7 @@ export default function Progress() {
                 for(var i = 0 ; i < finalData.length ; i++){
                     const response = await registerProcess(
                         {
-                            "user" : workdetail[0]?.user ,
+                            "user" : workdetail[0]?.user.id ,
                             "work" : workdetail[0]?.id ,
                             "name" : "미입력" ,
                             "tel" : 0 ,
@@ -93,7 +93,7 @@ export default function Progress() {
                         }
                     );
                     if(response.detail === "Process created successfully"){
-                        console.log(response)
+                        // console.log(response)
                         router.push(`/Certify/?&user=${response.return}`)
                     }
                     else{

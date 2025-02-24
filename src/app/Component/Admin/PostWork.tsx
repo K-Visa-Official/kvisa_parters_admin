@@ -36,7 +36,7 @@ export default function PostWork({ onClose, n = 0, la , max }: WorkPostProps) {
     const [state, setState] = useState<number | 1>(1);
     const [alert, setAlert] = useState<boolean>(false); // 로딩 상태
     const [file_detail, setFile_Detail] = useState<File | null>(null);
-    const [questionsac, setQuestionsac] = useState<boolean>(false); // 로딩 상태
+    // const [questionsac, setQuestionsac] = useState<boolean>(false); // 로딩 상태
     const [questions, setQuestions] = useState<Question[]>([
         {
             question: "",
@@ -89,10 +89,10 @@ export default function PostWork({ onClose, n = 0, la , max }: WorkPostProps) {
         setQuestions(updatedQuestions);
     };
 
-    // 질문 삭제 함수
-    const removeQuestion = (index: number) => {
-        setQuestions(questions.filter((_, qIndex) => qIndex !== index));
-    };
+    // // 질문 삭제 함수
+    // const removeQuestion = (index: number) => {
+    //     setQuestions(questions.filter((_, qIndex) => qIndex !== index));
+    // };
 
     // 답변 추가 함수
     const addAnswer = (qIndex: number) => {

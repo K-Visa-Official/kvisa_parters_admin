@@ -1,8 +1,8 @@
 "use client"
 import styles from "@/app/css/admin_user.module.css";
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import {  useState } from 'react';
+import {  useSearchParams } from 'next/navigation';
 import { User } from "@/app/type/typedef";
 import useAdminStore from "@/app/store/adminuser";
 import FilterInputBox from "../Common/FilterInputBox";
