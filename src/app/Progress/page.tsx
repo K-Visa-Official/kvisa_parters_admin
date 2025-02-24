@@ -213,7 +213,8 @@ import { Question_Post, WorkResponse } from "../type/user";
                             <p style={{ marginTop: "18px", fontSize: "20px", fontWeight: "bold", marginLeft: "15px", color: "black", }}>{workdetail[0]?.choice}</p>
                             <div style={{ display: "flex", justifyContent: "space-between", flexDirection: "row", marginTop: "10px", marginLeft: "15px" }}>
                                 <p style={{ fontSize: "13px", color: "#33405a" }}>입력하신 정보는 안전하게 보관됩니다.</p>
-                                <p style={{ color: "black", marginRight: "15px", fontSize: "18px", fontWeight: "bold" }}>{(finalData.filter(a => a.answer != "").length / finalData.length) * 100}%</p>
+                                <p style={{ color: "black", marginRight: "15px", fontSize: "18px", fontWeight: "bold" }}>
+                                {Math.floor((finalData.filter(a => a.answer != "").length / finalData.length) * 100)}%</p>
                             </div>
 
                             <div style={{ width: "345px", height: "5px", margin: "15px" , display:"flex" , flexDirection:"row" ,borderRadius:"20px" }}>
