@@ -89,6 +89,7 @@ import { Korean } from "../type/typedef";
                             <img src
                                 ={user ? user?.bu_logo : "/common/ic_nonprofile.svg"}
                                 className={styles.logo}
+                                alt = "pro"
                             />
                             <div style={{
                                 display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", width: "250px", height: "60px", color: "black",
@@ -160,7 +161,7 @@ import { Korean } from "../type/typedef";
                     </div>
                     :
                     <>
-                        <img src={url} style={{ width: "100%", height: "auto" }} />
+                        <img src={url} style={{ width: "100%", height: "auto" }} alt="url"/>
                         <div className={styles.footer}
                             onClick={() => router.push(`/Progress/?&progress=${pk}`)}
                         >

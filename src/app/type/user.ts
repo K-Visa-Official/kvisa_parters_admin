@@ -16,6 +16,7 @@ export interface UserList {
   work_count: number;
   work_count_ch: number;
   is_admin: boolean;
+  
 }
 
 export interface AllUserResponse {

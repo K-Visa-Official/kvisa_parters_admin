@@ -5,7 +5,7 @@ import { UserList, AllUserResponse } from "@/app/type/user";
 import Image from "next/image";
 import PostModal from "../Common/PostModal";
 import useAdminStore from "@/app/store/adminuser";
-
+import Paging from "../Common/Paging";
 
 interface ModalProps {
     search?: boolean;
@@ -20,6 +20,7 @@ const UserListtotla: React.FC<ModalProps> = ({ search }) => {
     const [modal, setModal] = useState<boolean>(false); // 로딩 상태
     const [pk, setPk] = useState<number>(0); // 로딩 상태
     const [page, setPage] = useState<number>(1); // 로딩 상태
+    const [maxpage, setMaxPage] = useState<number>(1); // 로딩 상태
 
        
     const list = ["순번", "가입일", "회사/업체명", "업체 소개문구", "담당자", "계정정보", "입금계좌", "중국어 업무", "한국어 업무",
@@ -32,7 +33,7 @@ const UserListtotla: React.FC<ModalProps> = ({ search }) => {
                 const data: AllUserResponse = await alluserApi(title, created_at ,page); // 파라미터 값은 실제로 적절하게 설정
                 setUsers(data.results); // 받은 데이터로 상태 업데이트
                 setIsLoading(false);
-                console.log(data)
+                setMaxPage(data.count)
             } 
             catch (e) {
                 console.log(e)
@@ -50,6 +51,29 @@ const UserListtotla: React.FC<ModalProps> = ({ search }) => {
 
     if (error) {
         return <p>{error}</p>;
+    }
+
+    const PageNeControl = async () => {
+        if(page === Math.floor(10/maxpage)){
+        }
+        else{
+            setPage(page + 1)
+        }
+    }
+
+    const PageControl = (selectedPage: number) => {
+        setPage(selectedPage);
+      };
+    
+    const PageBeControl = async () => {
+        // setPage(page + 1)
+        if(page === 1){
+            
+        }
+        else{
+            setPage(page-1)
+        }
+        
     }
 
     return (
@@ -239,6 +263,7 @@ const UserListtotla: React.FC<ModalProps> = ({ search }) => {
                 </div>
             ))}
 
+            <Paging w={Math.floor(10/maxpage)} onClick={PageNeControl} before={PageBeControl} choice={PageControl} />
             
             {modal ?
                 <PostModal la={language} pk={pk} onClose={() => setModal(false)} /> :

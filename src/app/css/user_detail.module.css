@@ -57,7 +57,7 @@
 .post {
     margin-top: 20px;
     height: 280px;
-    width: 100%;
+    width: 345px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -82,7 +82,7 @@
     left: 50%;
     transform: translateX(-50%);
     /* 중앙 정렬 */
-    width: 100%;
+    width: 345px;
     height: 56px;
     border-radius: 0 0 10px 10px;
     background-image: linear-gradient(to bottom, #1c68ff, #053cf0);
