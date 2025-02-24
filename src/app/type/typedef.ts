@@ -127,7 +127,7 @@ export enum Ch {
     accept_six = "同意接收活动及营销信息" ,
     accept_seven = "同意上述内容并完成提交" ,
     
-    accept_eight = "提交完成" ,
+    // accept_eight = "提交完成" ,
 
     accept_nine = "请放心，K-VISA 遵守《个人信息保护法》" ,
 

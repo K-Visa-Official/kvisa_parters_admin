@@ -98,11 +98,13 @@ import { Korean , Ch } from "../type/typedef";
                         }
                     );
                     if(response.detail === "Process created successfully"){
-                       
-                        parm.get("language") === "0" ?
-                        router.push(`/Certify/?&user=${response.return}&language=0`)
-                        :
-                        router.push(`/Certify/?&user=${response.return}&language=1`)
+                        if(parm.get("language") === "0" ){
+                            router.push(`/Certify/?&user=${response.return}&language=0`)
+                        }
+                        else{
+                            router.push(`/Certify/?&user=${response.return}&language=1`)
+                        }
+                        
                     }
                     else{
                         alert("에러발생")
