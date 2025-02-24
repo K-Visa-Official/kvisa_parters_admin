@@ -7,7 +7,7 @@ import FilterInputBox from "../Common/FilterInputBox";
 import Modal from "../Common/Modal";
 import { useRef } from "react";
 import { registerWork , workchangeimage} from "@/app/server/work";
-
+import { Korean , Ch } from "@/app/type/typedef";
 
 interface WorkPostProps {
     onClose: () => void;
@@ -154,13 +154,15 @@ export default function PostWork({ onClose, n = 0, la , max }: WorkPostProps) {
                 questions: questions.map((question) => ({
                     question: question.question, // 질문 텍스트
                     answer_type: question.answer_type, // 답변 타입
-                    answers: question.answers.map((answer) => ({
+                    answers: question.answer_type === 2 || question.answer_type === 3 ?
+                    [{ answer: "입력형", sort: 0 }] :
+                    question.answers.map((answer) => ({
                         answer: answer.answer, // 답변 내용
                         sort: answer.sort, // 답변 순서
                     })),
                 })),
             };
-
+            // console.log(transformedData)
             try {
                 // 업무 등록 요청
                 const response = await registerWork(transformedData);
@@ -260,19 +262,19 @@ export default function PostWork({ onClose, n = 0, la , max }: WorkPostProps) {
                                             style={{ background: "white" }}
                                             onClick={() => (
                                                 setActive(true),
-                                                setWork("맞춤형 비자상담 서비스")
+                                                setWork(la === "ko" ? Korean.work_post_ko : Ch.work_post_ko)
                                             )}
                                         >
-                                            <p style={{ marginLeft: "15px" }}>맞춤형 비자상담 서비스</p>
+                                            <p style={{ marginLeft: "15px" }}>{la === "ko" ? Korean.work_post_ko : Ch.work_post_ko}</p>
                                         </div>
                                         <div className={styles.woch}
                                             style={{ background: "white", borderTop: "solid 1px #ebecf1" }}
                                             onClick={() => (
                                                 setActive(true),
-                                                setWork("외국인 범죄/불법체류자 구제")
+                                                setWork(la === "ko" ? Korean.work_post_ko_second : Ch.work_post_ko_second)
                                             )}
                                         >
-                                            <p style={{ marginLeft: "15px" }}>외국인 범죄/불법체류자 구제</p>
+                                            <p style={{ marginLeft: "15px" }}>{la === "ko" ? Korean.work_post_ko_second : Ch.work_post_ko_second}</p>
                                         </div>
                                     </div>
                                     : <></>

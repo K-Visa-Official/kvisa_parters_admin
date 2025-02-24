@@ -6,7 +6,7 @@ import styles from "@/app/css/user_detail.module.css";
 import Image from "next/image";
 import { readlist, work_detail , registerProcess } from "../server/work";
 import { Question_Post, WorkResponse } from "../type/user";
-
+import { Korean , Ch } from "../type/typedef";
 
 
 
@@ -45,9 +45,9 @@ import { Question_Post, WorkResponse } from "../type/user";
             }
         };
         fetchUser();
-        console.log(Number(parm.get("progress")))
     }, [parm, progressId]);
 
+    
 
     // 답변 선택 (단일/복수 공통)
     const handleAnswerSelect = (questionId: number, answer: string, answerType: number) => {
@@ -76,7 +76,7 @@ import { Question_Post, WorkResponse } from "../type/user";
     const handleSubmit = async () => {
       
         if(finalData.filter(a => a.answer === "").length > 0 ){
-            alert("답변을 선택해주세요")
+            alert(parm.get("language") === "0" ? Korean.enter_alert : Ch?.enter_alert)
         }
         else{
             if(!modal){
@@ -98,8 +98,11 @@ import { Question_Post, WorkResponse } from "../type/user";
                         }
                     );
                     if(response.detail === "Process created successfully"){
-                        // console.log(response)
-                        router.push(`/Certify/?&user=${response.return}`)
+                       
+                        parm.get("language") === "0" ?
+                        router.push(`/Certify/?&user=${response.return}&language=0`)
+                        :
+                        router.push(`/Certify/?&user=${response.return}&language=1`)
                     }
                     else{
                         alert("에러발생")
@@ -177,7 +180,7 @@ import { Question_Post, WorkResponse } from "../type/user";
                                 // onClick={() => router.push(`/Progress/?&progress=${pk}`)}
                                 >
                                     <div className={styles.nextStep}>
-                                        확인했습니다.
+                                        {parm.get("language") === "0" ? Korean.ok : Ch?.ok}
                                     </div>
                                 </div>
                             </div>
@@ -212,7 +215,10 @@ import { Question_Post, WorkResponse } from "../type/user";
                         <div style={{ width: "100%", height: "117px", display: "flex", flexDirection: "column", background: " #f0f5ff" }}>
                             <p style={{ marginTop: "18px", fontSize: "20px", fontWeight: "bold", marginLeft: "15px", color: "black", }}>{workdetail[0]?.choice}</p>
                             <div style={{ display: "flex", justifyContent: "space-between", flexDirection: "row", marginTop: "10px", marginLeft: "15px" }}>
-                                <p style={{ fontSize: "13px", color: "#33405a" }}>입력하신 정보는 안전하게 보관됩니다.</p>
+                                <p style={{ fontSize: "13px", color: "#33405a" }}>
+                                {parm.get("language") === "0" ? Korean.safety : Ch?.safety}
+                                    {/* 입력하신 정보는 안전하게 보관됩니다. */}
+                                    </p>
                                 <p style={{ color: "black", marginRight: "15px", fontSize: "18px", fontWeight: "bold" }}>
                                 {Math.floor((finalData.filter(a => a.answer != "").length / finalData.length) * 100)}%</p>
                             </div>
@@ -273,7 +279,12 @@ import { Question_Post, WorkResponse } from "../type/user";
                                                             color: isSelected ? "#1b67ff" : "#444", // 선택된 항목 글자 색
                                                         }}
                                                     >
-                                                        <Image src="/admin/sort.png" alt="선택" width={20} height={20} />
+                                                        
+                                                        <Image 
+                                                        src={isSelected ? "/member/check_active.png" : "/member/check.png"}
+                                                        alt={isSelected ? "선택됨" : "선택 안됨"}
+                                                         width={20} height={20} />
+
                                                         <p style={{
                                                             display: "-webkit-box",
                                                             WebkitLineClamp: 2,
@@ -307,7 +318,8 @@ import { Question_Post, WorkResponse } from "../type/user";
                                 width: "50%", height: "56px", background: "linear-gradient(91deg, #1c68ff 0%, #053cf0 100%)", borderRadius: "5px",
                                 fontSize: "15px", color: "white", display: "flex", justifyContent: "center", alignItems: "center"
                             }} onClick={handleSubmit}>
-                                접수하기
+                                {parm.get("language") === "0" ? Korean.enter : Ch?.enter}
+                                
                             </div>
                         </div>
 

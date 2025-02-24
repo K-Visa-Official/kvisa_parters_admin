@@ -3,6 +3,13 @@ import useAuthStore from "../store/user";
 // import {  AllUserResponse , UserList , WorkPost} from "../type/user";
 import { Question_Post,WorkResponse , Question   } from "../type/user";
 
+interface tel_change {
+  id: string | null;
+  name: string| null;  // 언어 코드 (예: 0: 한국어, 1: 영어)
+  tel: string| null; // 업무 선택
+}
+
+
 interface ProcessData {
   user_id: number;
   language: number; // 언어 코드 (예: 0: 한국어, 1: 영어)
@@ -144,6 +151,39 @@ export async function registerProcess(payload: ProcessData_se) {
     const response = await fetch(baseurl + '/api/client/work/', {
       method: "POST",
       headers: { 
+        "Content-Type": "application/json", // JSON 형식으로 보내기 위한 헤더 추가
+      },
+      body: JSON.stringify(payload), // payload를 JSON으로 변환하여 전송
+    });
+
+    // 응답 상태가 200 OK가 아닐 경우 예외 처리
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "회원가입 실패");
+    }
+
+    // 성공 시 JSON 데이터 반환
+    return await response.json();
+    
+  } catch (error) {
+    console.error("Error during registration:", error);
+    throw error;
+  }
+}
+
+export async function change_name(payload: tel_change) {
+  try {
+    // const token = localStorage.getItem("token");
+
+    // // 토큰이 없을 경우 에러 처리
+    // if (!token) {
+    //   throw new Error("Authorization token is missing");
+    // }
+
+    const response = await fetch(baseurl + "/api/client/progress/edit", {
+      method: "PATCH",
+      headers: { 
+        // "Authorization": "Bearer " + token, // Bearer token 추가
         "Content-Type": "application/json", // JSON 형식으로 보내기 위한 헤더 추가
       },
       body: JSON.stringify(payload), // payload를 JSON으로 변환하여 전송
