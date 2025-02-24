@@ -184,7 +184,7 @@ export default function UserListtotla() {
                         <button className={styles.btn} style={{ background: "black", border: "none" }}
                            onClick={() => {
                             const currentUrl = window.location.href; // 현재 페이지 URL 가져오기
-                            navigator.clipboard.writeText(currentUrl + 'Member?&member=' + user.id + '&language=0') // 클립보드에 복사
+                            navigator.clipboard.writeText(currentUrl + 'Member?&member=' + user.id + '&language=1') // 클립보드에 복사
                                 .then(() => alert("링크가 복사되었습니다!")) // 성공 시 알림
                                 .catch(err => console.error("링크 복사 실패:", err));
                             // console.log(currentUrl + 'Member?&member=' + user.id + '&language=0')
@@ -204,7 +204,7 @@ export default function UserListtotla() {
                         <button className={styles.btn} style={{ background: "black", border: "none" }}
                         onClick={() => {
                             const currentUrl = window.location.href; // 현재 페이지 URL 가져오기
-                            navigator.clipboard.writeText(currentUrl + 'Member?&member=' + user.id + '&language=1') // 클립보드에 복사
+                            navigator.clipboard.writeText(currentUrl + 'Member?&member=' + user.id + '&language=0') // 클립보드에 복사
                                 .then(() => alert("링크가 복사되었습니다!")) // 성공 시 알림
                                 .catch(err => console.error("링크 복사 실패:", err));
 
