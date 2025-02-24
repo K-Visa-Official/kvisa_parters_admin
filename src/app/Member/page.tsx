@@ -10,7 +10,7 @@ import { Korean } from "../type/typedef";
 
 
 
-export default function CaseStoriesDetailPage() {
+ function CaseStoriesDetailPage() {
     const parm = useSearchParams();
     const router = useRouter()
     const [user, setUser] = useState<UserList>();
@@ -43,8 +43,8 @@ export default function CaseStoriesDetailPage() {
     // console.log(work[0]?.choice)
 
     return (
-        <>
-        <Suspense>
+        // <>
+        <Suspense fallback={<div>Loading...</div>}>
         <div
             style={{
                 display: "flex",
@@ -180,6 +180,16 @@ export default function CaseStoriesDetailPage() {
 
         </div>
         </Suspense>
-        </>
+        // </>
     );
 }
+
+const askldasd = () => {
+  return (
+    <Suspense>
+      <CaseStoriesDetailPage />
+    </Suspense>
+  );
+};
+
+export default askldasd;

@@ -9,7 +9,8 @@ import { Question_Post, WorkResponse } from "../type/user";
 
 
 
-export default function Progress() {
+
+ function Progress() {
     const parm = useSearchParams();
     const router = useRouter()
     const [progressId, setProgressId] = useState<string | null>(null);
@@ -27,8 +28,6 @@ export default function Progress() {
             ? textAnswers[user.id] || ""  // 단문/장문형은 그대로 사용
             : (selectedAnswers[user.id] || []).join(", ") // 배열이면 , 로 합치기
     }));
-
-  
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -117,8 +116,8 @@ export default function Progress() {
 
 
     return (
-        <>
-         <Suspense>
+   
+         <Suspense fallback={<div>Loading...</div>}>
             {modal ?
                 <div
                     style={{
@@ -316,6 +315,16 @@ export default function Progress() {
                 </div>
             }
         </Suspense>
-        </>
+      
     );
 }
+
+const OAuthTokenPage = () => {
+    return (
+      <Suspense>
+        <Progress />
+      </Suspense>
+    );
+  };
+  
+  export default OAuthTokenPage;
