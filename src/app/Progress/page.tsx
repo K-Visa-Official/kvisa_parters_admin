@@ -144,7 +144,7 @@ export default function Progress() {
                                 <p className={styles.endcontenttitle}>{workdetail[0]?.choice}</p>
 
                                 {finalData.map((user, index) => (
-                                    <div style={{ display: "flex", flexDirection: "column", marginTop: "20px" }}>
+                                    <div style={{ display: "flex", flexDirection: "column", marginTop: "20px" }} key={index}>
                                         <div style={{ display: "flex", flexDirection: "row", marginLeft: "15px" }}>
                                             <p style={{ color: "#1c68ff", fontSize: "14px", fontWeight: "bold" }}>Q{Number(index + 1)}</p>
                                             <p style={{
