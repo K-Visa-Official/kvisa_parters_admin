@@ -37,7 +37,7 @@ export default function CaseStoriesDetailPage() {
 
     return (
         <>
-        <Suspense fallback={<div>Loading...</div>}></Suspense>
+        <Suspense fallback={<div>Loading...</div>}>
         <div
             style={{
                 display: "flex",
@@ -172,6 +172,7 @@ export default function CaseStoriesDetailPage() {
 
 
         </div>
+        </Suspense>
         </>
     );
 }

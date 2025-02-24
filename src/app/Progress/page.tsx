@@ -112,7 +112,7 @@ export default function Progress() {
 
     return (
         <>
-        <Suspense fallback={<div>Loading...</div>}></Suspense>
+        <Suspense fallback={<div>Loading...</div>}>
             {modal ?
                 <div
                     style={{
@@ -309,6 +309,7 @@ export default function Progress() {
                     </div>
                 </div>
             }
+            </Suspense>
         </>
     );
 }
