@@ -86,13 +86,11 @@ import { Korean } from "../type/typedef";
                     <div className={styles.contentsbox}>
 
                         <div className={styles.cardbox}>
-                        <Image
-                        src={user ? user?.bu_logo : "/common/ic_nonprofile.svg"}
-                        alt="음식 사진"
-                         className={styles.logo}
-                        unoptimized={true}
-                        />
-                            
+                            <img src
+                                ={user ? user?.bu_logo : "/common/ic_nonprofile.svg"}
+                                className={styles.logo}
+                                alt = "pro"
+                            />
                             <div style={{
                                 display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", width: "250px", height: "60px", color: "black",
                                 fontSize: "20px", marginLeft: "10px"
@@ -117,13 +115,8 @@ import { Korean } from "../type/typedef";
                                     setPk(user?.id)
                                 )}
                                     key={index}
-                                >   
-                                 <Image
-                                        src={user?.detail}
-                                        alt="음식 사진"
-                                        className={styles.postimg}
-                                        unoptimized={true}
-                                        />
+                                >
+                                    <img src={user?.detail} className={styles.postimg} alt="profile"/>
                                     <div className={styles.nextstep}>
                                         바로가기
                                         <Image
@@ -168,12 +161,7 @@ import { Korean } from "../type/typedef";
                     </div>
                     :
                     <>
-                    <Image
-                        src={url}
-                        alt="음식 사진"
-                        style={{ width:"100%" , height:"auto"}}
-                        unoptimized={true}
-                        />
+                        <img src={url} style={{ width: "100%", height: "auto" }} alt="url"/>
                         <div className={styles.footer}
                             onClick={() => router.push(`/Progress/?&progress=${pk}`)}
                         >
