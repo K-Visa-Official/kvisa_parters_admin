@@ -80,7 +80,7 @@ export default function Progress() {
             else{
                 
 
-                for(var i = 0 ; i < finalData.length ; i++){
+                for(let i = 0 ; i < finalData.length ; i++){
                     const response = await registerProcess(
                         {
                             "user" : workdetail[0]?.user.id ,
