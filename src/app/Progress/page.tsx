@@ -27,24 +27,42 @@ export default function Progress() {
             : (selectedAnswers[user.id] || []).join(", ") // 배열이면 , 로 합치기
     }));
 
-
     useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const data = await readlist(Number(parm.get("progress")));
-                const data_detail = await work_detail(Number(parm.get("progress")));
-                setWork(data);
-                setWorkDetail(data_detail)
-            } catch (error) {
-                console.log(error)
-            }
-        };
-        fetchUser();
-        console.log(Number(parm.get("progress")))
-    }, [parm.get("progress")]);
+        const progressParam = parm.get("progress");
+        if (progressParam) {
+            const fetchUser = async () => {
+                try {
+                    const data = await readlist(Number(progressParam));
+                    const data_detail = await work_detail(Number(progressParam));
+                    setWork(data);
+                    setWorkDetail(data_detail);
+                } catch (error) {
+                    console.log(error);
+                }
+            };
+            fetchUser();
+        }
+    }, [parm]); // parm 객체가 아닌 `parm.get("progress")`를 의존성 배열에 넣기
+
+    
+    // useEffect(() => {
+    //     const fetchUser = async () => {
+    //         try {
+    //             const data = await readlist(Number(parm.get("progress")));
+    //             const data_detail = await work_detail(Number(parm.get("progress")));
+    //             setWork(data);
+    //             setWorkDetail(data_detail)
+    //         } catch (error) {
+    //             console.log(error)
+    //         }
+    //     };
+    //     fetchUser();
+    //     console.log(Number(parm.get("progress")))
+    // }, [parm.get("progress")]);
 
 
     // 답변 선택 (단일/복수 공통)
+    
     const handleAnswerSelect = (questionId: number, answer: string, answerType: number) => {
         setSelectedAnswers(prev => {
             const currentAnswers = prev[questionId] || [];
