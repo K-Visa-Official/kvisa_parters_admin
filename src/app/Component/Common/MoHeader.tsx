@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+// import { useState, useEffect, Suspense } from "react";
 import styles from "@/app/css/user_detail.module.css";
 import Image from "next/image";
 

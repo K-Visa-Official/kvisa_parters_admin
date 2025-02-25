@@ -1,8 +1,6 @@
 "use client";
 
-import { useSearchParams, useRouter } from "next/navigation";
-import { getUser, getUserApi } from "@/app/server/admin_user";
-import { UserList, WorkResponse } from "../type/user";
+import { useSearchParams } from "next/navigation";
 import { useState, useEffect, Suspense } from "react";
 import styles from "@/app/css/user_detail.module.css";
 import Image from "next/image";
@@ -16,7 +14,6 @@ import { CRM_res } from "../type/user";
 
 function CRM() {
     const parm = useSearchParams();
-    const router = useRouter();
 
     const [workNumber, setWorkNumber] = useState<string | "">("");
     const [ceNumber, setCeNumber] = useState<string | null>(null);

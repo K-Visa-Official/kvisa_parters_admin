@@ -6,14 +6,13 @@ import Image from "next/image";
 import PostModal from "../Common/PostModal";
 import useAdminStore from "@/app/store/adminuser";
 import Paging from "../Common/Paging";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 interface ModalProps {
     search?: boolean;
   }
 
 const UserListtotla: React.FC<ModalProps> = ({ search }) => {
-    const router = useRouter();
     const { title, created_at , page , setPage } = useAdminStore(); 
     const [users, setUsers] = useState<UserList[]>([]); // 유저 데이터 상태
     const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태
