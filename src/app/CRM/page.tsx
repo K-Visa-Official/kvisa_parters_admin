@@ -225,7 +225,7 @@ function CRM() {
                             </div>
 
                             <p style={{ marginTop: "6px", fontSize: "12px", color: "#84848f" }}>
-                                {parm.get("language") === "0" ? Korean.pro_cer : Ch.pro_cer}
+                                {parm.get("language") === "0" ? Korean.pro_cer : Ch.progress}
                             </p>
                             
                             {li?.map((user) => (

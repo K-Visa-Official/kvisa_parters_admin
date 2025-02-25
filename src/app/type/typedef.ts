@@ -156,6 +156,5 @@ export enum Ch {
     
     bu_progress_ex = "*  范例：1234567890123 请仅输入数字，不要输入 ‘-’" ,
 
-    pro_cer = "查看办理进度" ,
     pro_cer_second = "查看我的办理进度"
 }
