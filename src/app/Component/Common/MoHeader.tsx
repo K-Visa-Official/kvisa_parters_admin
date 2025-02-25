@@ -2,7 +2,7 @@
 
 import styles from "@/app/css/user_detail.module.css";
 import Image from "next/image";
-import { usePathname , useRouter } from "next/navigation";
+import { usePathname  } from "next/navigation";
 
 
 interface MoHeaderProps {
@@ -13,7 +13,6 @@ interface MoHeaderProps {
 
 const MoHeader: React.FC<MoHeaderProps> = ({ state = 0 , setState , setAc  }) =>  {
     const path = usePathname()
-    const router = useRouter(); 
     // console.log(path)
 
     // ㅌ버튼
