@@ -9,9 +9,9 @@ interface tel_change {
   tel: string| null; // 업무 선택
 }
 
-interface work_list {
-  tel: string| null; // 업무 선택
-}
+// interface work_list {
+//   tel: string| null; // 업무 선택
+// }
 
 
 interface ProcessData {
