@@ -12,6 +12,7 @@ import { useSearchParams , useRouter } from "next/navigation";
 import { change_name } from "../server/work";
 
 import MoHeader from "../Component/Common/MoHeader";
+import Modal from "../Component/Common/Modal";
 
 
 function Certify() {
@@ -33,6 +34,7 @@ function Certify() {
     const [four, setFour] = useState<boolean>(false);
 
     const [state, setState] = useState<number>(1);  // 3분 타이머 설정 (180초)
+    const [ac, setAc] = useState<boolean | false>(false);
 
 
     useEffect(() => {
@@ -120,7 +122,11 @@ function Certify() {
     };
 
     return (
-        <div
+        <>
+        {ac ?
+            <Modal web={"wed"} setAc={setAc}/>
+            :
+            <div
             style={{
                 display: "flex",
                 justifyContent: "center",
@@ -132,7 +138,8 @@ function Certify() {
         >
             <div className={styles.innerbox}>
                 {/* 헤더 */}
-                <MoHeader/>
+                <MoHeader setAc={setAc} />
+
                 {state === 1 ?
                     <div className={styles.innerbox} style={{ height: "100vh" }}>
                         <div style={{ height: "100vh", marginLeft: "15px", marginRight: "15px" }}>
@@ -445,7 +452,10 @@ function Certify() {
                 <></>
             }
 
-        </div>
+            </div>
+        }
+       </>
+       
     );
 }
 

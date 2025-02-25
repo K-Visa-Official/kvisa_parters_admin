@@ -8,7 +8,7 @@ import styles from "@/app/css/user_detail.module.css";
 import Image from "next/image";
 import { Korean  , Ch} from "../type/typedef";
 import MoHeader from "../Component/Common/MoHeader";
-
+import Modal from "../Component/Common/Modal";
 
 function CaseStoriesDetailPage() {
     const parm = useSearchParams();
@@ -19,6 +19,7 @@ function CaseStoriesDetailPage() {
     const [url, setUrl] = useState<string | "">("");
     const [work, setWork] = useState<WorkResponse[] | []>([]);
     const [memberId, setMemberId] = useState<string | null>(null);
+    const [ac, setAc] = useState<boolean | false>(false);
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -40,8 +41,7 @@ function CaseStoriesDetailPage() {
         }
     }, [parm, memberId]);
 
-        
-    // console.log(work[0]?.choice)
+            
 
     return (
         // <>
@@ -58,7 +58,7 @@ function CaseStoriesDetailPage() {
             >
                 <div className={styles.innerbox}>
                     {/* 헤더 */}
-                    <MoHeader/>
+                    <MoHeader state={state} setState={setState} setAc={setAc}/>
 
 
                     {state === 1 ?
@@ -144,7 +144,7 @@ function CaseStoriesDetailPage() {
                             </div>
                             <p style={{ marginTop: "15px", fontSize: "18px", color: "black", fontWeight: "600" }}>{parm.get("language") === "0" ? Korean.progress: Ch.progress}</p>
 
-                            <p style={{ marginTop: "6px", fontSize: "13px", color: "#84848f", fontWeight: "500" }}>
+                            <p style={{ marginTop: "6px", fontSize: "13px", color: "#84848f", fontWeight: "500" , marginBottom:"120px" }}>
                                 {parm.get("language") === "0" ? Korean.progress_first : Ch?.progress_first}<br />
                                 {parm.get("language") === "0" ? Korean.progress_second : Ch.progress_second}
                                 </p>
@@ -173,6 +173,11 @@ function CaseStoriesDetailPage() {
 
                     }
 
+                    {ac ?
+                    <Modal web={"we"} setAc={setAc}/>
+                        :
+                    <></>
+                    }
 
 
                 </div>
