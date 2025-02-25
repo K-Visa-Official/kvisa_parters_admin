@@ -7,7 +7,7 @@ import { useState, useEffect, Suspense } from "react";
 import styles from "@/app/css/user_detail.module.css";
 import Image from "next/image";
 import { Korean  , Ch} from "../type/typedef";
-
+import MoHeader from "../Component/Common/MoHeader";
 
 
 function CaseStoriesDetailPage() {
@@ -40,6 +40,7 @@ function CaseStoriesDetailPage() {
         }
     }, [parm, memberId]);
 
+        
     // console.log(work[0]?.choice)
 
     return (
@@ -57,29 +58,7 @@ function CaseStoriesDetailPage() {
             >
                 <div className={styles.innerbox}>
                     {/* 헤더 */}
-                    <div className={styles.headerbox}>
-                        <Image aria-hidden src="/member/back.png" alt="뒤로가기" width={30} height={30}
-                            onClick={() => state === 2 ? setState(1) : ""} />
-                        {/* X 버튼 클릭 시 handleCloseWebView 호출 */}
-                        <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "center", width: "324px" }}>
-                            <Image
-                                aria-hidden
-                                src="/common/KPJB.png"
-                                alt="닫기"
-                                width={250}
-                                height={30}
-                                style={{ cursor: "pointer" }}
-                            />
-                        </div>
-                        <Image
-                            aria-hidden
-                            src="/common/close.png"
-                            alt="닫기"
-                            width={30}
-                            height={30}
-                            style={{ cursor: "pointer" }}
-                        />
-                    </div>
+                    <MoHeader/>
 
 
                     {state === 1 ?
@@ -140,7 +119,7 @@ function CaseStoriesDetailPage() {
                                 </div>
                             ))}
 
-                            <div className={styles.post}>
+                            <div className={styles.post} onClick={() => router.push(`/CRM?&language=${parm.get("language")}`)}>
                                 <div className={styles.postimg} style={{ color: "black" }}>
                                     <Image
                                         aria-hidden
@@ -179,8 +158,8 @@ function CaseStoriesDetailPage() {
                             <div className={styles.footer}
                                 onClick={() => router.push(
                                     parm.get("language") === "0" ?
-                                    `/Progress/?&progress=${pk}&language=0` :
-                                    `/Progress/?&progress=${pk}&language=1`
+                                    `/Progress/?&progress=${pk}&language=0&member=${parm.get("member")}` :
+                                    `/Progress/?&progress=${pk}&language=1&member=${parm.get("member")}`
                                 )}
                             >
                                 <p>

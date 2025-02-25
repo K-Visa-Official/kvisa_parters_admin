@@ -4,10 +4,10 @@ import { useSearchParams , useRouter } from "next/navigation";
 import { useState, useEffect , Suspense } from "react";
 import styles from "@/app/css/user_detail.module.css";
 import Image from "next/image";
-import { readlist, work_detail , registerProcess } from "../server/work";
+import { readlist, work_detail , registerProcess , registerProcessUser } from "../server/work";
 import { Question_Post, WorkResponse } from "../type/user";
 import { Korean , Ch } from "../type/typedef";
-
+import MoHeader from "../Component/Common/MoHeader";
 
 
  function Progress() {
@@ -90,21 +90,31 @@ import { Korean , Ch } from "../type/typedef";
                         {
                             "user" : workdetail[0]?.user.id ,
                             "work" : workdetail[0]?.id ,
-                            "name" : "미입력" ,
-                            "tel" : 0 ,
-                            "marketing" : "n" , 
+                            // "name" : "미입력" ,
+                            // "tel" : 0 ,
+                            // "marketing" : "n" , 
                             "questions" : finalData[i].question ,
                             "answers" : finalData[i].answer ,
                         }
                     );
                     if(response.detail === "Process created successfully"){
-                        if(parm.get("language") === "0" ){
-                            router.push(`/Certify/?&user=${response.return}&language=0`)
+                        if (i === finalData.length - 1) {
+                            const response_se = await registerProcessUser(
+                                {   
+                                    "id" : response.return , 
+                                    "name" : "미입력" ,
+                                    "tel" : 0 ,
+                                    "marketing" : "n" ,
+                                    "lang" : String(parm.get("language"))
+                                }
+                            );
+                            if(parm.get("language") === "0" ){
+                                router.push(`/Certify/?&user=${response_se.return}&language=0&member=${parm.get("member")}`)
+                            }
+                            else{
+                                router.push(`/Certify/?&user=${response_se.return}&language=1&member=${parm.get("member")}`)
+                            }
                         }
-                        else{
-                            router.push(`/Certify/?&user=${response.return}&language=1`)
-                        }
-                        
                     }
                     else{
                         alert("에러발생")
@@ -201,18 +211,7 @@ import { Korean , Ch } from "../type/typedef";
                     }}
                 >
                     <div className={styles.innerbox}>
-                        <div className={styles.headerbox} style={{ background: " #f0f5ff" }}>
-                            <Image aria-hidden src="/member/back.png" alt="뒤로가기" width={30} height={30} />
-                            <Image
-                                aria-hidden
-                                src="/common/KPJB.png"
-                                alt="로고"
-                                width={250}
-                                height={30}
-                                style={{ cursor: "pointer" }}
-                            />
-                            <Image aria-hidden src="/common/close.png" alt="닫기" width={30} height={30} style={{ cursor: "pointer" }} />
-                        </div>
+                        <MoHeader/>
 
                         <div style={{ width: "100%", height: "117px", display: "flex", flexDirection: "column", background: " #f0f5ff" }}>
                             <p style={{ marginTop: "18px", fontSize: "20px", fontWeight: "bold", marginLeft: "15px", color: "black", }}>{workdetail[0]?.choice}</p>

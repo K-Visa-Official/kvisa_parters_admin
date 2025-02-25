@@ -6,12 +6,14 @@ import Image from "next/image";
 import PostModal from "../Common/PostModal";
 import useAdminStore from "@/app/store/adminuser";
 import Paging from "../Common/Paging";
+import { useRouter } from "next/navigation";
 
 interface ModalProps {
     search?: boolean;
   }
 
 const UserListtotla: React.FC<ModalProps> = ({ search }) => {
+    const router = useRouter();
     const { title, created_at , page , setPage } = useAdminStore(); 
     const [users, setUsers] = useState<UserList[]>([]); // 유저 데이터 상태
     const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태
@@ -21,7 +23,7 @@ const UserListtotla: React.FC<ModalProps> = ({ search }) => {
     const [pk, setPk] = useState<number>(0); // 로딩 상태
     const [maxpage, setMaxPage] = useState<number>(1); // 로딩 상태
 
-       
+
     const list = ["순번", "가입일", "회사/업체명", "업체 소개문구", "담당자", "계정정보", "입금계좌", "중국어 업무", "한국어 업무",
         // "접수 현황", "a"
     ];
@@ -33,6 +35,8 @@ const UserListtotla: React.FC<ModalProps> = ({ search }) => {
                 setUsers(data.results); // 받은 데이터로 상태 업데이트
                 setIsLoading(false);
                 setMaxPage(data.count)
+
+                // router.push('/CRM')
             } 
             catch (e) {
                 console.log(e)
@@ -262,7 +266,7 @@ const UserListtotla: React.FC<ModalProps> = ({ search }) => {
                 </div>
             ))}
 
-            <Paging w={Math.floor(10/maxpage)} onClick={PageNeControl} before={PageBeControl} choice={PageControl} />
+            <Paging w={Math.ceil(maxpage / 10)} onClick={PageNeControl} before={PageBeControl} choice={PageControl} />
             
             {modal ?
                 <PostModal la={language} pk={pk} onClose={() => setModal(false)} /> :

@@ -70,6 +70,18 @@ export enum Korean {
     
     accept_eleven = "접수완료" ,
     
+    bu_progress = "업무처리 진행현황" ,
+
+    bu_progress_first = "업무처리 현황을 조회 할 수 있습니다." ,
+    bu_progress_second = "카카오 알림문자를 확인해주세요." ,
+
+    bu_progress_tel = "휴대번호 입력" ,
+    bu_progress_cer = "인증하기" ,
+
+    bu_progress_ex = "* 예시) 1234567890123 ‘-‘를 제외한 숫자만 입력해 주세요" ,
+
+    pro_cer = "나의 진행상황을 한 눈에 확인하세요"
+
 }
 
 
@@ -136,4 +148,16 @@ export enum Ch {
     
     accept_eleven = "提交完成" ,
 
+    bu_progress = "业务办理进度" ,
+
+    bu_progress_first = "您可以查询业务办理进度，" ,
+    bu_progress_second = "请查看 Kakao 通知短信。" ,
+
+    bu_progress_tel = "输入手机号码." ,
+    bu_progress_cer = "验证码" ,
+
+    bu_progress_ex = "*  范例：1234567890123 请仅输入数字，不要输入 ‘-’" ,
+
+    pro_cer = "查看办理进度" ,
+    pro_cer_second = "查看我的办理进度"
 }

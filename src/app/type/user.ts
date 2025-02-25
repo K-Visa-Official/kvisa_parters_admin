@@ -78,3 +78,18 @@ export interface Question_Post {
   answers: Answer_Post[]; // 해당 질문에 대한 답변 배열
 }
 
+// export interface Process {
+//   id: number;
+//   user: string;
+//   state:number; // 해당 질문에 대한 답변 배열
+// }
+
+export interface CRM_res {
+  id: number;
+  name: string;
+  tel: string;
+  work:WorkPost;
+  state:number
+  created_at: string;
+  lang: string;
+}

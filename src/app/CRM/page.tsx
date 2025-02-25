@@ -1,0 +1,381 @@
+"use client";
+
+import { useSearchParams, useRouter } from "next/navigation";
+import { getUser, getUserApi } from "@/app/server/admin_user";
+import { UserList, WorkResponse } from "../type/user";
+import { useState, useEffect, Suspense } from "react";
+import styles from "@/app/css/user_detail.module.css";
+import Image from "next/image";
+import { Korean, Ch } from "../type/typedef";
+import MoHeader from "../Component/Common/MoHeader";
+import FilterInputBox from "../Component/Common/FilterInputBox";
+import { get_crm } from "../server/work";
+import { CRM_res } from "../type/user";
+
+
+
+function CRM() {
+    const parm = useSearchParams();
+    const router = useRouter();
+
+    const [workNumber, setWorkNumber] = useState<string | "">("");
+    const [ceNumber, setCeNumber] = useState<string | null>(null);
+    const [active, setActive] = useState<boolean>(false);
+    const [firstActive, setFirstActive] = useState<boolean>(false);
+    const [secondActive, setSecondActive] = useState<boolean>(false);
+    const [timer, setTimer] = useState<number>(180); // 3분 타이머 설정 (180초)
+    const [state, setState] = useState<number>(1); // 3분 타이머 설정 (180초)
+
+    const [li, setLi] = useState<CRM_res[] | []>([]);
+
+    const arra = ["접수완료" , "계약완료" , "서류작성" , "심사진행" , "처리완료" , "상담종료"]
+
+    // 타이머 관련 useEffect
+    useEffect(() => {
+        let interval: NodeJS.Timeout;
+
+        if (active && timer > 0) {
+            interval = setInterval(() => {
+                setTimer(prev => prev - 1);
+            }, 1000); // 1초마다 타이머 감소
+        }
+
+        if (timer === 0) {
+            setActive(false);
+            setTimer(180); // 타이머 초기화
+        }
+
+        return () => clearInterval(interval);
+    }, [active, timer]);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const data = await get_crm(workNumber);  // 유저 데이터 가져오기
+                setLi(data);
+            } catch (error) {
+                console.error("유저 데이터를 불러오는 중 오류 발생:", error);
+            }
+        };
+        fetchUser();
+    }, [state]);
+
+
+    const sendMessage = () => {
+        if (workNumber === "") {
+            setFirstActive(true);
+        } else {
+            setActive(true);
+            fetch(`https://kimseongwon.store/api/verify-mobile-number/${workNumber.replaceAll("-", "")}?&type=test`, {
+                method: 'GET',
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('서버 오류 발생: ' + response.status);
+                    }
+                    return response.text();
+                })
+                .catch(error => alert(error));
+        }
+    };
+
+    const certify = async () => {
+        if (ceNumber === "") {
+            setSecondActive(true);
+        } 
+        else {
+            const response = await fetch(`https://kimseongwon.store/api/verify-mobile-number`, {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    mobile_num: workNumber.replaceAll("-", ""),
+                    certification_num: ceNumber,
+                }),
+            });
+
+            if (response.status === 200) {
+                setState(2)
+                // 비동기 작업을 처리할 경우 이곳에 작성
+            } else {
+
+            setSecondActive(true);
+                // 인증번호 불일치 처리
+            }
+        }
+    };
+
+    const formatDate = (dateString:string) => {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}.${month}.${day}`;
+      };
+
+      
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "flex-start", background: "#f5f6f9", width: "100vw" , height:"auto" , overflowY:"auto" }}>
+                <div className={styles.innerbox}>
+                    <MoHeader />
+                    {state === 1 ?
+                        <div className={styles.crminner}>
+                            <p style={{ marginTop: "10px", color: "black" }}>
+                                {parm.get("language") === "0" ? Korean.bu_progress : Ch.bu_progress}
+                            </p>
+                            <p style={{ marginTop: "6px", fontSize: "12px", color: "#84848f" }}>
+                                {parm.get("language") === "0" ? Korean.bu_progress_first : Ch.bu_progress_first}<br />
+                                {parm.get("language") === "0" ? Korean.bu_progress_second : Ch.bu_progress_second}
+                            </p>
+                            <p style={{ marginTop: "40px", fontSize: "12px", color: "#84848f" }}>
+                                {parm.get("language") === "0" ? Korean.bu_progress_tel : Ch.bu_progress_tel}
+                            </p>
+
+                            <div style={{ width: "345px", height: "50px", marginTop: "10px", background: "#f5f6f9", display: "flex", flexDirection: "row" }}>
+                                <FilterInputBox
+                                    w={270} h={50} mt={0} bg={"#f5f6f9"}
+                                    p={parm.get("language") === "0" ? Korean.bu_progress_tel : Ch.bu_progress_tel}
+                                    v={workNumber} type={"tel"}
+                                    onChange={(e) => setWorkNumber(e.target.value)}
+                                />
+                                <div style={{ width: "75px", height: "50px", background: "#f5f6f9", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                    <div
+                                        style={{
+                                            display: "flex", justifyContent: "center", alignItems: "center", background: "black", fontSize: "13px", color: "white",
+                                            width: "65px", height: "30px", borderRadius: "5px",
+                                        }}
+                                        onClick={sendMessage}
+                                    >
+                                        {parm.get("language") === "0" ? Korean.certi_active : Ch.certi_active}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {firstActive && (
+                                <p style={{ fontSize: "12px", color: "#ff1c8e", marginTop: "10px", fontWeight: "500" }}>
+                                    {parm.get("language") === "0" ? Korean.certi_tel_input : Ch.certi_tel_input}
+                                </p>
+                            )}
+
+                            <p style={{ marginTop: "10px", fontSize: "12px", color: "#1c68ff" }}>
+                                {parm.get("language") === "0" ? Korean.bu_progress_ex : Ch.bu_progress_ex}
+                            </p>
+
+                            {active && (
+                                <div style={{ width: "345px", height: "50px", marginTop: "35px", background: "#f5f6f9", display: "flex", flexDirection: "row" }}>
+                                    <FilterInputBox
+                                        w={270} h={50} mt={0} bg={"#f5f6f9"}
+                                        p={parm.get("language") === "0" ? Korean.certi_no : Ch.certi_no}
+                                        v={ceNumber}
+                                        onChange={(e) => setCeNumber(e.target.value)}
+                                    />
+                                    <div style={{ width: "75px", height: "50px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                        <div
+                                            style={{
+                                                display: "flex", justifyContent: "center", alignItems: "center", fontSize: "14px", color: "#ff1c8e",
+                                                width: "65px", height: "30px", borderRadius: "5px",
+                                            }}
+                                        >
+                                            {Math.floor(timer / 60)}:{String(timer % 60).padStart(2, "0")}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {secondActive && (
+                                <p style={{ fontSize: "12px", color: "#ff1c8e", marginTop: "10px", fontWeight: "500" }}>
+                                    {parm.get("language") === "0" ? Korean.certi_nonumber : Ch.certi_nonumber}
+                                </p>
+                            )}
+
+                            {active && (
+                                <div
+                                    style={{
+                                        marginTop: "50px", width: "345px", height: "60px", background: "linear-gradient(to left, #33405a, #112448)", color: "white",
+                                        display: "flex", justifyContent: "center", alignItems: "center", fontSize: "18px", borderRadius: "5px"
+                                    }}
+                                    onClick={certify}
+                                >
+                                    {parm.get("language") === "0" ? Korean.certi_next : Ch.certi_next}
+                                </div>
+                            )}
+
+                            <Image
+                                src='/crm/Main_ad.png'
+                                alt="close"
+                                width={345}
+                                height={310}
+                                style={{ marginTop: "75px" }}
+                            />
+                        </div>
+                        :
+                        <div className={styles.crminner}>
+                            <div style={{ marginTop: "10px", color: "black", display: "flex", flexDirection: "row" }}>
+                                <Image
+                                    aria-hidden
+                                    src='/crm/crm_logo.png'
+                                    alt="close"
+                                    width={24}
+                                    height={24}
+                                    style={{ marginRight: "4px" }}
+                                />
+                                <p >
+                                    {parm.get("language") === "0" ? Korean.progress : Ch.progress}
+                                </p>
+                            </div>
+
+                            <p style={{ marginTop: "6px", fontSize: "12px", color: "#84848f" }}>
+                                {parm.get("language") === "0" ? Korean.pro_cer : Ch.pro_cer}
+                            </p>
+                            
+                            {li?.map((user) => (
+                                <div className={styles.probox} key={user.id}>
+                                    <p style={{ fontSize: "20px", color: "black", fontWeight: "600" }}>안전하게 처리하고 있어요</p>
+                                    <p style={{ fontSize: "15px", color: "#84848f", fontWeight: "500", marginTop: "10px" }}>고객님의 업무처리를<br />
+                                        과정을 확인하세요</p>
+                                    <div style={{ display: "flex", flexDirection: "column" , marginTop:"23px" }}>
+                                        <Image
+                                            aria-hidden
+                                            src='/crm/cabby.png'
+                                            alt="close"
+                                            width={57}
+                                            height={67}
+                                            style={{ marginLeft:
+                                                user.state === 0 ? "10px" :
+                                                    user.state === 1 ? "45px" :
+                                                    user.state === 2 ? "100px" :
+                                                    user.state === 3 ? "155px" :
+                                                    user.state === 4 ? "205px" : "263px"
+                                            }}
+                                        />
+                                        <div style={{ display:"flex" , flexDirection:"row" , width:"100%" , height:"5px" , borderRadius:"2.5px" }}>
+                                            <div style={{ display:"flex" , flexDirection:"row" ,  borderRadius:"2.5px" ,
+                                                width: user.state === 0 ? "5%" :
+                                                        user.state === 1 ? "25%" :
+                                                        user.state === 2 ? "40%" :
+                                                        user.state === 3 ? "57%" :
+                                                        user.state === 4 ? "73%" :"100%"
+                                                , background:"#1c68ff"}}>
+                                                
+                                            </div>   
+                                            <div style={{ display:"flex" , flexDirection:"row" ,  borderRadius:"2.5px" ,
+                                                width: user.state === 0 ? "95%" :
+                                                user.state === 1 ? "75%" :
+                                                user.state === 2 ? "60%" :
+                                                user.state === 3 ? "43%" :
+                                                user.state === 4 ? "27%" :"0%"
+                                                ,background:"white"}}>
+                            
+                                            </div> 
+                                        </div>
+                                        <div style={{ display:"flex" , flexDirection:"row" , width:"100%"  }}>
+                                            
+                                            {arra?.map((user , index) => (
+                                                <div key={index} style={{ fontSize: "12px", color: "#84848f" , marginTop:"3px" , display:"flex" , justifyContent:"space-between" , width:"100%" }}>
+                                                    {user}
+                                                </div>
+                                            ))}
+                                        </div>
+                                        
+                                        <p style={{ marginTop:"10px" , color:"#1c69ff" , fontSize:"12px" , fontWeight:"500" }}>
+                                        진행과정은 고객님의 카카오톡으로 알려드려요
+                                        </p>
+
+                                        <div className={styles.contenttal}>
+                                            <div className={styles.daybox}>
+                                                접수날짜 : {formatDate(user.created_at)}
+                                            </div>
+
+                                            <div style={{ width:"100%" , height:"15px" , fontSize:"13px" , fontWeight:"500" , display:"flex" , flexDirection:"row" , marginTop:"20px" }}>
+                                                <div style={{ width:"30%" ,color:"rgb(132, 132, 143)"}}>
+                                                    접수언어
+                                                </div>
+                                                <div style={{ width:"70%"  ,color:"black"}}>
+                                                    {user.lang === "0" ? "중국어" : "한국어"}
+                                                </div>
+                                            </div>
+                                            
+                                            <div style={{ width:"100%" , height:"15px" , fontSize:"13px" , fontWeight:"500" , display:"flex" , flexDirection:"row" , marginTop:"20px" }}>
+                                                <div style={{ width:"30%" ,color:"rgb(132, 132, 143)"}}>
+                                                    업무종류
+                                                </div>
+                                                <div style={{ width:"70%"  ,color:"black"}}>
+                                                    {user.work.choice}
+                                                </div>
+                                            </div>
+
+                                            <div style={{ width:"100%" , height:"15px" , fontSize:"13px" , fontWeight:"500" , display:"flex" , flexDirection:"row" , marginTop:"20px" }}>
+                                                <div style={{ width:"30%" ,color:"rgb(132, 132, 143)"}}>
+                                                    의뢰인명
+                                                </div>
+                                                <div style={{ width:"70%"  ,color:"black"}}>
+                                                    {user.name}
+                                                </div>
+                                            </div>
+
+                                            <div style={{ width:"100%" , height:"15px" , fontSize:"13px" , fontWeight:"500" , display:"flex" , flexDirection:"row" , marginTop:"20px" }}>
+                                                <div style={{ width:"30%" ,color:"rgb(132, 132, 143)"}}>
+                                                    연락처
+                                                </div>
+                                                <div style={{ width:"70%"  ,color:"black"}}>
+                                                    {user.tel}
+                                                </div>
+                                            </div>
+
+                                            <div style={{ width:"100%" , height:"15px" , fontSize:"13px" , fontWeight:"500" , display:"flex" , flexDirection:"row" , marginTop:"20px" }}>
+                                                <div style={{ width:"30%" ,color:"rgb(132, 132, 143)"}}>
+                                                    진행상태
+                                                </div>
+                                                <div style={{ width:"70%"  ,color:"black"}}>
+                                                    {
+                                                        user.state === 0 ? "접수완료" : 
+                                                        user.state === 1 ? "계약완료" : 
+                                                        user.state === 2 ? "서류작성" :  
+                                                        user.state === 3 ? "심사진행" :  
+                                                        user.state === 4 ? "처리완료" : "상담종료"
+                                                    }
+                                                </div>
+                                            </div>
+
+                                          
+
+                                        </div>
+
+                                        
+                                        <div style={{ width:"100%" , height:"47px" , fontSize:"12px" , fontWeight:"500" , display:"flex" , flexDirection:"row" , marginTop:"20px" , justifyContent:"space-between" }}>
+                                                    <div className={styles.firstboxsd}>
+                                                        전화문의<br/>
+                                                        1811-1942
+                                                    </div>
+
+                                                    <div className={styles.secondboxsd}>
+                                                    카톡으로 문의하기
+                                                    </div>
+                                        </div>
+
+                                        <p style={{ marginTop:"10px" , color:"#1c69ff" , fontSize:"12px" , fontWeight:"500" }}>
+                                        업무시간 : 평일 9:00 ~ 18:00 ( 점심시간 : 12:00 ~13:00 )
+                                        </p>
+
+                                    </div>
+                                </div>   
+                            ))}
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </Suspense>
+    );
+}
+
+
+const askldasd = () => {
+    return (
+        <Suspense>
+            <CRM />
+        </Suspense>
+    );
+};
+
+export default askldasd;

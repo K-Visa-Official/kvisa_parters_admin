@@ -224,6 +224,71 @@
   background-color: #fff;
 }
 
+.crminner{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 15px;
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.probox{
+    width: 345px;
+    height: 611px;;
+    padding: 20px 10px;
+    border-radius: 10px;
+    background-color: #f5f6f9;
+    margin-top: 20px;
+}
+
+.contenttal{
+    width: 326px;
+    height: 239px;
+    border-radius: 5px;
+    background-color: #fff;
+    padding: 20px 15px;
+    margin-top: 20px;
+}
+.daybox{
+    width: 114px;
+    height: 23px;
+    border-radius: 2px;
+    background-color: #e8eaf1;
+    font-size: 11px;
+  font-weight: 500;
+  color: #33405a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.firstboxsd{
+    width: 131px;
+    height: 47px;
+    border-radius: 5px;
+    background-image: linear-gradient(to right, #33405a, #112448);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+}
+.secondboxsd{
+    width: 184px;
+    height: 47px;
+    border-radius: 5px;
+    background-color: #fce64b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+}
+
 @media screen and (max-width: 414px) {
     .innerbox {
         width: 100%;

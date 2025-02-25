@@ -8,13 +8,15 @@ import styles from "@/app/css/user_detail.module.css";
 import Image from "next/image";
 import FilterInputBox from "../Component/Common/FilterInputBox";
 import { Korean, Ch } from "../type/typedef";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams , useRouter } from "next/navigation";
 import { change_name } from "../server/work";
 
+import MoHeader from "../Component/Common/MoHeader";
 
 
 function Certify() {
     const parm = useSearchParams();
+    const router = useRouter();
     const [name, setName] = useState<string>("");
     const [modal, setModal] = useState<boolean>(false);
     const [name_active, setName_active] = useState<boolean>(false);
@@ -108,6 +110,7 @@ function Certify() {
                 // 비동기 작업을 하는 change_name 호출
                 await change_name(finalData);  // 여기서 change_name이 비동기 함수여야 합니다.
                 setModal(true)
+
             } else {
                 setCe_active(true);  // 인증번호 불일치
             }
@@ -129,28 +132,7 @@ function Certify() {
         >
             <div className={styles.innerbox}>
                 {/* 헤더 */}
-                <div className={styles.headerbox}>
-                    <Image aria-hidden src="/member/back.png" alt="뒤로가기" width={30} height={30} />
-                    {/* X 버튼 클릭 시 handleCloseWebView 호출 */}
-                    <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "center", width: "324px" }}>
-                        <Image
-                            aria-hidden
-                            src="/common/KPJB.png"
-                            alt="닫기"
-                            width={250}
-                            height={30}
-                            style={{ cursor: "pointer" }}
-                        />
-                    </div>
-                    <Image
-                        aria-hidden
-                        src="/common/close.png"
-                        alt="닫기"
-                        width={30}
-                        height={30}
-                        style={{ cursor: "pointer" }}
-                    />
-                </div>
+                <MoHeader/>
                 {state === 1 ?
                     <div className={styles.innerbox} style={{ height: "100vh" }}>
                         <div style={{ height: "100vh", marginLeft: "15px", marginRight: "15px" }}>
@@ -265,8 +247,11 @@ function Certify() {
                             marginTop: "150px", width: "345px", height: "60px", color:"white" , background:"linear-gradient(to left, #02f, #3d7dff)" ,
                             display: "flex", justifyContent: "center", alignItems: "center", fontSize: "15px", borderRadius: "5px" ,
                             fontWeight:"600"
-                        }} onClick={() =>
-                           console.log("crm으로 이동")
+                        }} onClick={() =>(
+                            parm.get("language") === "0" ? router.push(`/Member?&member=${parm.get("member")}&language=0`) 
+                            :
+                            router.push(`/Member?&member=${parm.get("member")}&language=1`) 
+                        )
                         }>
                             {parm.get("language") === "0" ? Korean.accept_eleven : Ch.accept_eleven}
                         </div>
