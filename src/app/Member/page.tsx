@@ -27,7 +27,6 @@ function CaseStoriesDetailPage() {
           const data = JSON.parse(decodedMessage);
           const url = data.param.url;  // 전달된 URL 값
       
-          console.log("받은 URL:", url);  // URL 확인
       
           // 'ko'가 URL에 포함되어 있는지 확인
           if (url.includes("ko")) {
@@ -39,7 +38,7 @@ function CaseStoriesDetailPage() {
           }
         }
       };
-      
+
     useEffect(() => {
         const fetchUser = async () => {
             try {

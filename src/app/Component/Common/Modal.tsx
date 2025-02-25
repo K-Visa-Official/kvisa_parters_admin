@@ -11,9 +11,10 @@ interface ModalProps {
     s?: string;
     web?: string;
     setAc?: React.Dispatch<React.SetStateAction<boolean>>;
+    callbackId?: string;  
 }
 
-const Modal: React.FC<ModalProps> = ({ onClose, t, c, n, s, web , setAc }) => {
+const Modal: React.FC<ModalProps> = ({ onClose, t, c, n, s, web , setAc , callbackId = "1234567890" }) => {
 
     const router = useRouter()
 
@@ -23,7 +24,7 @@ const Modal: React.FC<ModalProps> = ({ onClose, t, c, n, s, web , setAc }) => {
         }
         else{
             const args = {
-                callbackId: "2604284179",   // callbackId 값
+                callbackId: callbackId,   // callbackId 값
                 className: "JBSchemeBR",    // 클래스명
                 methods: "doNCloseWebView", // 호출할 메서드명
                 param: ""                   // 파라미터 (현재는 비어 있음)
