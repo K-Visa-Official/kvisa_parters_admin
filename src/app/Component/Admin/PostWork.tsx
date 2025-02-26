@@ -237,7 +237,7 @@ export default function PostWork({ onClose, n = 0, la, max, work_id }: WorkPostP
                         
 
                         // 파일 업로드 처리 
-                        const daat = await workchangenoimage(formData);
+                        await workchangenoimage(formData);
 
                         // if (result && result.message) {
 
@@ -292,7 +292,6 @@ export default function PostWork({ onClose, n = 0, la, max, work_id }: WorkPostP
         }
     }
 
-    console.log(workdetail)
 
     return (
         <>
