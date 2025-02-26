@@ -21,23 +21,23 @@ function CaseStoriesDetailPage() {
     const [memberId, setMemberId] = useState<string | null>(null);
     const [ac, setAc] = useState<boolean | false>(false);
 
-    window.JBPrivateBankBridge = {
-        callNative: function(message) {
-          const decodedMessage = decodeURIComponent(message);
-          const data = JSON.parse(decodedMessage);
-          const url = data.param.url;  // 전달된 URL 값
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+          window.JBPrivateBankBridge = {
+            callNative: function (message) {
+              const decodedMessage = decodeURIComponent(message);
+              const data = JSON.parse(decodedMessage);
+              const url = data.param.url; // 전달된 URL 값
       
-      
-          // 'ko'가 URL에 포함되어 있는지 확인
-          if (url.includes("ko")) {
-            // 'ko'가 포함되어 있으면 language=0
-            window.location.href = "https://main.d1ixxx006maf83.amplifyapp.com/Member?&member=6&language=0";
-          } else {
-            // 'ko'가 포함되어 있지 않으면 language=1
-            window.location.href = "https://main.d1ixxx006maf83.amplifyapp.com/Member?&member=6&language=1";
-          }
+              if (url.includes("ko")) {
+                window.location.href = "https://main.d1ixxx006maf83.amplifyapp.com/Member?&member=6&language=0";
+              } else {
+                window.location.href = "https://main.d1ixxx006maf83.amplifyapp.com/Member?&member=6&language=1";
+              }
+            },
+          };
         }
-      };
+      }, []);
 
     useEffect(() => {
         const fetchUser = async () => {
