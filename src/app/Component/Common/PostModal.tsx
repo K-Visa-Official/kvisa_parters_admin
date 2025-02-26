@@ -7,7 +7,7 @@ import { WorkResponse, UserList } from "@/app/type/user";
 import UserPost from "../Admin/Userpost";
 import PostWork from "../Admin/PostWork";
 import { workchangeorder } from "@/app/server/work";
-import { work_detail } from "@/app/server/work";
+// import { work_detail } from "@/app/server/work";
 
 interface ModalProps {
   onClose: () => void;
@@ -57,7 +57,7 @@ const PostModal: React.FC<ModalProps> = ({ onClose, la, pk = 0 }) => {
 
   
 
-  const UpGrade = async (index: number, id: number, o: number) => {
+  const UpGrade = async (index: number, id: number) => {
     setUser((prevUsers) => {
       if (!prevUsers || index <= 0) return prevUsers; // 첫 번째 요소는 이동 불가
 
@@ -69,14 +69,14 @@ const PostModal: React.FC<ModalProps> = ({ onClose, la, pk = 0 }) => {
 
 
     await workchangeorder({
-      "pk": user_no!!.id,
+      "pk": Number(user_no?.id),
       "work_id": id,
       "direction": "up",
     });
 
   }
 
-  const DownGrade = async (index: number, id: number, o: number) => {
+  const DownGrade = async (index: number, id: number) => {
     setUser((prevUsers) => {
       if (!prevUsers || index >= prevUsers.length - 1) return prevUsers; // 마지막 요소는 이동 불가
 
@@ -87,7 +87,7 @@ const PostModal: React.FC<ModalProps> = ({ onClose, la, pk = 0 }) => {
     });
 
     await workchangeorder({
-      "pk": user_no!!.id,
+      "pk": Number(user_no?.id),
       "work_id": id,
       "direction": "down",
     });
@@ -191,7 +191,7 @@ const PostModal: React.FC<ModalProps> = ({ onClose, la, pk = 0 }) => {
                           width={22}
                           height={22}
                           style={{ rotate: index === 0 ? "0deg" : "180deg" }}
-                          onClick={() => index > 0 && UpGrade(index, user?.id, user?.user.id)}
+                          onClick={() => index > 0 && UpGrade(index, user?.id)}
                         />
                         <Image
                           aria-hidden
@@ -204,7 +204,7 @@ const PostModal: React.FC<ModalProps> = ({ onClose, la, pk = 0 }) => {
                           width={22}
                           height={22}
                           style={{ rotate: index + 1 === max ? "180deg" : "0deg", marginLeft: "5px" }}
-                          onClick={() => index + 1 < max && DownGrade(index, user?.id, user?.user.id)} // 마지막 요소가 아닐 때만 실행
+                          onClick={() => index + 1 < max && DownGrade(index, user?.id,)} // 마지막 요소가 아닐 때만 실행
                         />
                       </div>
                       <div style={{ width: "60px" }} className={styles.contentinner}

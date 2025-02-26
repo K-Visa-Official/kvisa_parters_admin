@@ -113,10 +113,7 @@ export default function UserPost({ onClose, pk }: UserPostProps) {
             formData.append("bu_logo", file);
         }
 
-        for (let [key, value] of formData.entries()) {
-                console.log(key, value);
-            }
-
+      
         const result_edit = await UserEdit(formData , Number(pk));
             
         if (result_edit && result_edit.message) {
