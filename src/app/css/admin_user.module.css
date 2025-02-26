@@ -63,11 +63,13 @@
     padding-left: 30px;
     gap: 10px;
 }
+
 .inputboxpost::placeholder {
     color: #bcbdc4;
     font-size: 14px;
     font-weight: 500;
 }
+
 .inputbox::placeholder {
     font-size: 12px;
     font-weight: 500;
@@ -137,4 +139,15 @@
     color: #84848f;
 }
 
-
+.tooltoplist {
+    width: 174px;
+    height: 50px;
+    padding: 17px 0 0 15px;
+    font-size: 14px;
+    font-weight: 500;
+    color: black;
+    border-radius: 5px;
+}
+.tooltoplist:hover{
+    background: rgba(0, 0, 0, 0.1);
+}

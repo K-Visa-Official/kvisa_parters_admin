@@ -10,10 +10,10 @@ import Paging from "../Common/Paging";
 
 interface ModalProps {
     search?: boolean;
-  }
+}
 
 const UserListtotla: React.FC<ModalProps> = ({ search }) => {
-    const { title, created_at , page , setPage } = useAdminStore(); 
+    const { title, created_at, page, setPage } = useAdminStore();
     const [users, setUsers] = useState<UserList[]>([]); // 유저 데이터 상태
     const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태
     const [error, setError] = useState<string | null>(null); // 에러 상태
@@ -21,7 +21,7 @@ const UserListtotla: React.FC<ModalProps> = ({ search }) => {
     const [modal, setModal] = useState<boolean>(false); // 로딩 상태
     const [pk, setPk] = useState<number>(0); // 로딩 상태
     const [maxpage, setMaxPage] = useState<number>(1); // 로딩 상태
-
+    const [tooltipIndex, setTooltipIndex] = useState<number | null>(null)
 
     const list = ["순번", "가입일", "회사/업체명", "업체 소개문구", "담당자", "계정정보", "입금계좌", "중국어 업무", "한국어 업무",
         // "접수 현황", "a"
@@ -30,13 +30,13 @@ const UserListtotla: React.FC<ModalProps> = ({ search }) => {
     useEffect(() => {
         async function fetchUsers() {
             try {
-                const data: AllUserResponse = await alluserApi(title, created_at ,page); // 파라미터 값은 실제로 적절하게 설정
+                const data: AllUserResponse = await alluserApi(title, created_at, page); // 파라미터 값은 실제로 적절하게 설정
                 setUsers(data.results); // 받은 데이터로 상태 업데이트
                 setIsLoading(false);
                 setMaxPage(data.count)
 
                 // router.push('/CRM')
-            } 
+            }
             catch (e) {
                 console.log(e)
                 setError("유저 목록을 불러오는 데 실패했습니다.");
@@ -45,7 +45,7 @@ const UserListtotla: React.FC<ModalProps> = ({ search }) => {
         }
 
         fetchUsers();
-    }, [modal,search]);
+    }, [modal, search]);
 
     if (isLoading) {
         return <p>로딩 중...</p>;
@@ -56,26 +56,26 @@ const UserListtotla: React.FC<ModalProps> = ({ search }) => {
     }
 
     const PageNeControl = async () => {
-        if(page === Math.floor(10/maxpage)){
+        if (page === Math.floor(10 / maxpage)) {
         }
-        else{
+        else {
             setPage(page + 1)
         }
     }
 
     const PageControl = (selectedPage: number) => {
         setPage(selectedPage);
-      };
-    
+    };
+
     const PageBeControl = async () => {
         // setPage(page + 1)
-        if(page === 1){
-            
+        if (page === 1) {
+
         }
-        else{
-            setPage(page-1)
+        else {
+            setPage(page - 1)
         }
-        
+
     }
 
     return (
@@ -86,7 +86,8 @@ const UserListtotla: React.FC<ModalProps> = ({ search }) => {
                     style={{ background: "white", border: "1px solid #1c68ff" }}
                     onClick={() => (
                         setLanguage("post"),
-                        setModal(true)
+                        setModal(true),
+                        setPk(0)
                     )}
                 >업체 리스트 추가</button>
             </div>
@@ -218,14 +219,14 @@ const UserListtotla: React.FC<ModalProps> = ({ search }) => {
                             <span style={{ textDecoration: "underline" }}>{user.work_count_ch}</span>
                         </div>
                         <button className={styles.btn} style={{ background: "black", border: "none" }}
-                           onClick={() => {
-                            const currentUrl = window.location.href; // 현재 페이지 URL 가져오기
-                            navigator.clipboard.writeText(currentUrl + 'Member?&member=' + user.id + '&language=1') // 클립보드에 복사
-                                .then(() => alert("링크가 복사되었습니다!")) // 성공 시 알림
-                                .catch(err => console.error("링크 복사 실패:", err));
-                            // console.log(currentUrl + 'Member?&member=' + user.id + '&language=0')
+                            onClick={() => {
+                                const currentUrl = window.location.href; // 현재 페이지 URL 가져오기
+                                navigator.clipboard.writeText(currentUrl + 'Member?&member=' + user.id + '&language=1') // 클립보드에 복사
+                                    .then(() => alert("링크가 복사되었습니다!")) // 성공 시 알림
+                                    .catch(err => console.error("링크 복사 실패:", err));
+                                // console.log(currentUrl + 'Member?&member=' + user.id + '&language=0')
 
-                        }}>링크복사</button>
+                            }}>링크복사</button>
                     </div>
                     <div style={{ width: "140px", display: "flex", justifyContent: "center", alignItems: "center" }}>
                         <div style={{ height: "16px", borderBottom: "1px solid black", marginRight: "16px", cursor: "pointer" }}
@@ -238,13 +239,13 @@ const UserListtotla: React.FC<ModalProps> = ({ search }) => {
                             <span style={{ textDecoration: "underline" }}>{user.work_count}</span>
                         </div>
                         <button className={styles.btn} style={{ background: "black", border: "none" }}
-                        onClick={() => {
-                            const currentUrl = window.location.href; // 현재 페이지 URL 가져오기
-                            navigator.clipboard.writeText(currentUrl + 'Member?&member=' + user.id + '&language=0') // 클립보드에 복사
-                                .then(() => alert("링크가 복사되었습니다!")) // 성공 시 알림
-                                .catch(err => console.error("링크 복사 실패:", err));
+                            onClick={() => {
+                                const currentUrl = window.location.href; // 현재 페이지 URL 가져오기
+                                navigator.clipboard.writeText(currentUrl + 'Member?&member=' + user.id + '&language=0') // 클립보드에 복사
+                                    .then(() => alert("링크가 복사되었습니다!")) // 성공 시 알림
+                                    .catch(err => console.error("링크 복사 실패:", err));
 
-                        }}>링크복사</button>
+                            }}>링크복사</button>
                     </div>
 
                     <div style={{ width: "90px", display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -253,7 +254,17 @@ const UserListtotla: React.FC<ModalProps> = ({ search }) => {
                         </div>
                     </div>
 
-                    <div style={{ width: "60px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <div
+                        style={{
+                            width: "60px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            position: "relative", // 툴팁 위치를 위한 상대 위치 설정
+                            cursor: "pointer"
+                        }}
+                        onClick={() => setTooltipIndex(tooltipIndex === index ? null : index)} // 클릭 시 툴팁 열기/닫기
+                    >
                         <Image
                             aria-hidden
                             src="/admin/etc.png"
@@ -261,12 +272,40 @@ const UserListtotla: React.FC<ModalProps> = ({ search }) => {
                             width={20}
                             height={20}
                         />
+
+                        {tooltipIndex === index && (
+                            <div
+                                style={{
+                                    position: "absolute",
+                                    top: "35px", transform: "translateX(-50%)",
+                                    background: "#fff", color: "#000",
+                                    borderRadius: "5px", border: "solid 1px #ebecf1",
+                                    fontSize: "14px", whiteSpace: "nowrap", width: "174px", height: "100px",
+                                    boxShadow: "0 5px 20px 0 rgba(0, 0, 0, 0.05)", zIndex: 2
+                                }}
+                            >
+                                <div className={styles.tooltoplist}
+                                    onClick={() => (
+                                        setLanguage("post"),
+                                        setModal(true),
+                                        setPk(user.id)
+                                    )}>
+                                    정보 수정하기
+                                </div>
+
+                                <div className={styles.tooltoplist}>
+                                    삭제하기 (관리자 문의)
+                                </div>
+
+                            </div>
+                        )}
                     </div>
+
                 </div>
             ))}
 
             <Paging w={Math.ceil(maxpage / 10)} onClick={PageNeControl} before={PageBeControl} choice={PageControl} />
-            
+
             {modal ?
                 <PostModal la={language} pk={pk} onClose={() => setModal(false)} /> :
                 <></>

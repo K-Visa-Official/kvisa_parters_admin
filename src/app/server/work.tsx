@@ -1,7 +1,7 @@
 const baseurl = process.env.NEXT_PUBLIC_SERVICE_VISA_URL; 
 import useAuthStore from "../store/user";
 // import {  AllUserResponse , UserList , WorkPost} from "../type/user";
-import { Question_Post,WorkResponse , Question , CRM_res   } from "../type/user";
+import { Question_Post,WorkResponse , Question , CRM_res , Order_Change  } from "../type/user";
 
 interface tel_change {
   id: string | null;
@@ -262,3 +262,108 @@ export async function get_crm(a:string): Promise<CRM_res[]> {
   }
 }
 
+// 업무 순서 변경
+export async function workchangeorder(payload: Order_Change) {
+  try {
+    const token = localStorage.getItem("token");
+
+    // 토큰이 없을 경우 에러 처리
+    if (!token) {
+      throw new Error("Authorization token is missing");
+    }
+
+    const response = await fetch(baseurl + "/api/admin/work/order", {
+      method: "PATCH",
+      headers: { 
+        "Authorization": "Bearer " + token, // Bearer token 추가
+        "Content-Type": "application/json", // JSON 형식으로 보내기 위한 헤더 추가
+      },
+      body: JSON.stringify(payload), // payload를 JSON으로 변환하여 전송
+    });
+
+    // 응답 상태가 200 OK가 아닐 경우 예외 처리
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "수정 실패");
+    }
+
+    // 성공 시 JSON 데이터 반환
+    return await response.json();
+    
+  } catch (error) {
+    console.error("Error during registration:", error);
+    throw error;
+  }
+}
+
+// 업무 삭제
+export async function workdelete(a:number) {
+  try {
+    const token = localStorage.getItem("token");
+
+    // 토큰이 없을 경우 에러 처리
+    if (!token) {
+      throw new Error("Authorization token is missing");
+    }
+
+    const response = await fetch(baseurl + "/api/admin/work/delete/" + a + "/", {
+      method: "DELETE",
+      headers: { 
+        "Authorization": "Bearer " + token, // Bearer token 추가
+        // "Content-Type": "application/json", // JSON 형식으로 보내기 위한 헤더 추가
+      },
+      // body: JSON.stringify(payload), // payload를 JSON으로 변환하여 전송
+    });
+
+    // 응답 상태가 200 OK가 아닐 경우 예외 처리
+    if (!response.ok) {
+      throw new Error(`Failed to delete work with id ${a}`);
+      }
+
+      // 응답이 비어있지 않은 경우에만 JSON 파싱
+      const responseData = await response.text();  // 먼저 텍스트로 받아본다
+      const parsedData = responseData ? JSON.parse(responseData) : {};  // 응답이 비어있지 않으면 JSON으로 변환
+
+      console.log('Deleted work:', parsedData);
+
+      return parsedData;  // 삭
+    
+  } catch (error) {
+    console.error("Error during registration:", error);
+    throw error;
+  }
+}
+
+export async function workchangenoimage(formData: FormData) {
+  try {
+    const token = localStorage.getItem("token");
+
+    // 토큰이 없을 경우 에러 처리
+    if (!token) {
+      throw new Error("Authorization token is missing");
+    }
+
+    const response = await fetch(baseurl + "/api/admin/work/change/no", {
+      method: "PATCH",
+      headers: { 
+        "Authorization": "Bearer " + token, // Bearer token 추가
+        
+        // "Content-Type": "application/json", // JSON 형식으로 보내기 위한 헤더 추가
+      },
+      body: formData, // payload를 JSON으로 변환하여 전송
+    });
+
+    // 응답 상태가 200 OK가 아닐 경우 예외 처리
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "회원가입 실패");
+    }
+
+    // 성공 시 JSON 데이터 반환
+    return await response.json();
+    
+  } catch (error) {
+    console.error("Error during registration:", error);
+    throw error;
+  }
+}

@@ -2,18 +2,20 @@
 
 import styles from "@/app/css/modal.module.css";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { registerUser } from "@/app/server/admin_user";
 import FilterInputBox from "../Common/FilterInputBox";
 import Modal from "../Common/Modal";
+import { getUser, UserEdit } from "@/app/server/admin_user";
+import { UserList } from "@/app/type/user";
 
 
 interface UserPostProps {
     onClose: () => void;
-    // n?: number;
+    pk?: number;
 }
 
-export default function UserPost({ onClose }: UserPostProps) {
+export default function UserPost({ onClose, pk }: UserPostProps) {
     const [email, setEmail] = useState<string | null>(null);
     const [password, setPassword] = useState<string | null>(null);
     const [company, setCompany] = useState<string | null>(null);
@@ -26,6 +28,9 @@ export default function UserPost({ onClose }: UserPostProps) {
     const [banktel, setBankTel] = useState<string | null>(null);
     const [file, setFile] = useState<File | null>(null);
     const [modalactive, setModalActive] = useState<boolean | false>(false); // 로딩 상태
+    const [logo, setLogo] = useState<string | null>(null);
+
+    const [user_edit, setUserEdit] = useState<UserList>();
 
     // 파일 선택 핸들러
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,7 +74,7 @@ export default function UserPost({ onClose }: UserPostProps) {
             // for (let [key, value] of formData.entries()) {
             //     console.log(key, value);
             // }
-            
+
             const result = await registerUser(formData);
 
             if (result && result.message) {
@@ -82,13 +87,85 @@ export default function UserPost({ onClose }: UserPostProps) {
         }
     }
 
+    async function EditUser() {
+        const userDB = {
+            bu_name: company,
+            bu_intro: intro,
+            bu_name_ch: company_ch,
+            bu_intro_ch: intro_ch,
+            bu_tel_first: tel,
+            bu_tel_name: name,
+            bu_bank_name: bank,
+            bu_bank_number: banktel,
+        };
+
+        const formData = new FormData();
+
+        // JSON 데이터를 FormData에 추가 (숫자는 문자열로 변환)
+        Object.keys(userDB).forEach((key) => {
+            const value = userDB[key as keyof typeof userDB];
+            if (value !== null && value !== undefined) {
+                formData.append(key, typeof value === "number" ? String(value) : value);
+            }
+        });
+
+        if (file) {
+            formData.append("bu_logo", file);
+        }
+
+        for (let [key, value] of formData.entries()) {
+                console.log(key, value);
+            }
+
+        const result_edit = await UserEdit(formData , Number(pk));
+            
+        if (result_edit && result_edit.message) {
+            onClose();  // 모달 닫기
+        }
+    }
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const data_user = await getUser(Number(pk));
+                setUserEdit(data_user)
+                setEmail(data_user.email || "");
+                setPassword(data_user.password.slice(0, 15) || "");
+
+                setLogo(data_user.bu_logo)
+
+                setCompany(data_user.bu_name || "");
+                setIntro(data_user.bu_intro || "");
+                setCompany_ch(data_user.bu_name_ch || "");
+                setIntro_ch(data_user.bu_intro_ch || "");
+
+                setName(data_user.bu_tel_name || "");
+                setTel(data_user.bu_tel_first || "");
+
+                setBank(data_user.bu_bank_name || "");
+                setBankTel(data_user.bu_bank_number || "");
+
+            } catch (error) {
+                console.log(error)
+            }
+        };
+        if (pk !== 0) { // pk가 0이 아닌 경우에만 실행
+            fetchUser();
+        }
+
+    }, [pk]); // u)
+
+    // user_edit.email . password
+    // bu_logo . bu_name . bu_intro . bu_name_ch . bu_intro_ch
+    // bu_tel_name . bu_tel_first . bu_bank_name . bu_bank_name . bu_bank_number
+
     return (
         <>
             {modalactive && <Modal t={"회원가입에 실패하였습니다"} s={"정보를 확인해주세요"} c={"확인"} onClose={() => setModalActive(false)} />}
 
             <div className={styles.userpostbox}>
                 <div className={styles.modaltitle}>
-                    <span style={{ marginLeft: "30px" }}>업체등록</span>
+                    <span style={{ marginLeft: "30px" }}>{user_edit ? "업체수정" : "업체등록"}</span>
                     <Image
                         aria-hidden
                         src="/common/close.png"
@@ -101,17 +178,19 @@ export default function UserPost({ onClose }: UserPostProps) {
                 </div>
 
                 <div className={styles.contentox}>
-                    <p style={{ marginTop: "30px" }}> 회원가입 정보 입력</p>
+                    <p style={{ marginTop: "30px" }}> {user_edit ? "회원정보 수정" : "회원가입 정보 입력"}</p>
 
                     <p style={{ marginTop: "30px", color: "#84848f", fontSize: "13px" }}> 아이디</p>
 
-                    <FilterInputBox w={700} h={50} mt={10} bg={"#f5f6f9"} p={"아이디 입력"} v={email}
+                    <FilterInputBox w={700} h={50} mt={10} bg={"#f5f6f9"} p={"아이디 입력"}
+                        v={email} a={"no"}
                         onChange={(e) => setEmail(e.target.value)}
                     />
 
                     <p style={{ marginTop: "30px", color: "#84848f", fontSize: "13px" }}> 비밀번호</p>
 
-                    <FilterInputBox w={700} h={50} mt={10} bg={"#f5f6f9"} p={"비밀번호 입력"} v={password}
+                    <FilterInputBox w={700} h={50} mt={10} bg={"#f5f6f9"} p={"비밀번호 입력"}
+                        v={password} a={"no"}
                         type={"password"} src={"/admin/hidden_password.png"}
                         onChange={(e) => setPassword(e.target.value)}
                     />
@@ -162,18 +241,29 @@ export default function UserPost({ onClose }: UserPostProps) {
                                     height={100}
                                     style={{ borderRadius: "10px", objectFit: "cover" }}
                                 />
-                            ) : (
-                                <>
+                            ) :
+                                user_edit ? (
+                                    // 선택된 이미지 미리보기
                                     <Image
-                                        aria-hidden
-                                        src="/admin/user_image.png"
-                                        alt="logo"
-                                        width={34}
-                                        height={34}
+                                        src={String(logo)}
+                                        alt="Uploaded"
+                                        width={100}
+                                        height={100}
+                                        style={{ borderRadius: "10px", objectFit: "cover" }}
                                     />
-                                    <p style={{ marginTop: "5px" }}>로고 등록</p>
-                                </>
-                            )}
+                                ) :
+                                    (
+                                        <>
+                                            <Image
+                                                aria-hidden
+                                                src="/admin/user_image.png"
+                                                alt="logo"
+                                                width={34}
+                                                height={34}
+                                            />
+                                            <p style={{ marginTop: "5px" }}>로고 등록</p>
+                                        </>
+                                    )}
 
                             {/* 숨겨진 파일 업로드 input */}
                             <input
@@ -217,7 +307,7 @@ export default function UserPost({ onClose }: UserPostProps) {
 
                     <div className={styles.conti}>
                         <div className={styles.contititle}>
-                            회사/업체명<br/>(중국어)
+                            회사/업체명<br />(중국어)
                         </div>
                         <FilterInputBox w={620} h={50} mt={0} bg={"#f5f6f9"} p={"업체명 입력"} v={company_ch}
                             onChange={(e) => setCompany_ch(e.target.value)}
@@ -226,7 +316,7 @@ export default function UserPost({ onClose }: UserPostProps) {
 
                     <div className={styles.conti}>
                         <div className={styles.contititle} >
-                            업체소개 문구<br/>(중국어)
+                            업체소개 문구<br />(중국어)
                         </div>
                         <FilterInputBox w={620} h={50} mt={0} bg={"#f5f6f9"} p={"업체소개를 적어주세요"} v={intro_ch}
                             onChange={(e) => setIntro_ch(e.target.value)}
@@ -277,8 +367,10 @@ export default function UserPost({ onClose }: UserPostProps) {
                         <div style={{
                             width: "350px", height: "100%", borderRadius: "5px", background: "linear-gradient(to right, #1c68ff, #053cf0)",
                             display: "flex", justifyContent: "center", alignItems: "center", fontSize: "15px", color: "white"
-                        }} onClick={() => handleRegister()}>
-                            업체 등록하기
+                        }}
+                            onClick={() =>
+                                user_edit ? EditUser() : handleRegister()}>
+                            {user_edit ? "수정하기" : "업체 등록하기"}
                         </div>
                     </div>
 

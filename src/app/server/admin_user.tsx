@@ -93,3 +93,25 @@ export async function registerUser(formData: FormData) {
       throw error;
   }
 }
+
+// 회원정보 수정
+export async function UserEdit(formData: FormData , a:number) {
+  try {
+      const response = await fetch(baseurl + "/api/user/edit/" + a, {
+          method: "PUT",
+          headers: { 
+            // "Content-Type": "application/json" ,
+            "Authorization": "Bearer " + localStorage.getItem("token")
+          }, // JSON 형식으로 전송
+          body: formData, // 데이터를 JSON 문자열로 변환
+      });
+
+      if (!response.ok) {
+          throw new Error("회원가입 실패");
+      }
+
+      return await response.json();
+  } catch (error) {
+      throw error;
+  }
+}

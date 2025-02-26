@@ -134,7 +134,7 @@ function Progress() {
     return (
         <>
             {ac ?
-                <Modal web={"wed"} setAc={setAc}/>
+                <Modal web={"wed"} setAc={setAc} />
                 :
 
                 <Suspense fallback={<div>Loading...</div>}>
@@ -216,36 +216,49 @@ function Progress() {
                             }}
                         >
                             <div className={styles.innerbox}>
-                                
-                                <MoHeader setAc={setAc} />
 
-                                <div style={{ width: "100%", height: "117px", display: "flex", flexDirection: "column", background: " #f0f5ff" }}>
-                                    <p style={{ marginTop: "18px", fontSize: "20px", fontWeight: "bold", marginLeft: "15px", color: "black", }}>{workdetail[0]?.choice}</p>
-                                    <div style={{ display: "flex", justifyContent: "space-between", flexDirection: "row", marginTop: "10px", marginLeft: "15px" }}>
-                                        <p style={{ fontSize: "13px", color: "#33405a" }}>
-                                            {parm.get("language") === "0" ? Korean.safety : Ch?.safety}
+                                <div style={{
+                                        position: "fixed",
+                                        top: 0,  // 상단에 고정
+                                        zIndex: 10, // 상위 요소가 덮어쓰지 않도록 zIndex를 높여줌
+                                        background: "#f0f5ff", // 배경색
+                                    }}
+                                >
+                                    <MoHeader setAc={setAc} />
 
+                                    <div style={{ width: "100%", height: "117px", display: "flex", flexDirection: "column", background: "#f0f5ff" }}>
+                                        <p style={{ marginTop: "18px", fontSize: "20px", fontWeight: "bold", marginLeft: "15px", color: "black" }}>
+                                            {workdetail[0]?.choice}
                                         </p>
-                                        <p style={{ color: "black", marginRight: "15px", fontSize: "18px", fontWeight: "bold" }}>
-                                            {Math.floor((finalData.filter(a => a.answer != "").length / finalData.length) * 100)}%</p>
-                                    </div>
-
-                                    <div style={{ width: "345px", height: "5px", margin: "15px", display: "flex", flexDirection: "row", borderRadius: "20px" }}>
-                                        <div style={{
-                                            width: (finalData.filter(a => a.answer != "").length / finalData.length) * 100 + "%", height: "100%",
-                                            background: "#1c68ff", borderRadius: "10px"
-                                        }}>
-
+                                        <div style={{ display: "flex", justifyContent: "space-between", flexDirection: "row", marginTop: "10px", marginLeft: "15px" }}>
+                                            <p style={{ fontSize: "13px", color: "#33405a" }}>
+                                                {parm.get("language") === "0" ? Korean.safety : Ch?.safety}
+                                            </p>
+                                            <p style={{ color: "black", marginRight: "15px", fontSize: "18px", fontWeight: "bold" }}>
+                                                {Math.floor((finalData.filter(a => a.answer != "").length / finalData.length) * 100)}%
+                                            </p>
                                         </div>
-                                        <div style={{ width: (finalData.filter(a => a.answer === "").length / finalData.length) * 100 + "%", height: "100%", background: "white" }}>
 
+                                        <div style={{ width: "345px", height: "5px", margin: "15px", display: "flex", flexDirection: "row", borderRadius: "20px" }}>
+                                            <div style={{
+                                                width: (finalData.filter(a => a.answer != "").length / finalData.length) * 100 + "%",
+                                                height: "100%",
+                                                background: "#1c68ff",
+                                                borderRadius: "10px"
+                                            }}></div>
+                                            <div style={{
+                                                width: (finalData.filter(a => a.answer === "").length / finalData.length) * 100 + "%",
+                                                height: "100%",
+                                                background: "white"
+                                            }}></div>
                                         </div>
                                     </div>
-
                                 </div>
 
+
                                 {work.map((user, index) => (
-                                    <div key={user.id} className={styles.qubox}>
+                                    <div key={user.id} className={styles.qubox}
+                                        style={{ marginTop: index === 0 ? "180px" : ""}}>
                                         <p className={styles.qutitle}>
                                             {user.answer_type === 0 ? "단일선택" :
                                                 user.answer_type === 1 ? "복수선택" :

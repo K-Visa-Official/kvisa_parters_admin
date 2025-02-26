@@ -99,6 +99,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .contentlist {
@@ -469,4 +470,17 @@
     border-radius: 5px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 10; /* 다른 요소 위에 표시 */
+}
+
+.tooltoplist {
+    width: 174px;
+    height: 50px;
+    padding: 17px 0 0 15px;
+    font-size: 14px;
+    font-weight: 500;
+    color: black;
+    border-radius: 5px;
+}
+.tooltoplist:hover{
+    background: rgba(0, 0, 0, 0.1);
 }

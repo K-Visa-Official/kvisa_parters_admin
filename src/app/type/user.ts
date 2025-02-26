@@ -36,17 +36,20 @@ export interface WorkResponse {
   detail_second: string;
   order: number;
   bu_logo?: string;
+  question?:Question[];
 }
 
 export interface Answer {
   answer: string;
-  sort: number;
+  sort?: number;
+  answer_count?:number;
 }
 
 export interface Question {
   question: string;
   answer_type: number;  // 0: 단일선택, 1: 복수선택, 2: 단문형, 3: 장문형
   answers: Answer[];
+  isExpanded?: boolean; 
 }
 
 export interface WorkPost {
@@ -92,4 +95,11 @@ export interface CRM_res {
   state:number
   created_at: string;
   lang: string;
+}
+
+
+export interface Order_Change {
+  pk: number;
+  work_id: number;
+  direction: string;
 }

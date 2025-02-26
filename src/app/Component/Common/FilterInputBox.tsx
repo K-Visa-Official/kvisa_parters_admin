@@ -13,12 +13,13 @@ interface FilterInputBoxProps {
     type?: string;
     bg?: string;
     src?: string;
+    a?: string;
     v?: string | null;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function FilterInputBox({
-    w, h, mt = 50, p, type, v, bg, src = "", onChange }: FilterInputBoxProps) {
+    w, h, mt = 50, p, type, v, bg, a , src = "", onChange }: FilterInputBoxProps) {
 
         const [inputType, setInputType] = useState(type);
         const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,8 +78,9 @@ export default function FilterInputBox({
                 }}
                 type={inputType}
                 placeholder={p}
-                value={v ?? ""}
+                value={v ?? ""}// "no"일 경우 빈값으로 처리
                 onChange={type === "tel" ? handlePhoneChange : onChange}
+                disabled={a === "no"} // v가 "no"일 경우 disabled
             >
             </input>
             {src === "/admin/hidden_password.png" ?

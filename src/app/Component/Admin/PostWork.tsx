@@ -2,23 +2,26 @@
 
 import styles from "@/app/css/modal.module.css";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FilterInputBox from "../Common/FilterInputBox";
 import Modal from "../Common/Modal";
 import { useRef } from "react";
-import { registerWork , workchangeimage} from "@/app/server/work";
-import { Korean , Ch } from "@/app/type/typedef";
+import { registerWork, workchangeimage, work_detail , workchangenoimage } from "@/app/server/work";
+import { Korean, Ch } from "@/app/type/typedef";
+import { WorkResponse } from "@/app/type/user";
 
 interface WorkPostProps {
     onClose: () => void;
     n?: number;
     la?: string;
-    max:number;
+    max: number;
+    work_id: number;
 }
 
 interface Answer {
     answer: string;
-    sort: number;
+    // sort: number;
+    answer_count?: number;
 }
 
 interface Question {
@@ -28,7 +31,7 @@ interface Question {
     isExpanded: boolean;
 }
 
-export default function PostWork({ onClose, n = 0, la , max }: WorkPostProps) {
+export default function PostWork({ onClose, n = 0, la, max, work_id }: WorkPostProps) {
     const [work, setWork] = useState<string | "업무를 선택해주세요">("업무를 선택해주세요");
     const [content, setContent] = useState<string | "">("");
     const [active, setActive] = useState<boolean>(false); // 로딩 상태
@@ -36,6 +39,11 @@ export default function PostWork({ onClose, n = 0, la , max }: WorkPostProps) {
     const [state, setState] = useState<number | 1>(1);
     const [alert, setAlert] = useState<boolean>(false); // 로딩 상태
     const [file_detail, setFile_Detail] = useState<File | null>(null);
+    const [workdetail, setWorkDetail] = useState<WorkResponse[]>();
+    const [first_img, setFirst_img] = useState<string | null>(null);
+    const [second_img, setSecond_img] = useState<string | null>(null);
+   
+
     // const [questionsac, setQuestionsac] = useState<boolean>(false); // 로딩 상태
     const [questions, setQuestions] = useState<Question[]>([
         {
@@ -45,6 +53,35 @@ export default function PostWork({ onClose, n = 0, la , max }: WorkPostProps) {
             isExpanded: false,  // 드롭다운 상태 추가
         },
     ]);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+
+                const data_detail = await work_detail(Number(work_id));
+
+                setWorkDetail(data_detail)
+                setWork(data_detail[0].choice)
+                setContent(data_detail[0].work_detail)
+                setFirst_img(String(data_detail[0].detail))
+                setSecond_img(String(data_detail[0].detail_second))
+                
+                const formattedQuestions = (data_detail[0]?.question ?? []).map(q => ({
+                    ...q,
+                    isExpanded: q.isExpanded ?? false,
+                }));
+
+                setQuestions(formattedQuestions);
+                // setQuestions(data_detail[0].)
+
+            } catch (error) {
+                console.log(error)
+            }
+        };
+        if (work_id !== 0) { // pk가 0이 아닌 경우에만 실행
+            fetchUser();
+        }
+    }, [work_id]);
 
     // 1번째 상세이미지
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,7 +136,7 @@ export default function PostWork({ onClose, n = 0, la , max }: WorkPostProps) {
         const updatedQuestions = [...questions];
         updatedQuestions[qIndex].answers.push({
             answer: "",
-            sort: updatedQuestions[qIndex].answers.length + 1,
+            answer_count: updatedQuestions[qIndex].answers.length + 1,
         });
         setQuestions(updatedQuestions);
     };
@@ -126,21 +163,33 @@ export default function PostWork({ onClose, n = 0, la , max }: WorkPostProps) {
         setQuestions(updatedQuestions);
     };
 
-    const NextStep = async () => { 
+   
+
+    const NextStep = async () => {
         if (state === 1) {
-            if (work === "업무를 선택해주세요" || content === "" || file === null) {
-                setAlert(true)
-            }
-            else {
+            if(workdetail){
                 setState(2)
+            }
+            else{
+                if (work === "업무를 선택해주세요" || content === "" || file === null) {
+                    setAlert(true)
+                }
+                else {
+                    setState(2)
+                }    
             }
         }
         else if (state === 2) {
-            if (file_detail === null) {
-                setAlert(true)
-            }
-            else {
+            if(workdetail){
                 setState(3)
+            }
+            else{
+                if (file_detail === null) {
+                    setAlert(true)
+                }
+                else {
+                    setState(3)
+                }
             }
         }
         else if (state === 3) {
@@ -150,49 +199,91 @@ export default function PostWork({ onClose, n = 0, la , max }: WorkPostProps) {
                 language: la === "ko" ? 0 : 1, // 언어 코드
                 choice: work, // 선택된 업무
                 work_detail: content, // 업무에 대한 상세 설명
-                order: max + 1, // 답변 타입
+                order: workdetail ? workdetail[0].order : max + 1, // 답변 타입
                 questions: questions.map((question) => ({
                     question: question.question, // 질문 텍스트
                     answer_type: question.answer_type, // 답변 타입
                     answers: question.answer_type === 2 || question.answer_type === 3 ?
-                    [{ answer: "입력형", sort: 0 }] :
-                    question.answers.map((answer) => ({
-                        answer: answer.answer, // 답변 내용
-                        sort: answer.sort, // 답변 순서
-                    })),
+                        [{ answer: "입력형", answer_count: 0 }] :
+                        question.answers.map((answer) => ({
+                            answer: answer.answer, // 답변 내용
+                            answer_count: answer.answer_count, // 답변 순서
+                        })),
                 })),
             };
             // console.log(transformedData)
             try {
-                // 업무 등록 요청
-                const response = await registerWork(transformedData);
-               
-                if (response?.id) {
-                    const formData = new FormData();
-                    formData.append("id", response.id);
-                    if (file) {
-                        formData.append("detail_url", file);
-                    }
-                    if (file_detail) {
-                        formData.append("detail_second", file_detail); // 오타 수정
-                    }
-                    // for (let [key, value] of formData.entries()) {
-                    //     console.log(key, value);
-                    // }
-                    // 파일 업로드 처리 
-                    await workchangeimage(formData);
-                 
-                    // if (result && result.message) {
+                // 업무 수정을 진행
+                if(workdetail){
+                    console.log(transformedData)
+                    console.log(workdetail[0])
+                    const response = await registerWork(transformedData);
+                    
+                    if (response?.id) {
 
-                    //     console.log(2)
+                        // workdelete(workdetail[0]?.id)
+
+                        const formData = new FormData();
+                        formData.append("new_id", response.id);
+                        formData.append("before_id", String(work_id));
+
+                        if (file) {
+                            formData.append("detail_url", file);
+                        }
+                       
+                        if (file_detail) {
+                            formData.append("detail_second", file_detail); // 오타 수정
+                        }
+                        
+
+                        // 파일 업로드 처리 
+                        const daat = await workchangenoimage(formData);
+
+                        // if (result && result.message) {
+
+                        //     console.log(2)
                         onClose() // 모달 닫기
-                    //     console.log("File upload successful");
-                    // } else {
-                    //     console.error("File upload failed", result);
-                    // }
-                } else {
-                    console.error("Response does not contain id");
+                        //     console.log("File upload successful");
+                        // } else {
+                        //     console.error("File upload failed", result);
+                        // }
+                    } else {
+                        console.error("Response does not contain id");
+                    }
+
                 }
+                // 업무 등록 요청
+                else{
+                    const response = await registerWork(transformedData);
+
+                    if (response?.id) {
+                        const formData = new FormData();
+                        formData.append("id", response.id);
+                        if (file) {
+                            formData.append("detail_url", file);
+                        }
+                        if (file_detail) {
+                            formData.append("detail_second", file_detail); // 오타 수정
+                        }
+                        // for (let [key, value] of formData.entries()) {
+                        //     console.log(key, value);
+                        // }
+                        // 파일 업로드 처리 
+                        await workchangeimage(formData);
+
+                        // if (result && result.message) {
+
+                        //     console.log(2)
+                        onClose() // 모달 닫기
+                        //     console.log("File upload successful");
+                        // } else {
+                        //     console.error("File upload failed", result);
+                        // }
+                    } else {
+                        console.error("Response does not contain id");
+                    }
+                }
+                
             } catch (error) {
                 console.error("Error during registration:", error);
                 // 실패 시 알림을 표시하지 않음
@@ -201,6 +292,8 @@ export default function PostWork({ onClose, n = 0, la , max }: WorkPostProps) {
         }
     }
 
+    console.log(workdetail)
+
     return (
         <>
             {alert && <Modal t={state === 1 ? "입력안된 정보가 있습니다" : "이미지를 확인해주세요"} s={state === 1 ? "빈칸을 확인해주세요" : ""} c={"확인"} onClose={() => setAlert(false)} />}
@@ -208,7 +301,7 @@ export default function PostWork({ onClose, n = 0, la , max }: WorkPostProps) {
                 <div className={styles.modaltitle}>
                     <span style={{ marginLeft: "30px" }}>
                         {state === 1 ?
-                            "B2B 업무등록" :
+                            workdetail ? "B2B 업무수정" : "B2B 업무등록" :
                             state === 2 ? "상세이미지" : "질문등록"
                         }
                     </span>
@@ -224,7 +317,7 @@ export default function PostWork({ onClose, n = 0, la , max }: WorkPostProps) {
                 </div>
                 {/* {modalactive && <Modal t={"회원가입에 실패하였습니다"} s={"정보를 확인해주세요"} c={"확인"} onClose={() => setModalActive(false)} />} */}
                 {state === 1 ?
-                    <div className={styles.postcontentbox} style={{ marginTop:"30px"}}>
+                    <div className={styles.postcontentbox} style={{ marginTop: "30px" }}>
 
                         <div className={styles.worktitle}>
                             <div className={styles.woti}>
@@ -265,7 +358,9 @@ export default function PostWork({ onClose, n = 0, la , max }: WorkPostProps) {
                                                 setWork(la === "ko" ? Korean.work_post_ko : Ch.work_post_ko)
                                             )}
                                         >
-                                            <p style={{ marginLeft: "15px" }}>{la === "ko" ? Korean.work_post_ko : Ch.work_post_ko}</p>
+                                            <p style={{ marginLeft: "15px" }}>
+                                                {la === "ko" ? Korean.work_post_ko : Ch.work_post_ko}
+                                            </p>
                                         </div>
                                         <div className={styles.woch}
                                             style={{ background: "white", borderTop: "solid 1px #ebecf1" }}
@@ -343,18 +438,32 @@ export default function PostWork({ onClose, n = 0, la , max }: WorkPostProps) {
                                     }}>
                                         <p className={styles.chph}>사진변경</p>
                                     </div>
-                                ) : (
-                                    <>
-                                        <Image
-                                            aria-hidden
-                                            src="/admin/user_image.png"
-                                            alt="logo"
-                                            width={34}
-                                            height={34}
-                                        />
-                                        <p style={{ marginTop: "5px" }}>썸네일 이미지 등록</p>
-                                    </>
-                                )}
+                                ) :
+                                workdetail ? (
+                                        // 선택된 이미지 미리보기
+                                        <>
+                                            <Image
+                                                aria-hidden
+                                                src={String(first_img)}
+                                                alt="logo"
+                                                width={300}
+                                                height={145}
+                                            />
+                                        </>
+                                        
+                                    ) :
+                                        (
+                                            <>
+                                                <Image
+                                                    aria-hidden
+                                                    src="/admin/user_image.png"
+                                                    alt="logo"
+                                                    width={34}
+                                                    height={34}
+                                                />
+                                                <p style={{ marginTop: "5px" }}>썸네일 이미지 등록</p>
+                                            </>
+                                        )}
 
                                 {/* 숨겨진 파일 업로드 input */}
                                 <input
@@ -453,6 +562,19 @@ export default function PostWork({ onClose, n = 0, la , max }: WorkPostProps) {
                                         <p className={styles.chph}>사진변경</p>
                                     </div>
                                     :
+                                    workdetail ? (
+                                        // 선택된 이미지 미리보기
+                                        <>
+                                            <Image
+                                                aria-hidden
+                                                src={String(second_img)}
+                                                alt="logo"
+                                                width={780}
+                                                height={710}
+                                            />
+                                        </>
+                                        
+                                    ) :
                                     <></>
 
                                 }
@@ -519,9 +641,9 @@ export default function PostWork({ onClose, n = 0, la , max }: WorkPostProps) {
                                                                             updatedQuestions[qIndex].isExpanded = false;
                                                                             if (option.value === 2 || option.value === 3) {
                                                                                 updatedQuestions[qIndex].answers = [
-                                                                                  { answer: "", sort: 1 }  // 기본 답변 추가
+                                                                                    { answer: "", answer_count: 1 }  // 기본 답변 추가
                                                                                 ];
-                                                                              }
+                                                                            }
                                                                             setQuestions(updatedQuestions);
                                                                         }}
                                                                     >
@@ -533,10 +655,6 @@ export default function PostWork({ onClose, n = 0, la , max }: WorkPostProps) {
                                                 </div>
 
 
-                                                {/* 질문 삭제 */}
-                                                {/* <button onClick={() => removeQuestion(qIndex)}>삭제</button> */}
-
-
                                                 {/* 🛠 단문형이면 input 박스, 아니면 기존의 답변 리스트 */}
                                                 {question.answer_type === 2 ? (
                                                     <div style={{ marginTop: "20px", marginLeft: "30px", marginRight: "40px", display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
@@ -544,7 +662,7 @@ export default function PostWork({ onClose, n = 0, la , max }: WorkPostProps) {
                                                             value={question.answers[0]?.answer || ""}
                                                             placeholder="내용을 입력해주세요"
                                                             className={styles.quinput}
-                                                            style={{ background: "#f5f6f9", height: "50px" , padding:20 }}
+                                                            style={{ background: "#f5f6f9", height: "50px", padding: 20 }}
                                                             onChange={(e) => updateAnswer(qIndex, 0, e.target.value)}
                                                         />
                                                     </div>
@@ -554,7 +672,7 @@ export default function PostWork({ onClose, n = 0, la , max }: WorkPostProps) {
                                                             value={question.answers[0]?.answer || ""}
                                                             placeholder="내용을 입력해주세요"
                                                             className={styles.quinput}
-                                                            style={{ background: "#f5f6f9", height: "100px", resize: "none" ,padding:20 }}
+                                                            style={{ background: "#f5f6f9", height: "100px", resize: "none", padding: 20 }}
                                                             onChange={(e) => updateAnswer(qIndex, 0, e.target.value)}
                                                         />
                                                     </div>
