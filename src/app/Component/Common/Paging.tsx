@@ -2,7 +2,7 @@
 import Image from "next/image";
 import BusinessStore from "@/app/store/business_store";
 import useAdminStore from "@/app/store/adminuser";
-import { useSearchParams , usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 interface PagingProps {
     w: number;
