@@ -4,7 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-const ko = () => {
+const KoPage = () => {
     const router = useRouter()
 
     useEffect(() => {
@@ -18,4 +18,4 @@ const ko = () => {
     );
 };
 
-export default ko;
+export default KoPage;

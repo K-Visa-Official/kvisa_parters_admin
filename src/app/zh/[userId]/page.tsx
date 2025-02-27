@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 
 
-const ko = () => {
+const ZhPage = () => {
     const router = useRouter()
 
     useEffect(() => {
@@ -20,4 +20,4 @@ const ko = () => {
     );
 };
 
-export default ko;
+export default ZhPage;
