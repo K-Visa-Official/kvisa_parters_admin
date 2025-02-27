@@ -29,10 +29,12 @@ const MoHeader: React.FC<MoHeaderProps> = ({ state = 0, setState, setAc }) => {
                 }
             }
         }
-        
-        if (setAc) {
-            setAc(true)
+        else{
+            if (setAc) {
+                setAc(true)
+            }
         }
+        
         //   else if (path === '/Progress'){
         //     if (setAc) {
         //         setAc(true)
