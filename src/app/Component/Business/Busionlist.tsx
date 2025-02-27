@@ -15,7 +15,7 @@ interface ModalProps {
 const Busionlist: React.FC<ModalProps> = ({ search }) => {
 
     const {
-        title_bu, created_at_bu, state,
+        title_bu, created_at_bu,
         page_bu,
         // seTitle_bu, setCreate_bu, setState , 
         setPage_bu } = BusinessStore();

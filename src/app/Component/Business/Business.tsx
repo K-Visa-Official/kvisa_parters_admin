@@ -10,7 +10,7 @@ import Busionlist from "./Busionlist";
 
 export default function Business() {
 
-    const { title_bu, created_at_bu, state, seTitle_bu, setCreate_bu, setState } = BusinessStore();
+    const { title_bu, created_at_bu, seTitle_bu, setCreate_bu } = BusinessStore();
     const [search, setSearch] = useState<boolean>(false); // 로딩 상태
     const [kind, setKind] = useState<string>(Busioness.total);
 
