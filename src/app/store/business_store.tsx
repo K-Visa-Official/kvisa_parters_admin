@@ -1,6 +1,5 @@
 "use client";
 import { create } from "zustand";
-import { alluserApi } from "../server/admin_user";
 
 
 interface BusinessFilter {
@@ -14,7 +13,9 @@ interface BusinessFilter {
   setState: (state: number) => void;
 }
 
-const BusinessStore = create<BusinessFilter>((set, get) => ({
+const BusinessStore = create<BusinessFilter>((set, 
+    // get
+) => ({
 
   title_bu: "",
   created_at_bu: "",
