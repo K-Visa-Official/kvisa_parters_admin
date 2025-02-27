@@ -17,7 +17,7 @@ export default function Paging({
     const pages = Array.from({ length: w }, (_, index) => index + 1);
     const { page_bu } = BusinessStore();
     const { page } = useAdminStore();
-    const parm = useSearchParams()
+    // const parm = useSearchParams()
     const pathname = usePathname()
 
     // console.log(pathname)
