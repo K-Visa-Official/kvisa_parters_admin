@@ -61,7 +61,7 @@ const MoHeader: React.FC<MoHeaderProps> = ({ state = 0, setState, setAc }) => {
 
     return (
         <div className={styles.headerbox}>
-            {path === '/Member' ?
+            {path === '/Member' || state === 1 ?
                 <></>
                 :
                 <Image aria-hidden src="/member/back.png" alt="뒤로가기" width={30} height={30} onClick={handleCloseWebView} style={{ cursor: "pointer" }} />
@@ -70,7 +70,7 @@ const MoHeader: React.FC<MoHeaderProps> = ({ state = 0, setState, setAc }) => {
                 <Image aria-hidden src="/common/KPJB.png" alt="로고" width={250} height={30} />
             </div>
             {
-                path === '/Member' ?
+                path === '/Member' || state === 1 ?
                     <Image
                         aria-hidden
                         src="/common/close.png"
