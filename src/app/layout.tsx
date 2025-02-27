@@ -15,8 +15,8 @@ import Header from "./Component/Common/Login_Header";
 // });
 
 export const metadata: Metadata = {
-  title: "K-visa Biz Solution",
-  description: "K-visa Biz Solution",
+  title: "K-visa Partner",
+  description: "K-visa Partner",
 };
 
 
@@ -27,7 +27,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      
+      <body style={{ touchAction:"manipulation"}}>
         <Header/>
         {children}
         {/* Footer */}

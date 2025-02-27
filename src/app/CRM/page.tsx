@@ -28,7 +28,7 @@ function CRM() {
     const [ac, setAc] = useState<boolean | false>(false);
 
     const arra = ["접수완료", "계약완료", "서류작성", "심사진행", "처리완료", "상담종료"]
-
+    const userId = parm.get("userId");
     // 타이머 관련 useEffect
     useEffect(() => {
         let interval: NodeJS.Timeout;
@@ -50,8 +50,9 @@ function CRM() {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const data = await get_crm(workNumber);  // 유저 데이터 가져오기
+                const data = userId ? await get_crm(undefined, userId) : await get_crm(workNumber);
                 setLi(data);
+                
             } catch (error) {
                 console.error("유저 데이터를 불러오는 중 오류 발생:", error);
             }
@@ -59,6 +60,11 @@ function CRM() {
         fetchUser();
     }, [state]);
 
+    useEffect(() => {
+        if(userId){
+            setState(2)
+        }
+    }, [userId]);
 
     const sendMessage = () => {
         if (workNumber === "") {

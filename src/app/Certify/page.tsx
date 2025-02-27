@@ -93,7 +93,7 @@ function Certify() {
         const finalData = {
             id: parm.get('user'),
             tel: tel,
-            name: name,
+            name: parm.get("userId") === null ? name : parm.get("userId") ,
         };
 
         try {
@@ -255,9 +255,21 @@ function Certify() {
                             display: "flex", justifyContent: "center", alignItems: "center", fontSize: "15px", borderRadius: "5px" ,
                             fontWeight:"600"
                         }} onClick={() =>(
-                            parm.get("language") === "0" ? router.push(`/Member?&member=${parm.get("member")}&language=0`) 
+                            parm.get("userId") === null ?
+                            (
+                                parm.get("language") === "0" ? 
+                                router.push(`/Member?&member=${parm.get("member")}&language=0`) 
+                                :
+                                router.push(`/Member?&member=${parm.get("member")}&language=1`) 
+                            )
                             :
-                            router.push(`/Member?&member=${parm.get("member")}&language=1`) 
+                            (
+                                parm.get("language") === "0" ? 
+                                router.push(`/Member?&member=${parm.get("member")}&language=0&userId=${parm.get("userId")}`) 
+                                :
+                                router.push(`/Member?&member=${parm.get("member")}&language=1&userId=${parm.get("userId")}`) 
+                            )
+                           
                         )
                         }>
                             {parm.get("language") === "0" ? Korean.accept_eleven : Ch.accept_eleven}

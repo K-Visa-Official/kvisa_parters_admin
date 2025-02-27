@@ -39,7 +39,7 @@ interface ProcessData_user {
   tel: number;
   marketing: "y" | "n";
   lang:string | "0";
-}
+  }
 
 
 // 요청을 보내는 함수
@@ -239,24 +239,26 @@ export async function change_name(payload: tel_change) {
   }
 }
 
-export async function get_crm(a:string): Promise<CRM_res[]> {
+export async function get_crm(tel?: string, name?: string): Promise<CRM_res[]> {
   try {
-    
-    const response = await fetch(baseurl + '/api/client/crm?&tel=' + a, {
+    let url = baseurl + "/api/client/crm?";
+
+    // 파라미터가 있을 경우 URL에 추가
+    if (tel) url += `&tel=${tel}`;
+    if (name) url += `&name=${name}`;
+
+    const response = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        // "Authorization": "Bearer " + localStorage.getItem("token"),
       },
-      // body: JSON.stringify({tel: a}),
     });
 
     if (!response.ok) {
-      // useAuthStore.getState().logout();
       throw new Error("유저 목록 불러오기 실패");
     }
-    const data: CRM_res[] = await response.json();
-    return data;
+
+    return await response.json();
   } catch (error) {
     throw error;
   }

@@ -15,7 +15,9 @@ export default function UserBox() {
     const subkind = searchParams.get('user-ch');
     const [active, setActive] = useState<string>(subkind ? subkind : User.total);
     const [search, setSearch] = useState<boolean>(false); // 로딩 상태
-    
+
+
+
     return (
         <div className={styles.total}>
             <div className={styles.totalinner}>
@@ -60,7 +62,7 @@ export default function UserBox() {
                     
                 </div>
 
-
+            
                 {active === User.total ? 
                     <UserListtotla search ={search}/>
                     :

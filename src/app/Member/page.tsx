@@ -137,7 +137,12 @@ function CaseStoriesDetailPage() {
                                 </div>
                             ))}
 
-                            <div className={styles.post} onClick={() => router.push(`/CRM?&language=${parm.get("language")}`)}>
+                            <div className={styles.post} onClick={() => router.push(
+                                parm.get("userId") === null ?
+                                `/CRM?&language=${parm.get("language")}`
+                                :
+                                `/CRM?&language=${parm.get("language")}&userId=${parm.get("userId")}`
+                                )}>
                                 <div className={styles.postimg} style={{ color: "black" }}>
                                     <Image
                                         aria-hidden
@@ -175,9 +180,18 @@ function CaseStoriesDetailPage() {
 
                             <div className={styles.footer}
                                 onClick={() => router.push(
-                                    parm.get("language") === "0" ?
-                                    `/Progress/?&progress=${pk}&language=0&member=${parm.get("member")}` :
-                                    `/Progress/?&progress=${pk}&language=1&member=${parm.get("member")}`
+                                    parm.get("userId") === null ?
+                                    (
+                                        parm.get("language") === "0" ?
+                                        `/Progress/?&progress=${pk}&language=0&member=${parm.get("member")}` :
+                                        `/Progress/?&progress=${pk}&language=1&member=${parm.get("member")}`
+                                    )
+                                    :
+                                    (
+                                        parm.get("language") === "0" ?
+                                        `/Progress/?&progress=${pk}&language=0&member=${parm.get("member")}&userId=${parm.get("userId")}` :
+                                        `/Progress/?&progress=${pk}&language=1&member=${parm.get("member")}&userId=${parm.get("userId")}`
+                                    )
                                 )}
                             >
                                 <p>

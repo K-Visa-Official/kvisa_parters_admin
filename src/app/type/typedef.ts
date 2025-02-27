@@ -8,6 +8,13 @@ export enum User {
     ex = "그밖에",
 }
 
+
+export enum Busioness {
+    total = "전체",
+    first = "맞춤형 비자상담 서비스",
+    second = "외국인 범죄/불법체류자 구제",
+}
+
 export enum Korean {
     title = "케이비자와 함께",
     title_second = "안전한 한국생활을 시작하세요",

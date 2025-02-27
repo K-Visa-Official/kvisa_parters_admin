@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import useAuthStore from "../store/user";
 import { useRouter  } from 'next/navigation';
 import Sidebar from "../Component/Common/Sidebar";
+import Business from "../Component/Business/Business";
 
 export default function Business_Main() {
 
@@ -22,7 +23,7 @@ export default function Business_Main() {
             {isLoggedIn ?
                 <div style={{ display: "flex", flexDirection: "row" }}>
                     <Sidebar />
-                    업무
+                    <Business/>
                 </div>
                 : <></>
             }

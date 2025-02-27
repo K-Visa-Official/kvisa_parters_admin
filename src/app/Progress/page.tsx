@@ -49,7 +49,6 @@ function Progress() {
     }, [parm, progressId]);
 
 
-
     // 답변 선택 (단일/복수 공통)
     const handleAnswerSelect = (questionId: number, answer: string, answerType: number) => {
         setSelectedAnswers(prev => {
@@ -89,7 +88,7 @@ function Progress() {
                 for (let i = 0; i < finalData.length; i++) {
                     const response = await registerProcess(
                         {
-                            "user": workdetail[0]?.user.id,
+                            "user": Number(workdetail[0]?.user),
                             "work": workdetail[0]?.id,
                             // "name" : "미입력" ,
                             // "tel" : 0 ,
@@ -109,11 +108,21 @@ function Progress() {
                                     "lang": String(parm.get("language"))
                                 }
                             );
-                            if (parm.get("language") === "0") {
-                                router.push(`/Certify/?&user=${response_se.return}&language=0&member=${parm.get("member")}`)
+                            if(parm.get("userId") === null){
+                                if (parm.get("language") === "0") {
+                                    router.push(`/Certify/?&user=${response_se.return}&language=0&member=${parm.get("member")}`)
+                                }
+                                else {
+                                    router.push(`/Certify/?&user=${response_se.return}&language=1&member=${parm.get("member")}`)
+                                }
                             }
-                            else {
-                                router.push(`/Certify/?&user=${response_se.return}&language=1&member=${parm.get("member")}`)
+                            else{
+                                if (parm.get("language") === "0") {
+                                    router.push(`/Certify/?&user=${response_se.return}&language=0&member=${parm.get("member")}&userId=${parm.get("userId")}`)
+                                }
+                                else {
+                                    router.push(`/Certify/?&user=${response_se.return}&language=1&member=${parm.get("member")}&userId=${parm.get("userId")}`)
+                                }
                             }
                         }
                     }
