@@ -4,13 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-interface ModalProps {
-    onClose: () => void;
-    la?: string;
-    pk?: number;
-}
-
-const ko: React.FC<ModalProps> = ({ onClose, la, pk = 0 }) => {
+const ko = () => {
     const router = useRouter()
 
     useEffect(() => {
