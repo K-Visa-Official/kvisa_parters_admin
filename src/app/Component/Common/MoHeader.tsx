@@ -17,18 +17,18 @@ const MoHeader: React.FC<MoHeaderProps> = ({ state = 0, setState, setAc }) => {
 
     // ㅌ버튼
     const handleCloseWebView = () => {
-        // if (path === '/Member') {
-        //     if (state === 1) {
-        //         if (setAc) {
-        //             setAc(true)
-        //         }
-        //     }
-        //     else {
-        //         if (setState) {
-        //             setState(1)
-        //         }
-        //     }
-        // }
+        if (path === '/Member') {
+            if (state === 1) {
+                if (setAc) {
+                    setAc(true)
+                }
+            }
+            else {
+                if (setState) {
+                    setState(1)
+                }
+            }
+        }
         
         if (setAc) {
             setAc(true)
