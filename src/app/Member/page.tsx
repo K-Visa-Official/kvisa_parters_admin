@@ -20,7 +20,6 @@ function CaseStoriesDetailPage() {
     const [work, setWork] = useState<WorkResponse[] | []>([]);
     const [memberId, setMemberId] = useState<string | null>(null);
     const [ac, setAc] = useState<boolean | false>(false);
-    const [bank_link, setBank_link] = useState<string | false>(false);
 
     useEffect(() => {
         if (typeof window !== "undefined") {
