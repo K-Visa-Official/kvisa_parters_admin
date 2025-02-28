@@ -26,7 +26,7 @@ const DatePicker: React.FC<DatePickerProps> = ({ onSelectDate }) => {
     if (type === "day") setDay(value);
 
     if (year || month || day) {
-      onSelectDate(`${year}${month}${day}`);
+      onSelectDate(`${year}.${month}.${day}`);
     }
   };
 
