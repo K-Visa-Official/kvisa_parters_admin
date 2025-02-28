@@ -11,7 +11,7 @@ interface MoHeaderProps {
     setAc?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const MoHeader: React.FC<MoHeaderProps> = ({ state = 0, setState, setAc }) => {
+const MoHeader: React.FC<MoHeaderProps> = ({ state = 0, setState }) => {
     const path = usePathname()
     const router = useRouter()
     const parm = useSearchParams()
