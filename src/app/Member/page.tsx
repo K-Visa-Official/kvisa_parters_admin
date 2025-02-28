@@ -186,13 +186,14 @@ function CaseStoriesDetailPage() {
                                     :
                                     `/CRM?&language=${parm.get("language")}&userId=${parm.get("userId")}`
                             )}>
-                                <div className={styles.postimg} style={{ color: "black" }}>
+                                <div className={styles.postimg} style={{ color: "black" , }}>
                                     <Image
                                         aria-hidden
                                         src="/common/CRM.png"
                                         alt="다음"
                                         width={345}
                                         height={200}
+                                        style={{ borderRadius:"10px" }}
                                     /></div>
                                 {/* <img src={user?.detail} className={styles.postimg} /> */}
                                 <div className={styles.nextstep}>
@@ -208,12 +209,16 @@ function CaseStoriesDetailPage() {
                                 </div>
 
                             </div>
-                            <p style={{ marginTop: "15px", fontSize: "18px", color: "black", fontWeight: "600" }}>{parm.get("language") === "0" ? Korean.progress : Ch.progress}</p>
 
-                            <p style={{ marginTop: "6px", fontSize: "13px", color: "#84848f", fontWeight: "500", marginBottom: "30px" }}>
-                                {parm.get("language") === "0" ? Korean.progress_first : Ch?.progress_first}<br />
-                                {parm.get("language") === "0" ? Korean.progress_second : Ch.progress_second}
-                            </p>
+                            <div style={{ width:"345px" , display:"flex" , justifyContent:"center" , alignItems:"flex-start" , flexDirection:"column"}}>
+ 
+                                <p style={{ marginTop: "15px", fontSize: "18px", color: "black", fontWeight: "600" }}>{parm.get("language") === "0" ? Korean.progress : Ch.progress}</p>
+
+                                <p style={{ marginTop: "6px", fontSize: "13px", color: "#84848f", fontWeight: "500", marginBottom: "30px" }}>
+                                    {parm.get("language") === "0" ? Korean.progress_first : Ch?.progress_first}<br />
+                                    {parm.get("language") === "0" ? Korean.progress_second : Ch.progress_second}
+                                </p>
+                            </div>
                             
                             {parm.get("userId") === null ?
                                 <></>
