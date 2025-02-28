@@ -1,24 +1,12 @@
-import type { Metadata } from "next";
-// import { Geist, Geist_Mono } from "next/font/google";
+import { Metadata } from "next";
 import "./globals.css";
 import Footer from "./Component/Common/Footer";
 import Header from "./Component/Common/Login_Header";
-
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
 
 export const metadata: Metadata = {
   title: "K-visa Partner",
   description: "K-visa Partner",
 };
-
 
 export default function RootLayout({
   children,
@@ -27,11 +15,32 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      
-      <body style={{ touchAction:"manipulation"}}>
-        <Header/>
+      <head>
+        {/* 폰트 파일 로드 */}
+        <style>
+          {`
+            @font-face {
+              font-family: 'SpoqaHanSansNeo';
+              src: url('/fonts/SpoqaHanSansNeo-Regular.otf') format('opentype');
+              font-weight: normal;
+              font-style: normal;
+            }
+            @font-face {
+              font-family: 'SpoqaHanSansNeo';
+              src: url('/fonts/SpoqaHanSansNeo-Bold.otf') format('opentype');
+              font-weight: bold;
+              font-style: normal;
+            }
+
+            body {
+              font-family: 'SpoqaHanSansNeo', sans-serif;
+            }
+          `}
+        </style>
+      </head>
+      <body style={{ touchAction: "manipulation" }}>
+        <Header />
         {children}
-        {/* Footer */}
         <Footer />
       </body>
     </html>

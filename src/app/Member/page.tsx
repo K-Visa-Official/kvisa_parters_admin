@@ -103,10 +103,12 @@ function CaseStoriesDetailPage() {
                                 <></>
                             }
 
-
-                            <p className={styles.title}>
-                                {parm.get("language") === "0" ? Korean.title : Ch.title} <br />
-                                {parm.get("language") === "0" ? Korean.title_second : Ch.title_second}</p>
+                            <div style={{ width:"345px" , display:"flex" , justifyContent:"flex-start" , alignItems:"center"}}>
+                                <p className={styles.title}>
+                                    {parm.get("language") === "0" ? Korean.title : Ch.title} <br />
+                                    {parm.get("language") === "0" ? Korean.title_second : Ch.title_second}
+                                </p>
+                            </div>
 
                             {work?.map((user) => (
                                 <div key={user.id} >
@@ -220,9 +222,8 @@ function CaseStoriesDetailPage() {
                                  onClick={() => (
                                     setUrl(work.filter(a => a?.choice === "외국인 범죄/불법체류자 구제")[0].detail_second),
                                     setState(2),
-                                    setPk(2)
+                                    setPk(work.filter(a => a?.choice === "외국인 범죄/불법체류자 구제")[0].id)
                                 )}
-                                
                                 />
                             }
                             

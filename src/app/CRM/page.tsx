@@ -130,6 +130,8 @@ function CRM() {
 
                             {state === 1 ?
                                 <div className={styles.crminner}>
+                                    <div style={{ width:"345px" , display:"flex" , justifyContent:"center" , alignItems:"flex-start" ,flexDirection:"column"}}>
+                           
                                     <p style={{ marginTop: "10px", color: "black" }}>
                                         {parm.get("language") === "0" ? Korean.bu_progress : Ch.bu_progress}
                                     </p>
@@ -140,6 +142,7 @@ function CRM() {
                                     <p style={{ marginTop: "40px", fontSize: "12px", color: "#84848f" }}>
                                         {parm.get("language") === "0" ? Korean.bu_progress_tel : Ch.bu_progress_tel}
                                     </p>
+                                    </div>
 
                                     <div style={{ width: "345px", height: "50px", marginTop: "10px", background: "#f5f6f9", display: "flex", flexDirection: "row" }}>
                                         <FilterInputBox
@@ -220,23 +223,26 @@ function CRM() {
                                 </div>
                                 :
                                 <div className={styles.crminner}>
-                                    <div style={{ marginTop: "10px", color: "black", display: "flex", flexDirection: "row" }}>
-                                        <Image
-                                            aria-hidden
-                                            src='/crm/crm_logo.png'
-                                            alt="close"
-                                            width={24}
-                                            height={24}
-                                            style={{ marginRight: "4px" }}
-                                        />
-                                        <p >
-                                            {parm.get("language") === "0" ? Korean.progress : Ch.progress}
+                                    <div style={{ width:"345px" , display:"flex" , justifyContent:"center" , alignItems:"flex-start" ,flexDirection:"column"}}>
+                           
+                                        <div style={{ marginTop: "10px", color: "black", display: "flex", flexDirection: "row" }}>
+                                            <Image
+                                                aria-hidden
+                                                src='/crm/crm_logo.png'
+                                                alt="close"
+                                                width={24}
+                                                height={24}
+                                                style={{ marginRight: "4px" }}
+                                            />
+                                            <p >
+                                                {parm.get("language") === "0" ? Korean.progress : Ch.progress}
+                                            </p>
+                                        </div>
+
+                                        <p style={{ marginTop: "6px", fontSize: "12px", color: "#84848f" }}>
+                                            {parm.get("language") === "0" ? Korean.pro_cer : Ch.progress}
                                         </p>
                                     </div>
-
-                                    <p style={{ marginTop: "6px", fontSize: "12px", color: "#84848f" }}>
-                                        {parm.get("language") === "0" ? Korean.pro_cer : Ch.progress}
-                                    </p>
 
                                     {li?.map((user) => (
                                         <div className={styles.probox} key={user.id}>

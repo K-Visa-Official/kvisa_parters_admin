@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, Suspense , useRef } from "react";
 import styles from "@/app/css/user_detail.module.css";
 import Image from "next/image";
 import { readlist, work_detail, registerProcess, registerProcessUser } from "../server/work";
@@ -9,10 +9,14 @@ import { Question_Post, WorkResponse } from "../type/user";
 import { Korean, Ch } from "../type/typedef";
 import MoHeader from "../Component/Common/MoHeader";
 import Modal from "../Component/Common/Modal";
+import AutoComplete from "../Component/Common/AutoComplete";
+import DatePicker from "../Component/Common/DatePicker";
+import { start } from "repl";
 
 function Progress() {
     const parm = useSearchParams();
     const router = useRouter()
+    const targetRefs = useRef<(HTMLParagraphElement | null)[]>([]);    
     const [progressId, setProgressId] = useState<string | null>(null);
     const [work, setWork] = useState<Question_Post[]>([]);
     const [workdetail, setWorkDetail] = useState<WorkResponse[]>([]);
@@ -20,6 +24,17 @@ function Progress() {
     const [textAnswers, setTextAnswers] = useState<{ [key: number]: string }>({});
     const [modal, setModal] = useState<boolean>(false); // 로딩 상태
     const [ac, setAc] = useState<boolean | false>(false);
+    const [selectedDate, setSelectedDate] = useState<string>("");
+
+
+    const suggestionsList = [
+        "한국",
+        "중국",
+        "인도네시아",
+        "베트남",
+        "인도",
+        "일본",
+    ];
 
     const finalData = work.map(user => ({
         questionId: user.id,
@@ -73,6 +88,8 @@ function Progress() {
         setTextAnswers(prev => ({ ...prev, [questionId]: value }));
     };
 
+
+
     const handleSubmit = async () => {
 
         if (finalData.filter(a => a.answer === "").length > 0) {
@@ -108,7 +125,7 @@ function Progress() {
                                     "lang": String(parm.get("language"))
                                 }
                             );
-                            if(parm.get("userId") === null){
+                            if (parm.get("userId") === null) {
                                 if (parm.get("language") === "0") {
                                     router.push(`/Certify/?&user=${response_se.return}&language=0&member=${parm.get("member")}`)
                                 }
@@ -116,7 +133,7 @@ function Progress() {
                                     router.push(`/Certify/?&user=${response_se.return}&language=1&member=${parm.get("member")}`)
                                 }
                             }
-                            else{
+                            else {
                                 if (parm.get("language") === "0") {
                                     router.push(`/Certify/?&user=${response_se.return}&language=0&member=${parm.get("member")}&userId=${parm.get("userId")}`)
                                 }
@@ -227,19 +244,19 @@ function Progress() {
                             <div className={styles.innerbox}>
 
                                 <div style={{
-                                        position: "fixed",
-                                        top: 0,  // 상단에 고정
-                                        zIndex: 10, // 상위 요소가 덮어쓰지 않도록 zIndex를 높여줌
-                                        background: "#f0f5ff", // 배경색
-                                    }}
+                                    position: "fixed",
+                                    top: 0,  // 상단에 고정
+                                    zIndex: 10, // 상위 요소가 덮어쓰지 않도록 zIndex를 높여줌
+                                    background: "#f0f5ff", // 배경색
+                                }}
                                 >
                                     <MoHeader setAc={setAc} />
 
                                     <div style={{ width: "100%", height: "117px", display: "flex", flexDirection: "column", background: "#f0f5ff" }}>
-                                        <p style={{ marginTop: "18px", fontSize: "20px", fontWeight: "bold", marginLeft: "15px", color: "black" }}>
+                                        <p style={{ marginTop: "18px", fontSize: "20px", fontWeight: "bold", marginLeft: "24px", color: "black" }}>
                                             {workdetail[0]?.choice}
                                         </p>
-                                        <div style={{ display: "flex", justifyContent: "space-between", flexDirection: "row", marginTop: "10px", marginLeft: "15px" }}>
+                                        <div style={{ display: "flex", justifyContent: "space-between", flexDirection: "row", marginTop: "10px", marginLeft: "24px" }}>
                                             <p style={{ fontSize: "13px", color: "#33405a" }}>
                                                 {parm.get("language") === "0" ? Korean.safety : Ch?.safety}
                                             </p>
@@ -267,12 +284,18 @@ function Progress() {
 
                                 {work.map((user, index) => (
                                     <div key={user.id} className={styles.qubox}
-                                        style={{ marginTop: index === 0 ? "180px" : ""}}>
-                                        <p className={styles.qutitle}>
-                                            {user.answer_type === 0 ? "단일선택" :
-                                                user.answer_type === 1 ? "복수선택" :
-                                                    user.answer_type === 2 ? "단문형" : "장문형"}
-                                        </p>
+                                        style={{ marginTop: index === 0 ? "180px" : "" }}>
+
+                                        {parm.get("userId") === null ?
+                                            <p className={styles.qutitle}>
+                                                {user.answer_type === 0 ? "단일선택" :
+                                                    user.answer_type === 1 ? "복수선택" :
+                                                        user.answer_type === 2 ? "단문형" : "장문형"}
+                                            </p>
+                                            :
+                                            <></>
+                                        }
+
                                         <p className={styles.titlesub} style={{
                                             display: "-webkit-box",
                                             WebkitLineClamp: 2,
@@ -280,54 +303,154 @@ function Progress() {
                                             overflow: "hidden",
                                             textOverflow: "ellipsis",
                                             wordBreak: "break-word"
-                                        }}>{index + 1}. {user.question}</p>
+                                        }}
+                                        ref={(el) => { targetRefs.current[index] = el; }} 
+                                        >{index + 1}. {user.question}</p>
 
                                         <div className={styles.answerBox}>
                                             {user.answers.map((a) => {
                                                 const isSelected = selectedAnswers[user.id]?.includes(a.answer);
 
                                                 return (
-                                                    <div key={a.id} className={styles.answerWrapper}>
-                                                        {user.answer_type >= 2 ? (
-                                                            // 단문형 또는 장문형 입력 처리
-                                                            <textarea
-                                                                value={textAnswers[user.id] || ""}
-                                                                placeholder="내용을 입력해주세요"
-                                                                className={styles.quinput}
-                                                                style={{
-                                                                    background: "#f5f6f9", height: "100px", resize: "none", padding: 20,
-                                                                    border: "none", marginTop: "20px", width: "300px"
-                                                                }}
-                                                                onChange={(e) => handleTextInputChange(user.id, e.target.value)}
-                                                            />
-                                                        ) : (
-                                                            // 단일/복수 선택 처리
-                                                            <div
-                                                                className={styles.answerItem}
-                                                                onClick={() => handleAnswerSelect(user.id, a.answer, user.answer_type)}
-                                                                style={{
-                                                                    marginTop: "16px", display: "flex", flexDirection: "row",
-                                                                    color: isSelected ? "#1b67ff" : "#444", // 선택된 항목 글자 색
-                                                                }}
-                                                            >
+                                                    <>
+                                                        {parm.get("userId") === null ?
+                                                            <div key={a.id} className={styles.answerWrapper}>
+                                                                {user.answer_type >= 2 ? (
+                                                                    // 단문형 또는 장문형 입력 처리
+                                                                    <textarea
+                                                                        value={textAnswers[user.id] || ""}
+                                                                        placeholder="내용을 입력해주세요"
+                                                                        className={styles.quinput}
+                                                                        style={{
+                                                                            background: "#f5f6f9", height: "100px", resize: "none", padding: 20,
+                                                                            border: "none", marginTop: "20px", width: "300px",
+                                                                        }}
+                                                                        onChange={(e) => handleTextInputChange(user.id, e.target.value)}
+                                                                    />
+                                                                ) : (
+                                                                    // 단일/복수 선택 처리
+                                                                    <div
+                                                                        className={styles.answerItem}
+                                                                        onClick={() => handleAnswerSelect(user.id, a.answer, user.answer_type)}
+                                                                        style={{
+                                                                            marginTop: "16px", display: "flex", flexDirection: "row",
+                                                                            color: isSelected ? "#1b67ff" : "#444", // 선택된 항목 글자 색
+                                                                        }}
+                                                                    >
 
-                                                                <Image
-                                                                    src={isSelected ? "/member/check_active.png" : "/member/check.png"}
-                                                                    alt={isSelected ? "선택됨" : "선택 안됨"}
-                                                                    width={20} height={20} />
+                                                                        <Image
+                                                                            src={isSelected ? "/member/check_active.png" : "/member/check.png"}
+                                                                            alt={isSelected ? "선택됨" : "선택 안됨"}
+                                                                            width={20} height={20} />
 
-                                                                <p style={{
-                                                                    display: "-webkit-box",
-                                                                    WebkitLineClamp: 2,
-                                                                    WebkitBoxOrient: "vertical",
-                                                                    overflow: "hidden",
-                                                                    textOverflow: "ellipsis",
-                                                                    wordBreak: "break-word",
-                                                                    marginLeft: "8px"
-                                                                }}>{a.answer}</p>
+                                                                        <p style={{
+                                                                            display: "-webkit-box",
+                                                                            WebkitLineClamp: 2,
+                                                                            WebkitBoxOrient: "vertical",
+                                                                            overflow: "hidden",
+                                                                            textOverflow: "ellipsis",
+                                                                            wordBreak: "break-word",
+                                                                            marginLeft: "8px"
+                                                                        }}>{a.answer}</p>
+                                                                    </div>
+                                                                )}
                                                             </div>
-                                                        )}
-                                                    </div>
+                                                            :
+                                                            <div key={a.id} className={styles.answerWrapper}>
+                                                                {user.answer_type >= 2 ? (
+                                                                    // 단문형 또는 장문형 입력 처리
+                                                                    index === 0 ? (
+
+                                                                        <AutoComplete suggestions={suggestionsList}
+                                                                            onSelect={(value) =>
+                                                                                handleTextInputChange(user.id, value)}
+                                                                        />
+
+                                                                    ) :
+                                                                        index === 6 ? (
+                                                                            <DatePicker onSelectDate={(date) =>
+                                                                            (
+                                                                                setSelectedDate(date),
+                                                                                handleTextInputChange(user.id, date)
+                                                                            )} />
+                                                                        )
+                                                                            :
+                                                                            (
+                                                                                <textarea
+                                                                                    value={textAnswers[user.id] || ""}
+                                                                                    // placeholder="내용을 입력해주세요"
+                                                                                    className={styles.quinput}
+                                                                                    style={{
+                                                                                        background: "#f5f6f9",
+                                                                                        resize: "none",
+                                                                                        padding: 15,
+                                                                                        border: "none",
+                                                                                        marginTop: "20px",
+                                                                                        width: `${textAnswers[user.id]?.length ? textAnswers[user.id].length * 10 + 50 : 80}px`, // 텍스트 길이에 맞게 크기 조정
+                                                                                        height: 'auto',
+                                                                                        textAlign: "center", // 텍스트 가로 중앙 정렬
+                                                                                        lineHeight: "3px"
+                                                                                    }}
+                                                                                    onChange={(e) => {
+                                                                                        let newValue = e.target.value;
+
+                                                                                        // index 8: 문자만 입력 가능
+                                                                                        if (index === 8) {
+                                                                                            newValue = e.target.value.replace(/[^a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣\s]/g, ""); // 문자만 입력
+                                                                                        }
+
+                                                                                        // index 9: 전화번호 형식 적용
+                                                                                        if (index === 9) {
+                                                                                            let formattedValue = e.target.value.replace(/[^0-9]/g, ""); // 숫자만 남기기
+                                                                                            if (formattedValue.length > 3 && formattedValue.length <= 6) {
+                                                                                                formattedValue = formattedValue.replace(/(\d{3})(\d{1,4})/, "$1-$2");
+                                                                                            } else if (formattedValue.length > 6) {
+                                                                                                formattedValue = formattedValue.replace(/(\d{3})(\d{4})(\d{1,4})/, "$1-$2-$3");
+                                                                                            }
+                                                                                            newValue = formattedValue;
+                                                                                        }
+
+                                                                                        // 최종적으로 값 변경 처리
+                                                                                        handleTextInputChange(user.id, newValue);
+                                                                                    }}
+                                                                                />
+                                                                            )
+
+                                                                ) : (
+                                                                    // 단일/복수 선택 처리
+                                                                    <div
+                                                                        className={styles.answerItem}
+                                                                        onClick={() => {
+                                                                            targetRefs.current[index]?.scrollIntoView({ behavior: 'smooth', block:'start' });
+                                                                            
+                                                                            handleAnswerSelect(user.id, a.answer, user.answer_type)
+                                                                          }}
+                                                                        // onClick={() => handleAnswerSelect(user.id, a.answer, user.answer_type)}
+                                                                        style={{
+                                                                            marginTop: "16px", display: "flex", flexDirection: "row",
+                                                                            color: isSelected ? "#1b67ff" : "#444", // 선택된 항목 글자 색
+                                                                        }}
+                                                                    >
+
+                                                                        <Image
+                                                                            src={isSelected ? "/member/check_active.png" : "/member/check.png"}
+                                                                            alt={isSelected ? "선택됨" : "선택 안됨"}
+                                                                            width={20} height={20} />
+
+                                                                        <p style={{
+                                                                            display: "-webkit-box",
+                                                                            WebkitLineClamp: 2,
+                                                                            WebkitBoxOrient: "vertical",
+                                                                            overflow: "hidden",
+                                                                            textOverflow: "ellipsis",
+                                                                            wordBreak: "break-word",
+                                                                            marginLeft: "8px"
+                                                                        }}>{a.answer}</p>
+                                                                    </div>
+                                                                )}
+                                                            </div>
+                                                        }
+                                                    </>
                                                 );
                                             })}
                                         </div>
@@ -341,13 +464,15 @@ function Progress() {
                         </div>
                     </div> */}
 
-                                <div style={{ width: "100%", height: "56px", display: "flex", flexDirection: "row", marginTop: "50px", marginBottom: "60px" }}>
-                                    <div style={{ width: "50%", height: "56px" }}>
+                                <div style={{ width: "100%", height: "56px", display: "flex", flexDirection: "row", marginTop: "50px", marginBottom: "60px" ,
+                                    justifyContent:"center" , alignItems:"center"
+                                }}>
+                                    {/* <div style={{ width: "50%", height: "56px" }}>
 
-                                    </div>
+                                    </div> */}
                                     <div style={{
                                         width: "50%", height: "56px", background: "linear-gradient(91deg, #1c68ff 0%, #053cf0 100%)", borderRadius: "5px",
-                                        fontSize: "15px", color: "white", display: "flex", justifyContent: "center", alignItems: "center"
+                                        fontSize: "15px", color: "white", display: "flex", justifyContent: "center", alignItems: "center" , fontWeight:"bold"
                                     }} onClick={handleSubmit}>
                                         {parm.get("language") === "0" ? Korean.enter : Ch?.enter}
 
