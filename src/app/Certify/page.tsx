@@ -36,6 +36,16 @@ function Certify() {
     const [state, setState] = useState<number>(1);  // 3분 타이머 설정 (180초)
     const [ac, setAc] = useState<boolean | false>(false);
 
+    const member = parm.get("member");
+    const userId = parm.get("userId");
+    
+    useEffect(() => {
+        if (member === "6") {
+            if(userId === null){
+                router.replace("/404");
+            }
+        }
+        }, [member , userId]);
 
     useEffect(() => {
         let interval: NodeJS.Timeout;

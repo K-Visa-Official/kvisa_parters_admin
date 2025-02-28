@@ -59,8 +59,16 @@ function Progress() {
         const fetchUser = async () => {
             try {
                 const progress = parm.get("progress");
+                const member = parm.get("member");
+                const userId = parm.get("userId");
+
                 if (progress !== progressId) {
                     setProgressId(progress); // progress가 바뀔 때마다 상태 업데이트
+                }
+                if (member === "6") {
+                    if(userId === null){
+                        router.replace("/404");
+                    }
                 }
                 const data = await readlist(Number(progress));
                 const data_detail = await work_detail(Number(progress));

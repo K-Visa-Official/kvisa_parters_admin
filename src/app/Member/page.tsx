@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams, useRouter , notFound } from "next/navigation";
 import { getUser, getUserApi } from "@/app/server/admin_user";
 import { UserList, WorkResponse } from "../type/user";
 import { useState, useEffect, Suspense } from "react";
@@ -21,31 +21,41 @@ function CaseStoriesDetailPage() {
     const [memberId, setMemberId] = useState<string | null>(null);
     const [ac, setAc] = useState<boolean | false>(false);
 
-    useEffect(() => {
-        if (typeof window !== "undefined") {
-            window.JBPrivateBankBridge = {
-                callNative: function (message) {
-                    const decodedMessage = decodeURIComponent(message);
-                    const data = JSON.parse(decodedMessage);
-                    const url = data.param.url; // 전달된 URL 값
 
-                    if (url.includes("ko")) {
-                        window.location.href = "https://main.d1ixxx006maf83.amplifyapp.com/Member?&member=6&language=0";
-                    } else {
-                        window.location.href = "https://main.d1ixxx006maf83.amplifyapp.com/Member?&member=6&language=1";
-                    }
-                },
-            };
-        }
+    useEffect(() => {
+        // if (typeof window !== "undefined") {
+        //     window.JBPrivateBankBridge = {
+        //         callNative: function (message) {
+        //             const decodedMessage = decodeURIComponent(message);
+        //             const data = JSON.parse(decodedMessage);
+        //             const url = data.param.url; // 전달된 URL 값
+
+        //             if (url.includes("ko")) {
+        //                 window.location.href = "https://main.d1ixxx006maf83.amplifyapp.com/Member?&member=6&language=0";
+        //             } else {
+        //                 window.location.href = "https://main.d1ixxx006maf83.amplifyapp.com/Member?&member=6&language=1";
+        //             }
+        //         },
+        //     };
+        // }
+
     }, []);
 
     useEffect(() => {
         const fetchUser = async () => {
             try {
                 const member = parm.get("member");
+                const userId = parm.get("userId");
+
                 if (member !== memberId) {
                     setMemberId(member);  // memberId가 바뀔 때 상태 업데이트
                 }
+                if (member === "6") {
+                    if(userId === null){
+                        router.replace("/404");
+                    }
+                }
+
                 const data = await getUser(Number(member));  // 유저 데이터 가져오기
                 const data_sec = await getUserApi(Number(member), parm.get("language") === "0" ? 0 : 1);  // 추가 작업 데이터 가져오기
                 setUser(data);

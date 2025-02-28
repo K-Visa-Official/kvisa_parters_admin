@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useSearchParams , useRouter } from "next/navigation";
 import { useState, useEffect, Suspense } from "react";
 import styles from "@/app/css/user_detail.module.css";
 import Image from "next/image";
@@ -15,7 +15,7 @@ import Modal from "../Component/Common/Modal";
 
 function CRM() {
     const parm = useSearchParams();
-
+    const router = useRouter()
     const [workNumber, setWorkNumber] = useState<string | "">("");
     const [ceNumber, setCeNumber] = useState<string | null>(null);
     const [active, setActive] = useState<boolean>(false);
@@ -50,6 +50,12 @@ function CRM() {
     useEffect(() => {
         const fetchUser = async () => {
             try {
+                const member = parm.get("member");
+                if (member === "6") {
+                    if(userId === null){
+                        router.replace("/404");
+                    }
+                }
                 const data = userId ? await get_crm(undefined, userId + "^") : await get_crm(workNumber);
                 setLi(data);
                 
