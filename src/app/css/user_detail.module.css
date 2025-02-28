@@ -49,18 +49,19 @@
 .title {
     font-size: 22px;
     font-weight: bold;
-    margin-top: 30px;
+    margin-top: 20px;
     color: #000;
 }
 
 .post {
     margin-top: 20px;
-    height: 280px;
+    height: 200px;
     width: 345px;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
+    flex-direction: column;
     /* .nextstep이 절대 위치로 겹칠 수 있도록 설정 */
 
 }
@@ -70,12 +71,12 @@
     height: 200px;
     display: block;
     /* 하단 여백 방지 */
-    border-radius: 10px 10px 0 0;
+    border-radius: 10px 10px ;
     /* 위쪽 모서리만 둥글게 */
 }
 
 .nextstep {
-    position: absolute;
+    position: absolute; 
     /* 이미지 위에 겹치도록 설정 */
     bottom: 0;
     left: 50%;
@@ -126,6 +127,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    
 }
 
 .qubox {

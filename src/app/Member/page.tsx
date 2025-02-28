@@ -6,7 +6,7 @@ import { UserList, WorkResponse } from "../type/user";
 import { useState, useEffect, Suspense } from "react";
 import styles from "@/app/css/user_detail.module.css";
 import Image from "next/image";
-import { Korean  , Ch} from "../type/typedef";
+import { Korean, Ch } from "../type/typedef";
 import MoHeader from "../Component/Common/MoHeader";
 import Modal from "../Component/Common/Modal";
 
@@ -20,24 +20,25 @@ function CaseStoriesDetailPage() {
     const [work, setWork] = useState<WorkResponse[] | []>([]);
     const [memberId, setMemberId] = useState<string | null>(null);
     const [ac, setAc] = useState<boolean | false>(false);
+    const [bank_link, setBank_link] = useState<string | false>(false);
 
     useEffect(() => {
         if (typeof window !== "undefined") {
-          window.JBPrivateBankBridge = {
-            callNative: function (message) {
-              const decodedMessage = decodeURIComponent(message);
-              const data = JSON.parse(decodedMessage);
-              const url = data.param.url; // 전달된 URL 값
-      
-              if (url.includes("ko")) {
-                window.location.href = "https://main.d1ixxx006maf83.amplifyapp.com/Member?&member=6&language=0";
-              } else {
-                window.location.href = "https://main.d1ixxx006maf83.amplifyapp.com/Member?&member=6&language=1";
-              }
-            },
-          };
+            window.JBPrivateBankBridge = {
+                callNative: function (message) {
+                    const decodedMessage = decodeURIComponent(message);
+                    const data = JSON.parse(decodedMessage);
+                    const url = data.param.url; // 전달된 URL 값
+
+                    if (url.includes("ko")) {
+                        window.location.href = "https://main.d1ixxx006maf83.amplifyapp.com/Member?&member=6&language=0";
+                    } else {
+                        window.location.href = "https://main.d1ixxx006maf83.amplifyapp.com/Member?&member=6&language=1";
+                    }
+                },
+            };
         }
-      }, []);
+    }, []);
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -50,6 +51,7 @@ function CaseStoriesDetailPage() {
                 const data_sec = await getUserApi(Number(member), parm.get("language") === "0" ? 0 : 1);  // 추가 작업 데이터 가져오기
                 setUser(data);
                 setWork(data_sec)
+                
             } catch (error) {
                 console.error("유저 데이터를 불러오는 중 오류 발생:", error);
             }
@@ -59,7 +61,7 @@ function CaseStoriesDetailPage() {
         }
     }, [parm, memberId]);
 
-            
+
 
     return (
         // <>
@@ -76,62 +78,102 @@ function CaseStoriesDetailPage() {
             >
                 <div className={styles.innerbox}>
                     {/* 헤더 */}
-                    <MoHeader state={state} setState={setState} setAc={setAc}/>
+                    <MoHeader state={state} setState={setState} setAc={setAc} />
 
 
                     {state === 1 ?
                         <div className={styles.contentsbox}>
 
-                            <div className={styles.cardbox}>
-                                {/* <img src
+                            {parm.get("userId") === null ?
+                                <div className={styles.cardbox}>
+                                    {/* <img src
                                 ={user ? user?.bu_logo : "/common/ic_nonprofile.svg"}
                                 className={styles.logo}
                                 alt = "pro"
                             /> */}
-                                <Image src={user ? user?.bu_logo : "/common/ic_nonprofile.svg"} alt="pro" width={60} height={60} />
-                                <div style={{
-                                    display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", width: "250px", height: "60px", color: "black",
-                                    fontSize: "20px", marginLeft: "10px"
-                                }}>
-                                    <p style={{ fontWeight: "600" }}>{parm.get("language") === "0" ? user?.bu_name : user?.bu_name_ch}</p>
-                                    <p style={{ color: "#84848f", fontSize: "15px", fontWeight: "500" }}>{parm.get("language") === "0" ? user?.bu_intro : user?.bu_intro_ch}</p>
+                                    <Image src={user ? user?.bu_logo : "/common/ic_nonprofile.svg"} alt="pro" width={60} height={60} />
+                                    <div style={{
+                                        display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", width: "250px", height: "60px", color: "black",
+                                        fontSize: "20px", marginLeft: "10px"
+                                    }}>
+                                        <p style={{ fontWeight: "600" }}>{parm.get("language") === "0" ? user?.bu_name : user?.bu_name_ch}</p>
+                                        <p style={{ color: "#84848f", fontSize: "15px", fontWeight: "500" }}>{parm.get("language") === "0" ? user?.bu_intro : user?.bu_intro_ch}</p>
+                                    </div>
                                 </div>
-                            </div>
+                                :
+                                <></>
+                            }
+
+
                             <p className={styles.title}>
                                 {parm.get("language") === "0" ? Korean.title : Ch.title} <br />
                                 {parm.get("language") === "0" ? Korean.title_second : Ch.title_second}</p>
 
                             {work?.map((user) => (
-                                <div key={user.id} > 
+                                <div key={user.id} >
                                     {work[0]?.choice === undefined ?
                                         null
                                         :
-                                        <div key={user.id}>
-                                            <div className={styles.post} onClick={() => (
-                                                setUrl(user.detail_second),
-                                                setState(2),
-                                                setPk(user?.id)
-                                            )}
-                                            >
-                                                {/* <img src={user?.detail} className={styles.postimg} alt="profile"/> */}
-                                                <Image src={user?.detail} className={styles.postimg} alt="profile" width={345} height={200} />
-                                                <div className={styles.nextstep}>
-                                                    {parm.get("language") === "0" ? Korean.go: Ch.go}
-                                                    <Image
-                                                        aria-hidden
-                                                        src="/member/next_white.png"
-                                                        alt="다음"
-                                                        width={16}
-                                                        height={16}
-                                                        style={{ marginLeft: "5px" }}
-                                                    />
+                                        <>
+                                            {parm.get("userId") === null ?
+                                                <div key={user.id}>
+                                                    <div className={styles.post} onClick={() => (
+                                                        setUrl(user.detail_second),
+                                                        setState(2),
+                                                        setPk(user?.id)
+                                                    )}
+                                                    >
+                                                        {/* <img src={user?.detail} className={styles.postimg} alt="profile"/> */}
+                                                        <Image src={user?.detail} className={styles.postimg} alt="profile" width={345} height={200} />
+                                                        <div className={styles.nextstep}>
+                                                            {parm.get("language") === "0" ? Korean.go : Ch.go}
+                                                            <Image
+                                                                aria-hidden
+                                                                src="/member/next_white.png"
+                                                                alt="다음"
+                                                                width={16}
+                                                                height={16}
+                                                                style={{ marginLeft: "5px" }}
+                                                            />
+                                                        </div>
+
+                                                    </div>
+                                                    <p style={{ marginTop: "15px", fontSize: "18px", color: "black", fontWeight: "600" }}>{user?.choice}</p>
+
+                                                    <p style={{ marginTop: "6px", fontSize: "13px", color: "#84848f", fontWeight: "500" }}>{user?.work_detail}</p>
                                                 </div>
+                                                :
+                                                user.choice === "외국인 범죄/불법체류자 구제" ?
+                                                    <></>
+                                                    :
+                                                    <div key={user.id}>
+                                                        <div className={styles.post} onClick={() => (
+                                                            setUrl(user.detail_second),
+                                                            setState(2),
+                                                            setPk(user?.id)
+                                                        )}
+                                                        >
+                                                            {/* <img src={user?.detail} className={styles.postimg} alt="profile"/> */}
+                                                            <Image src={user?.detail} className={styles.postimg} alt="profile" width={345} height={200} />
+                                                            <div className={styles.nextstep}>
+                                                                {parm.get("language") === "0" ? Korean.go : Ch.go}
+                                                                <Image
+                                                                    aria-hidden
+                                                                    src="/member/next_white.png"
+                                                                    alt="다음"
+                                                                    width={16}
+                                                                    height={16}
+                                                                    style={{ marginLeft: "5px" }}
+                                                                />
+                                                            </div>
 
-                                            </div>
-                                            <p style={{ marginTop: "15px", fontSize: "18px", color: "black", fontWeight: "600" }}>{user?.choice}</p>
+                                                        </div>
+                                                        <p style={{ marginTop: "15px", fontSize: "18px", color: "black", fontWeight: "600" }}>{user?.choice}</p>
 
-                                            <p style={{ marginTop: "6px", fontSize: "13px", color: "#84848f", fontWeight: "500" }}>{user?.work_detail}</p>
-                                        </div>
+                                                        <p style={{ marginTop: "6px", fontSize: "13px", color: "#84848f", fontWeight: "500" }}>{user?.work_detail}</p>
+                                                    </div>
+                                            }
+                                        </>
                                     }
 
                                 </div>
@@ -139,10 +181,10 @@ function CaseStoriesDetailPage() {
 
                             <div className={styles.post} onClick={() => router.push(
                                 parm.get("userId") === null ?
-                                `/CRM?&language=${parm.get("language")}`
-                                :
-                                `/CRM?&language=${parm.get("language")}&userId=${parm.get("userId")}`
-                                )}>
+                                    `/CRM?&language=${parm.get("language")}`
+                                    :
+                                    `/CRM?&language=${parm.get("language")}&userId=${parm.get("userId")}`
+                            )}>
                                 <div className={styles.postimg} style={{ color: "black" }}>
                                     <Image
                                         aria-hidden
@@ -153,7 +195,7 @@ function CaseStoriesDetailPage() {
                                     /></div>
                                 {/* <img src={user?.detail} className={styles.postimg} /> */}
                                 <div className={styles.nextstep}>
-                                {parm.get("language") === "0" ? Korean.go: Ch.go}
+                                    {parm.get("language") === "0" ? Korean.go : Ch.go}
                                     <Image
                                         aria-hidden
                                         src="/member/next_white.png"
@@ -165,12 +207,26 @@ function CaseStoriesDetailPage() {
                                 </div>
 
                             </div>
-                            <p style={{ marginTop: "15px", fontSize: "18px", color: "black", fontWeight: "600" }}>{parm.get("language") === "0" ? Korean.progress: Ch.progress}</p>
+                            <p style={{ marginTop: "15px", fontSize: "18px", color: "black", fontWeight: "600" }}>{parm.get("language") === "0" ? Korean.progress : Ch.progress}</p>
 
-                            <p style={{ marginTop: "6px", fontSize: "13px", color: "#84848f", fontWeight: "500" , marginBottom:"120px" }}>
+                            <p style={{ marginTop: "6px", fontSize: "13px", color: "#84848f", fontWeight: "500", marginBottom: "30px" }}>
                                 {parm.get("language") === "0" ? Korean.progress_first : Ch?.progress_first}<br />
                                 {parm.get("language") === "0" ? Korean.progress_second : Ch.progress_second}
-                                </p>
+                            </p>
+                            
+                            {parm.get("userId") === null ?
+                                <></>
+                                :
+                                <Image aria-hidden src="/common/main_banner.png" alt="닫기" width={345} height={110} style={{ cursor: "pointer" , marginBottom:"100px" }}
+                                 onClick={() => (
+                                    setUrl(work.filter(a => a?.choice === "외국인 범죄/불법체류자 구제")[0].detail_second),
+                                    setState(2),
+                                    setPk(2)
+                                )}
+                                
+                                />
+                            }
+                            
                         </div>
                         :
                         <>
@@ -181,24 +237,24 @@ function CaseStoriesDetailPage() {
                             <div className={styles.footer}
                                 onClick={() => router.push(
                                     parm.get("userId") === null ?
-                                    (
-                                        parm.get("language") === "0" ?
-                                        `/Progress/?&progress=${pk}&language=0&member=${parm.get("member")}` :
-                                        `/Progress/?&progress=${pk}&language=1&member=${parm.get("member")}`
-                                    )
-                                    :
-                                    (
-                                        parm.get("language") === "0" ?
-                                        `/Progress/?&progress=${pk}&language=0&member=${parm.get("member")}&userId=${parm.get("userId")}` :
-                                        `/Progress/?&progress=${pk}&language=1&member=${parm.get("member")}&userId=${parm.get("userId")}`
-                                    )
+                                        (
+                                            parm.get("language") === "0" ?
+                                                `/Progress/?&progress=${pk}&language=0&member=${parm.get("member")}` :
+                                                `/Progress/?&progress=${pk}&language=1&member=${parm.get("member")}`
+                                        )
+                                        :
+                                        (
+                                            parm.get("language") === "0" ?
+                                                `/Progress/?&progress=${pk}&language=0&member=${parm.get("member")}&userId=${parm.get("userId")}` :
+                                                `/Progress/?&progress=${pk}&language=1&member=${parm.get("member")}&userId=${parm.get("userId")}`
+                                        )
                                 )}
                             >
                                 <p>
-                                    {parm.get("language") === "0" ? Korean.go_third: Ch.go_third }
+                                    {parm.get("language") === "0" ? Korean.go_third : Ch.go_third}
                                 </p>
                                 <div className={styles.nextStep}>
-                                    {parm.get("language") === "0" ? Korean.go_second: Ch.go_second }
+                                    {parm.get("language") === "0" ? Korean.go_second : Ch.go_second}
                                 </div>
                             </div>
                         </>
@@ -206,9 +262,9 @@ function CaseStoriesDetailPage() {
                     }
 
                     {ac ?
-                    <Modal web={"we"} setAc={setAc}/>
+                        <Modal web={"we"} setAc={setAc} />
                         :
-                    <></>
+                        <></>
                     }
 
 
