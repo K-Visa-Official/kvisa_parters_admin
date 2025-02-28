@@ -11,10 +11,9 @@ interface ModalProps {
     s?: string;
     web?: string;
     setAc?: React.Dispatch<React.SetStateAction<boolean>>;
-    callbackId?: string;  
 }
 
-const Modal: React.FC<ModalProps> = ({ onClose, t, c, n, s, web , setAc , callbackId = "1234567890" }) => {
+const Modal: React.FC<ModalProps> = ({ onClose, t, c, n, s, web , setAc  }) => {
 
     const router = useRouter()
 
