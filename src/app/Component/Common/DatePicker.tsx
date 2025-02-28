@@ -9,8 +9,7 @@ const DatePicker: React.FC<DatePickerProps> = ({ onSelectDate }) => {
   const [month, setMonth] = useState<string>("");
   const [day, setDay] = useState<string>("");
 
-  // 🔹 현재 연도를 기준으로 선택할 연도 리스트 생성
-  const currentYear = new Date().getFullYear();
+  // 🔹 현재 연도를 기준으로 선택할 연도 리스트
   const years = Array.from({ length: 2099 - 2025 + 1 }, (_, i) => (2025 + i).toString());
 
 

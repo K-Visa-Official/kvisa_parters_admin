@@ -11,7 +11,6 @@ import MoHeader from "../Component/Common/MoHeader";
 import Modal from "../Component/Common/Modal";
 import AutoComplete from "../Component/Common/AutoComplete";
 import DatePicker from "../Component/Common/DatePicker";
-import { start } from "repl";
 
 function Progress() {
     const parm = useSearchParams();
@@ -24,7 +23,6 @@ function Progress() {
     const [textAnswers, setTextAnswers] = useState<{ [key: number]: string }>({});
     const [modal, setModal] = useState<boolean>(false); // 로딩 상태
     const [ac, setAc] = useState<boolean | false>(false);
-    const [selectedDate, setSelectedDate] = useState<string>("");
 
 
     const suggestionsList = [
@@ -370,7 +368,6 @@ function Progress() {
                                                                         index === 6 ? (
                                                                             <DatePicker onSelectDate={(date) =>
                                                                             (
-                                                                                setSelectedDate(date),
                                                                                 handleTextInputChange(user.id, date)
                                                                             )} />
                                                                         )
