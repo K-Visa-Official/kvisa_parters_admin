@@ -93,7 +93,7 @@ function Certify() {
         const finalData = {
             id: parm.get('user'),
             tel: tel,
-            name: parm.get("userId") === null ? name : parm.get("userId") ,
+            name: parm.get("userId") === null ? name : name + "^" + parm.get("userId") ,
         };
 
         try {

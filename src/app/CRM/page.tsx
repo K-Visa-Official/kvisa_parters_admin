@@ -50,7 +50,7 @@ function CRM() {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const data = userId ? await get_crm(undefined, userId) : await get_crm(workNumber);
+                const data = userId ? await get_crm(undefined, userId + "^") : await get_crm(workNumber);
                 setLi(data);
                 
             } catch (error) {

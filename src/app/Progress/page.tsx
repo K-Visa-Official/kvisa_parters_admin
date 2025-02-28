@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
-import { useState, useEffect, Suspense , useRef } from "react";
+import { useState, useEffect, Suspense, useRef } from "react";
 import styles from "@/app/css/user_detail.module.css";
 import Image from "next/image";
 import { readlist, work_detail, registerProcess, registerProcessUser } from "../server/work";
@@ -15,7 +15,7 @@ import DatePicker from "../Component/Common/DatePicker";
 function Progress() {
     const parm = useSearchParams();
     const router = useRouter()
-    const targetRefs = useRef<(HTMLParagraphElement | null)[]>([]);    
+    const targetRefs = useRef<(HTMLParagraphElement | null)[]>([]);
     const [progressId, setProgressId] = useState<string | null>(null);
     const [work, setWork] = useState<Question_Post[]>([]);
     const [workdetail, setWorkDetail] = useState<WorkResponse[]>([]);
@@ -23,7 +23,19 @@ function Progress() {
     const [textAnswers, setTextAnswers] = useState<{ [key: number]: string }>({});
     const [modal, setModal] = useState<boolean>(false); // 로딩 상태
     const [ac, setAc] = useState<boolean | false>(false);
+    const [year, setYear] = useState<string>("");
+    const [month, setMonth] = useState<string>("");
+    const [day, setDay] = useState<string>("");
 
+    // 🔹 현재 연도를 기준으로 선택할 연도 리스트
+    const years = Array.from({ length: 2099 - 2025 + 1 }, (_, i) => (2025 + i).toString());
+
+
+    // 🔹 월 리스트 (01~12)
+    const months = Array.from({ length: 12 }, (_, i) => (i + 1).toString().padStart(2, "0"));
+
+    // 🔹 일 리스트 (1~31)
+    const days = Array.from({ length: 31 }, (_, i) => (i + 1).toString().padStart(2, "0"));
 
     const suggestionsList = [
         "한국",
@@ -84,9 +96,8 @@ function Progress() {
     // 텍스트 입력 변경
     const handleTextInputChange = (questionId: number, value: string) => {
         setTextAnswers(prev => ({ ...prev, [questionId]: value }));
+
     };
-
-
 
     const handleSubmit = async () => {
 
@@ -302,7 +313,7 @@ function Progress() {
                                             textOverflow: "ellipsis",
                                             wordBreak: "break-word"
                                         }}
-                                        ref={(el) => { targetRefs.current[index] = el; }} 
+                                            ref={(el) => { targetRefs.current[index] = el; }}
                                         >{index + 1}. {user.question}</p>
 
                                         <div className={styles.answerBox}>
@@ -366,10 +377,67 @@ function Progress() {
 
                                                                     ) :
                                                                         index === 6 ? (
-                                                                            <DatePicker onSelectDate={(date) =>
-                                                                            (
-                                                                                handleTextInputChange(user.id, date)
-                                                                            )} />
+                                                                            <div className="flex gap-2" style={{ marginTop: "20px" }}>
+                                                                                {/* 연도 선택 */}
+                                                                                <select value={year} onChange={(e) => setYear(e.target.value)}
+                                                                                    style={{
+                                                                                        border: "none",
+                                                                                        width: "80px",
+                                                                                        height: "30px",
+                                                                                        padding: "5px",
+                                                                                        background: "#f5f6f9",
+                                                                                        color: "black", fontSize: "14px"
+                                                                                    }}
+                                                                                >
+                                                                                    <option value="">YYYY</option>
+                                                                                    {years.map((y) => (
+                                                                                        <option key={y} value={y} style={{ fontSize: "14px" }}>
+                                                                                            {y}
+                                                                                        </option>
+                                                                                    ))}
+                                                                                </select>
+
+                                                                                {/* 월 선택 */}
+                                                                                <select value={month} onChange={(e) => setMonth(e.target.value)}
+                                                                                    style={{
+                                                                                        border: "none",
+                                                                                        width: "80px",
+                                                                                        height: "30px",
+                                                                                        padding: "5px",
+                                                                                        background: "#f5f6f9", marginLeft: "10px",
+                                                                                        color: "black", fontSize: "14px"
+                                                                                    }}>
+                                                                                    <option value="">MM</option>
+                                                                                    {months.map((m) => (
+                                                                                        <option key={m} value={m}>
+                                                                                            {m}
+                                                                                        </option>
+                                                                                    ))}
+                                                                                </select>
+
+                                                                                {/* 일 선택 */}
+                                                                                <select value={day} onChange={(e) => (
+                                                                                    setDay(e.target.value) , 
+                                                                                    console.log(year + "." + month + "." + e.target.value),
+                                                                                    handleTextInputChange(user.id, year + "." + month + "." + e.target.value)
+                                                                                    )
+                                                                                    }className="border p-2 rounded"
+                                                                                    style={{
+                                                                                        border: "none",
+                                                                                        width: "80px",
+                                                                                        height: "30px",
+                                                                                        padding: "5px",
+                                                                                        background: "#f5f6f9",
+                                                                                        color: "black", fontSize: "14px", marginLeft: "10px"
+                                                                                    }}>
+                                                                                    <option value="">DD</option>
+                                                                                    {days.map((d) => (
+                                                                                        <option key={d} value={d}>
+                                                                                            {d}
+                                                                                        </option>
+                                                                                    ))}
+                                                                                </select>
+                                                                            </div>
                                                                         )
                                                                             :
                                                                             (
@@ -418,10 +486,10 @@ function Progress() {
                                                                     <div
                                                                         className={styles.answerItem}
                                                                         onClick={() => {
-                                                                            targetRefs.current[index]?.scrollIntoView({ behavior: 'smooth', block:'start' });
-                                                                            
+                                                                            targetRefs.current[index]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
                                                                             handleAnswerSelect(user.id, a.answer, user.answer_type)
-                                                                          }}
+                                                                        }}
                                                                         // onClick={() => handleAnswerSelect(user.id, a.answer, user.answer_type)}
                                                                         style={{
                                                                             marginTop: "16px", display: "flex", flexDirection: "row",
@@ -461,15 +529,16 @@ function Progress() {
                         </div>
                     </div> */}
 
-                                <div style={{ width: "100%", height: "56px", display: "flex", flexDirection: "row", marginTop: "50px", marginBottom: "60px" ,
-                                    justifyContent:"center" , alignItems:"center"
+                                <div style={{
+                                    width: "100%", height: "56px", display: "flex", flexDirection: "row", marginTop: "50px", marginBottom: "60px",
+                                    justifyContent: "center", alignItems: "center"
                                 }}>
                                     {/* <div style={{ width: "50%", height: "56px" }}>
 
                                     </div> */}
                                     <div style={{
                                         width: "50%", height: "56px", background: "linear-gradient(91deg, #1c68ff 0%, #053cf0 100%)", borderRadius: "5px",
-                                        fontSize: "15px", color: "white", display: "flex", justifyContent: "center", alignItems: "center" , fontWeight:"bold"
+                                        fontSize: "15px", color: "white", display: "flex", justifyContent: "center", alignItems: "center", fontWeight: "bold"
                                     }} onClick={handleSubmit}>
                                         {parm.get("language") === "0" ? Korean.enter : Ch?.enter}
 

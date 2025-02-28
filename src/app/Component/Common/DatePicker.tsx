@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect } from "react";
 
 interface DatePickerProps {
   onSelectDate: (date: string) => void;
@@ -21,14 +21,22 @@ const DatePicker: React.FC<DatePickerProps> = ({ onSelectDate }) => {
 
   // 🔹 선택된 날짜 조합
   const handleSelect = (type: string, value: string) => {
-    if (type === "year") setYear(value);
-    if (type === "month") setMonth(value);
-    if (type === "day") setDay(value);
-
-    if (year || month || day) {
-      onSelectDate(`${year}.${month}.${day}`);
+    if (type === "year") {
+      setYear(value);
+    } else if (type === "month") {
+      setMonth(value);
+    } else if (type === "day") {
+      setDay(value);
     }
   };
+
+  // 모든 값이 선택되었을 때만 onSelectDate 호출
+  useEffect(() => {
+    if (year && month && day) {
+      onSelectDate(`${year}.${month}.${day}`);
+    }
+  }, [year, month, day, onSelectDate]); // year, month, day가 모두 변경될 때마다 실행됨
+
 
   return (
     <div className="flex gap-2" style={{ marginTop:"20px"}}>
