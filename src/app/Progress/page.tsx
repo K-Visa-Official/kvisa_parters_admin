@@ -26,6 +26,10 @@ function Progress() {
     const [year, setYear] = useState<string>("");
     const [month, setMonth] = useState<string>("");
     const [day, setDay] = useState<string>("");
+    const [phone, setPhone] = useState<string>("010");
+    const [phone_second, setPhone_second] = useState<string>("");
+    const [phone_third, setPhone_third] = useState<string>("");
+
 
     // 🔹 현재 연도를 기준으로 선택할 연도 리스트
     const years = Array.from({ length: 2099 - 2025 + 1 }, (_, i) => (2025 + i).toString());
@@ -38,12 +42,13 @@ function Progress() {
     const days = Array.from({ length: 31 }, (_, i) => (i + 1).toString().padStart(2, "0"));
 
     const suggestionsList = [
-        "한국",
-        "중국",
-        "인도네시아",
-        "베트남",
-        "인도",
-        "일본",
+        "한국", "중국", "인도네시아", "베트남", "인도", "일본", "필리핀",
+        "영국", "프랑스", "이탈리아", "독일", "그리스", "미국", "캐나다", 
+        "멕시코", "브라질", "아르헨티나", "칠레", "페루", "콜롬비아", "네팔" ,
+        "스페인", "포르투갈", "네덜란드", "벨기에", "스위스", "스웨덴", 
+        "노르웨이", "덴마크", "핀란드", "러시아", "터키", "사우디아라비아", 
+        "아랍에미리트", "이집트", "남아프리카공화국", "나이지리아", "케냐", 
+        "호주", "뉴질랜드", "태국", "말레이시아", "싱가포르"
     ];
 
     const finalData = work.map(user => ({
@@ -66,7 +71,7 @@ function Progress() {
                     setProgressId(progress); // progress가 바뀔 때마다 상태 업데이트
                 }
                 if (member === "6") {
-                    if(userId === null){
+                    if (userId === null) {
                         router.replace("/404");
                     }
                 }
@@ -425,11 +430,11 @@ function Progress() {
 
                                                                                 {/* 일 선택 */}
                                                                                 <select value={day} onChange={(e) => (
-                                                                                    setDay(e.target.value) , 
+                                                                                    setDay(e.target.value),
                                                                                     console.log(year + "." + month + "." + e.target.value),
                                                                                     handleTextInputChange(user.id, year + "." + month + "." + e.target.value)
-                                                                                    )
-                                                                                    }className="border p-2 rounded"
+                                                                                )
+                                                                                } className="border p-2 rounded"
                                                                                     style={{
                                                                                         border: "none",
                                                                                         width: "80px",
@@ -448,46 +453,107 @@ function Progress() {
                                                                             </div>
                                                                         )
                                                                             :
-                                                                            (
-                                                                                <textarea
-                                                                                    value={textAnswers[user.id] || ""}
-                                                                                    // placeholder="내용을 입력해주세요"
-                                                                                    className={styles.quinput}
-                                                                                    style={{
-                                                                                        background: "#f5f6f9",
-                                                                                        resize: "none",
-                                                                                        padding: 15,
-                                                                                        border: "none",
-                                                                                        marginTop: "20px",
-                                                                                        width: `${textAnswers[user.id]?.length ? textAnswers[user.id].length * 10 + 50 : 80}px`, // 텍스트 길이에 맞게 크기 조정
-                                                                                        height: 'auto',
-                                                                                        textAlign: "center", // 텍스트 가로 중앙 정렬
-                                                                                        lineHeight: "3px"
-                                                                                    }}
-                                                                                    onChange={(e) => {
-                                                                                        let newValue = e.target.value;
-
-                                                                                        // index 8: 문자만 입력 가능
-                                                                                        if (index === 8) {
-                                                                                            newValue = e.target.value.replace(/[^a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣\s]/g, ""); // 문자만 입력
-                                                                                        }
-
-                                                                                        // index 9: 전화번호 형식 적용
-                                                                                        if (index === 9) {
-                                                                                            let formattedValue = e.target.value.replace(/[^0-9]/g, ""); // 숫자만 남기기
-                                                                                            if (formattedValue.length > 3 && formattedValue.length <= 6) {
-                                                                                                formattedValue = formattedValue.replace(/(\d{3})(\d{1,4})/, "$1-$2");
-                                                                                            } else if (formattedValue.length > 6) {
-                                                                                                formattedValue = formattedValue.replace(/(\d{3})(\d{4})(\d{1,4})/, "$1-$2-$3");
-                                                                                            }
-                                                                                            newValue = formattedValue;
-                                                                                        }
-
-                                                                                        // 최종적으로 값 변경 처리
-                                                                                        handleTextInputChange(user.id, newValue);
-                                                                                    }}
-                                                                                />
+                                                                            index === 9 ? (
+                                                                                <div className="flex gap-2" style={{ marginTop: "20px" }}>
+                                                                                    {/* 연도 선택 */}
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        value={phone}
+                                                                                        disabled
+                                                                                        onChange={(e)=> setPhone(e.target.value)}
+                                                                                        placeholder=""
+                                                                                        style={{
+                                                                                            border: "none", textAlign:"center" ,
+                                                                                            width: "80px",
+                                                                                            height: "30px",
+                                                                                            padding: "5px",
+                                                                                            background: "#f5f6f9",
+                                                                                            color: "black", fontSize: "14px",
+                                                                                            borderRadius: "5px" , marginRight:"10px"
+                                                                                        }}
+                                                                                    />
+                                                                                    -
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        value={phone_second}
+                                                                                        onChange={(e)=> setPhone_second(e.target.value)}
+                                                                                        placeholder=""
+                                                                                        style={{
+                                                                                            border: "none", textAlign:"center" ,
+                                                                                            width: "80px",
+                                                                                            height: "30px",
+                                                                                            padding: "5px",
+                                                                                            background: "#f5f6f9",
+                                                                                            color: "black", fontSize: "14px",
+                                                                                            borderRadius: "5px", marginRight:"10px" , marginLeft:"10px"
+                                                                                        }}
+                                                                                        maxLength={4}
+                                                                                    />
+                                                                                    -
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        value={phone_third}
+                                                                                        onChange={(e)=> (
+                                                                                            setPhone_third(e.target.value),
+                                                                                            handleTextInputChange(user.id, 
+                                                                                                phone + "-" + phone_second + "-" + e.target.value
+                                                                                            )
+                                                                                        )}
+                                                                                        placeholder=""
+                                                                                        style={{
+                                                                                            border: "none", textAlign:"center" ,
+                                                                                            width: "80px",
+                                                                                            height: "30px",
+                                                                                            padding: "5px",
+                                                                                            background: "#f5f6f9",
+                                                                                            color: "black", fontSize: "14px",
+                                                                                            borderRadius: "5px", marginLeft:"10px"
+                                                                                        }}
+                                                                                        maxLength={4}
+                                                                                    />
+                                                                                </div>
                                                                             )
+                                                                                :
+                                                                                (
+                                                                                    <textarea
+                                                                                        value={textAnswers[user.id] || ""}
+                                                                                        // placeholder="내용을 입력해주세요"
+                                                                                        className={styles.quinput}
+                                                                                        style={{
+                                                                                            background: "#f5f6f9",
+                                                                                            resize: "none",
+                                                                                            padding: 15,
+                                                                                            border: "none",
+                                                                                            marginTop: "20px",
+                                                                                            // width: `${textAnswers[user.id]?.length ? textAnswers[user.id].length * 10 + 50 : 80}px`, // 텍스트 길이에 맞게 크기 조정
+                                                                                            height: 'auto',
+                                                                                            textAlign: "left", // 텍스트 가로 중앙 정렬
+                                                                                            lineHeight: "3px"
+                                                                                        }}
+                                                                                        onChange={(e) => {
+                                                                                            let newValue = e.target.value;
+
+                                                                                            // index 8: 문자만 입력 가능
+                                                                                            if (index === 8) {
+                                                                                                newValue = e.target.value.replace(/[^a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣\s]/g, ""); // 문자만 입력
+                                                                                            }
+
+                                                                                            // index 9: 전화번호 형식 적용
+                                                                                            if (index === 9) {
+                                                                                                let formattedValue = e.target.value.replace(/[^0-9]/g, ""); // 숫자만 남기기
+                                                                                                if (formattedValue.length > 3 && formattedValue.length <= 6) {
+                                                                                                    formattedValue = formattedValue.replace(/(\d{3})(\d{1,4})/, "$1-$2");
+                                                                                                } else if (formattedValue.length > 6) {
+                                                                                                    formattedValue = formattedValue.replace(/(\d{3})(\d{4})(\d{1,4})/, "$1-$2-$3");
+                                                                                                }
+                                                                                                newValue = formattedValue;
+                                                                                            }
+
+                                                                                            // 최종적으로 값 변경 처리
+                                                                                            handleTextInputChange(user.id, newValue);
+                                                                                        }}
+                                                                                    />
+                                                                                )
 
                                                                 ) : (
                                                                     // 단일/복수 선택 처리

@@ -336,7 +336,7 @@ function CRM() {
                                                             의뢰인명
                                                         </div>
                                                         <div style={{ width: "70%", color: "black" }}>
-                                                            {user.name}
+                                                            {user.name.split("^")[0]}
                                                         </div>
                                                     </div>
 

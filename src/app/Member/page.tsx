@@ -192,10 +192,10 @@ function CaseStoriesDetailPage() {
 
                             <div className={styles.post} onClick={() => router.push(
                                 parm.get("userId") === null ?
-                                    `/CRM?&language=${parm.get("language")}`
+                                    `/CRM?&member=${parm.get("member")}&language=${parm.get("language")}`
                                     :
-                                    `/CRM?&language=${parm.get("language")}&userId=${parm.get("userId")}`
-                            )}>
+                                    `/CRM?&member=${parm.get("member")}&language=${parm.get("language")}&userId=${parm.get("userId")}`
+                                )}>
                                 <div className={styles.postimg} style={{ color: "black" , }}>
                                     <Image
                                         aria-hidden

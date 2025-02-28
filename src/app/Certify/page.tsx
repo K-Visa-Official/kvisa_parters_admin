@@ -119,6 +119,7 @@ function Certify() {
             });
 
             if (response.status === 200) {
+
                 // 비동기 작업을 하는 change_name 호출
                 await change_name(finalData);  // 여기서 change_name이 비동기 함수여야 합니다.
                 setModal(true)
@@ -275,11 +276,10 @@ function Certify() {
                             :
                             (
                                 parm.get("language") === "0" ? 
-                                router.push(`/Member?&member=${parm.get("member")}&language=0&userId=${parm.get("userId")}`) 
+                                router.push(`/CRM?&member=${parm.get("member")}&language=${parm.get("language")}&userId=${parm.get("userId")}`) 
                                 :
-                                router.push(`/Member?&member=${parm.get("member")}&language=1&userId=${parm.get("userId")}`) 
+                                router.push(`/CRM?&member=${parm.get("member")}&language=${parm.get("language")}&userId=${parm.get("userId")}`) 
                             )
-                           
                         )
                         }>
                             {parm.get("language") === "0" ? Korean.accept_eleven : Ch.accept_eleven}

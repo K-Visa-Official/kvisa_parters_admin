@@ -2,7 +2,7 @@
 
 import styles from "@/app/css/user_detail.module.css";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname , useRouter , useSearchParams } from "next/navigation";
 
 
 interface MoHeaderProps {
@@ -13,39 +13,29 @@ interface MoHeaderProps {
 
 const MoHeader: React.FC<MoHeaderProps> = ({ state = 0, setState, setAc }) => {
     const path = usePathname()
+    const router = useRouter()
+    const parm = useSearchParams()
     // console.log(path)
 
     // ㅌ버튼
     const handleCloseWebView = () => {
         if (path === '/Member') {
-            if (state === 1) {
-                if (setAc) {
-                    setAc(true)
-                }
-            }
-            else {
-                if (setState) {
-                    setState(1)
-                }
+            if (setState) {
+                setState(1)
             }
         }
-        else{
-            if (setAc) {
-                setAc(true)
+        else if (path === '/CRM'){
+            if(parm.get("language") === "0"){
+                router.push(`/Member?&member=${parm.get("member")}&language=0&userId=${parm.get("userId")}`) 
             }
+            else{
+                router.push(`/Member?&member=${parm.get("member")}&language=1&userId=${parm.get("userId")}`) 
+            }
+        }
+        else {
+            router.back()
         }
         
-        //   else if (path === '/Progress'){
-        //     if (setAc) {
-        //         setAc(true)
-        //     }
-        //   }
-        //   else if (path === '/Certify'){
-        //     if (setAc) {
-        //         setAc(true)
-        //     }
-        //   }
-
     };
 
     const closeWebView = () => {
@@ -55,9 +45,9 @@ const MoHeader: React.FC<MoHeaderProps> = ({ state = 0, setState, setAc }) => {
             methods: "doNCloseWebView",
             param: ""
         };
-    
+
         const message = encodeURIComponent(JSON.stringify(args));
-    
+
         if (window.JBPrivateBankBridge) {
             // Android
             window.JBPrivateBankBridge.callNative(message);
@@ -69,9 +59,9 @@ const MoHeader: React.FC<MoHeaderProps> = ({ state = 0, setState, setAc }) => {
         }
     };
 
-    const handleCloseEnd = () =>{
+    const handleCloseEnd = () => {
         if (state === 1) {
-            closeWebView(); 
+            closeWebView();
         }
         else {
             if (setState) {
