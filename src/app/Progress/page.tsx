@@ -10,7 +10,7 @@ import { Korean, Ch } from "../type/typedef";
 import MoHeader from "../Component/Common/MoHeader";
 import Modal from "../Component/Common/Modal";
 import AutoComplete from "../Component/Common/AutoComplete";
-import DatePicker from "../Component/Common/DatePicker";
+// import DatePicker from "../Component/Common/DatePicker";
 
 function Progress() {
     const parm = useSearchParams();
