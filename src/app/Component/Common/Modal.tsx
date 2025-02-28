@@ -23,24 +23,24 @@ const Modal: React.FC<ModalProps> = ({ onClose, t, c, n, s, web , setAc , callba
             router.back()
         }
         else{
-            const args = {
-                callbackId: callbackId,   // callbackId 값
-                className: "JBSchemeBR",    // 클래스명
-                methods: "doNCloseWebView", // 호출할 메서드명
-                param: ""                   // 파라미터 (현재는 비어 있음)
-            };
+            // const args = {
+            //     callbackId: callbackId,   // callbackId 값
+            //     className: "JBSchemeBR",    // 클래스명
+            //     methods: "doNCloseWebView", // 호출할 메서드명
+            //     param: ""                   // 파라미터 (현재는 비어 있음)
+            // };
     
-            const message = encodeURIComponent(JSON.stringify(args)); // args를 JSON 문자열로 변환 후 인코딩
+            // const message = encodeURIComponent(JSON.stringify(args)); // args를 JSON 문자열로 변환 후 인코딩
     
-            if (window.JBPrivateBankBridge) {
-                // Android 웹뷰 닫기
-                window.JBPrivateBankBridge.callNative(message);
-            } else if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.JBPrivateBankBridge) {
-                // iOS 웹뷰 닫기
-                window.webkit.messageHandlers.JBPrivateBankBridge.postMessage(message);
-            } else {
-                console.warn("웹뷰 인터페이스를 찾을 수 없음");
-            }
+            // if (window.JBPrivateBankBridge) {
+            //     // Android 웹뷰 닫기
+            //     window.JBPrivateBankBridge.callNative(message);
+            // } else if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.JBPrivateBankBridge) {
+            //     // iOS 웹뷰 닫기
+            //     window.webkit.messageHandlers.JBPrivateBankBridge.postMessage(message);
+            // } else {
+            //     console.warn("웹뷰 인터페이스를 찾을 수 없음");
+            // }
         }
     }
 

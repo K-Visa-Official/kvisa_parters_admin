@@ -48,11 +48,30 @@ const MoHeader: React.FC<MoHeaderProps> = ({ state = 0, setState, setAc }) => {
 
     };
 
+    const closeWebView = () => {
+        const args = {
+            callbackId: "1234567890",
+            className: "JBSchemeBR",
+            methods: "doNCloseWebView",
+            param: ""
+        };
+    
+        const message = encodeURIComponent(JSON.stringify(args));
+    
+        if (window.JBPrivateBankBridge) {
+            // Android
+            window.JBPrivateBankBridge.callNative(message);
+        } else if (window.webkit?.messageHandlers?.JBPrivateBankBridge) {
+            // iOS
+            window.webkit.messageHandlers.JBPrivateBankBridge.postMessage(message);
+        } else {
+            console.warn("웹뷰 인터페이스를 찾을 수 없음");
+        }
+    };
+
     const handleCloseEnd = () =>{
         if (state === 1) {
-            if (setAc) {
-                setAc(true)
-            }
+            closeWebView(); 
         }
         else {
             if (setState) {
