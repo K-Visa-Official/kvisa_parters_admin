@@ -674,8 +674,9 @@ function Progress() {
                                                                     <div
                                                                         className={styles.answerItem}
                                                                         onClick={() => {
-                                                                            user.answer_type === 0 ?
-                                                                                targetRefs.current[index]?.scrollIntoView({ behavior: 'smooth', block: 'start' }) : ""
+                                                                            if (user.answer_type === 0) {
+                                                                                targetRefs.current[index]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                                                            }
 
                                                                             handleAnswerSelect(user.id, a.answer, user.answer_type)
                                                                         }}
