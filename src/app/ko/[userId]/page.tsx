@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation"; 
 
-const sdakjhasdhjsa = () => {
+const Sdakjhasdhjsa = () => {
     const router = useRouter();
     // const params = useParams<{ userId: string }>()
     
@@ -16,4 +16,4 @@ const sdakjhasdhjsa = () => {
     return <div></div>;
 };
 
-export default sdakjhasdhjsa;
+export default Sdakjhasdhjsa;

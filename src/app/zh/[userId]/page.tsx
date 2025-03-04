@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 
 
-const asdghjasdgshjagshjadjgas = () => {
+const Asdghjasdgshjagshjadjgas = () => {
     const router = useRouter();
     // const params = useParams<{ userId: string }>()
 
@@ -23,4 +23,4 @@ const asdghjasdgshjagshjadjgas = () => {
     );
 };
 
-export default asdghjasdgshjagshjadjgas;
+export default Asdghjasdgshjagshjadjgas;
