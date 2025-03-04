@@ -93,7 +93,7 @@ const Busionlist: React.FC<ModalProps> = ({ search }) => {
         if (!bu_list || !bu_list.results) return;
 
         // 새로운 리스트 생성 (불변성 유지)
-        const updatedList = bu_list.results.map((item, index) => 
+        const updatedList = bu_list.results.map((item) => 
             item.id === a ? { ...item, state: b } : item
         );
 

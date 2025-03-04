@@ -4,7 +4,9 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useState, useEffect, Suspense, useRef } from "react";
 import styles from "@/app/css/user_detail.module.css";
 import Image from "next/image";
-import { readlist, work_detail, registerProcess, registerProcessUser } from "../server/work";
+import { readlist, work_detail, 
+    registerProcess, registerProcessUser 
+    } from "../server/work";
 import { Question_Post, WorkResponse } from "../type/user";
 import { Korean, Ch } from "../type/typedef";
 import MoHeader from "../Component/Common/MoHeader";
@@ -125,50 +127,49 @@ function Progress() {
 
 
                 for (let i = 0; i < finalData.length; i++) {
-                    console.log(finalData)
-                    // const response = await registerProcess(
-                    //     {
-                    //         "user": Number(workdetail[0]?.user),
-                    //         "work": workdetail[0]?.id,
-                    //         // "name" : "미입력" ,
-                    //         // "tel" : 0 ,
-                    //         // "marketing" : "n" , 
-                    //         "questions": finalData[i].question,
-                    //         "answers": finalData[i].answer,
-                    //     }
-                    // );
-                    // if (response.detail === "Process created successfully") {
-                    //     if (i === finalData.length - 1) {
-                    //         const response_se = await registerProcessUser(
-                    //             {
-                    //                 "id": response.return,
-                    //                 "name": "미입력",
-                    //                 "tel": 0,
-                    //                 "marketing": "n",
-                    //                 "lang": String(parm.get("language"))
-                    //             }
-                    //         );
-                    //         if (parm.get("userId") === null) {
-                    //             if (parm.get("language") === "0") {
-                    //                 router.push(`/Certify/?&user=${response_se.return}&language=0&member=${parm.get("member")}`)
-                    //             }
-                    //             else {
-                    //                 router.push(`/Certify/?&user=${response_se.return}&language=1&member=${parm.get("member")}`)
-                    //             }
-                    //         }
-                    //         else {
-                    //             if (parm.get("language") === "0") {
-                    //                 router.push(`/Certify/?&user=${response_se.return}&language=0&member=${parm.get("member")}&userId=${parm.get("userId")}`)
-                    //             }
-                    //             else {
-                    //                 router.push(`/Certify/?&user=${response_se.return}&language=1&member=${parm.get("member")}&userId=${parm.get("userId")}`)
-                    //             }
-                    //         }
-                    //     }
-                    // }
-                    // else {
-                    //     alert("에러발생")
-                    // }
+                    const response = await registerProcess(
+                        {
+                            "user": Number(workdetail[0]?.user),
+                            "work": workdetail[0]?.id,
+                            // "name" : "미입력" ,
+                            // "tel" : 0 ,
+                            // "marketing" : "n" , 
+                            "questions": finalData[i].question,
+                            "answers": finalData[i].answer,
+                        }
+                    );
+                    if (response.detail === "Process created successfully") {
+                        if (i === finalData.length - 1) {
+                            const response_se = await registerProcessUser(
+                                {
+                                    "id": response.return,
+                                    "name": "미입력",
+                                    "tel": 0,
+                                    "marketing": "n",
+                                    "lang": String(parm.get("language"))
+                                }
+                            );
+                            if (parm.get("userId") === null) {
+                                if (parm.get("language") === "0") {
+                                    router.push(`/Certify/?&user=${response_se.return}&language=0&member=${parm.get("member")}`)
+                                }
+                                else {
+                                    router.push(`/Certify/?&user=${response_se.return}&language=1&member=${parm.get("member")}`)
+                                }
+                            }
+                            else {
+                                if (parm.get("language") === "0") {
+                                    router.push(`/Certify/?&user=${response_se.return}&language=0&member=${parm.get("member")}&userId=${parm.get("userId")}`)
+                                }
+                                else {
+                                    router.push(`/Certify/?&user=${response_se.return}&language=1&member=${parm.get("member")}&userId=${parm.get("userId")}`)
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        alert("에러발생")
+                    }
 
                 }
             }
