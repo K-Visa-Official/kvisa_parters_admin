@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation"; 
 
-const KoPage = () => {
+const sdakjhasdhjsa = () => {
     const router = useRouter();
     // const params = useParams<{ userId: string }>()
     
@@ -16,4 +16,4 @@ const KoPage = () => {
     return <div></div>;
 };
 
-export default KoPage;
+export default sdakjhasdhjsa;

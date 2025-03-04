@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 
 
-const ZhPage = () => {
+const asdghjasdgshjagshjadjgas = () => {
     const router = useRouter();
     // const params = useParams<{ userId: string }>()
 
@@ -23,4 +23,4 @@ const ZhPage = () => {
     );
 };
 
-export default ZhPage;
+export default asdghjasdgshjagshjadjgas;
