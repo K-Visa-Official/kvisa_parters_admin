@@ -15,7 +15,6 @@ interface ModalProps {
 
 const Modal: React.FC<ModalProps> = ({ onClose, t, c, n, s, web , setAc  }) => {
 
-    const router = useRouter()
 
     function exit(){
         if(web){
