@@ -2,7 +2,7 @@
 
 import styles from "@/app/css/user_detail.module.css";
 import Image from "next/image";
-import { usePathname , useRouter , useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 
 interface MoHeaderProps {
@@ -24,18 +24,18 @@ const MoHeader: React.FC<MoHeaderProps> = ({ state = 0, setState }) => {
                 setState(1)
             }
         }
-        else if (path === '/CRM'){
-            if(parm.get("language") === "0"){
-                router.push(`/Member?&member=${parm.get("member")}&language=0&userId=${parm.get("userId")}`) 
+        else if (path === '/CRM') {
+            if (parm.get("language") === "0") {
+                router.push(`/Member?&member=${parm.get("member")}&language=0&userId=${parm.get("userId")}`)
             }
-            else{
-                router.push(`/Member?&member=${parm.get("member")}&language=1&userId=${parm.get("userId")}`) 
+            else {
+                router.push(`/Member?&member=${parm.get("member")}&language=1&userId=${parm.get("userId")}`)
             }
         }
         else {
             router.back()
         }
-        
+
     };
 
     const closeWebView = () => {
@@ -60,13 +60,18 @@ const MoHeader: React.FC<MoHeaderProps> = ({ state = 0, setState }) => {
     };
 
     const handleCloseEnd = () => {
-        if (state === 1) {
-            closeWebView();
+        if(path === '/Member'){
+            if (state === 1) {
+                closeWebView();
+            }
+            else {
+                if (setState) {
+                    setState(1)
+                }
+            }
         }
         else {
-            if (setState) {
-                setState(1)
-            }
+            closeWebView();
         }
     }
 
@@ -80,7 +85,16 @@ const MoHeader: React.FC<MoHeaderProps> = ({ state = 0, setState }) => {
             <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "center", width: "324px", }}>
                 <Image aria-hidden src="/common/KPJB.png" alt="로고" width={250} height={30} />
             </div>
-            {
+            <Image
+                aria-hidden
+                src="/common/close.png"
+                alt="닫기"
+                width={30}
+                height={30}
+                style={{ cursor: "pointer" }}
+                onClick={handleCloseEnd} // 클릭 시 웹뷰 닫기
+            />
+            {/* {
                 path === '/Member' && state === 1 ?
                     <Image
                         aria-hidden
@@ -91,7 +105,7 @@ const MoHeader: React.FC<MoHeaderProps> = ({ state = 0, setState }) => {
                         style={{ cursor: "pointer" }}
                         onClick={handleCloseEnd} // 클릭 시 웹뷰 닫기
                     /> : ""
-            }
+            } */}
 
         </div>
     );

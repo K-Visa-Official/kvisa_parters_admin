@@ -10,9 +10,11 @@ import Busionlist from "./Busionlist";
 
 export default function Business() {
 
-    const { title_bu, created_at_bu, seTitle_bu, setCreate_bu } = BusinessStore();
+    const { title_bu, created_at_bu, seTitle_bu, setCreate_bu , state , setState , setPage_bu ,  setChoice} = BusinessStore();
     const [search, setSearch] = useState<boolean>(false); // 로딩 상태
     const [kind, setKind] = useState<string>(Busioness.total);
+    const [isTooltipVisible, setTooltipVisible] = useState(false);
+    const order = ["접수완료", "계약완료", "서류작성", "심사진행", "처리완료", "상담종료"]
 
     return (
         <div className={first.total}>
@@ -37,45 +39,90 @@ export default function Business() {
                             onChange={(e) => seTitle_bu(e.target.value)}
                         />
 
-                        <FilterInputBox w={152} h={28} mt={0} bg={"#f5f6f9"} p={"접수일자"} v={created_at_bu}
+                        <FilterInputBox w={152} h={28} mt={0} bg={"#f5f6f9"} p={"접수일자(yyyy.mm.dd)"} v={created_at_bu}
                             src={"/admin/calendar.png"}
                             onChange={(e) => setCreate_bu(e.target.value)}
                         />
 
-                        <div className={styles.statebox}>
-                            <p>진행상태</p>
-                            <Image
-                                aria-hidden
-                                src="/admin/arrow_active.png"
-                                alt="Window icon"
-                                width={14}
-                                height={14}
-                            />
-                        </div>
+                        {isTooltipVisible ?
+                            <div style={{ display:"flex" , flexDirection:"column"}}>
+                                {order.map((b, index) => (
+                                    <div className={styles.statebox} key={index}
+                                        onClick={() => (
+                                            setTooltipVisible(!isTooltipVisible) ,
+                                            setState(index)
+                                            )
+                                            }> 
+                                        <p>{b}</p>
+                                        <Image
+                                            aria-hidden
+                                            src="/admin/arrow_active.png"
+                                            alt="Window icon"
+                                            width={14}
+                                            height={14}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                            :
+                            <div className={styles.statebox}
+                                onClick={() => setTooltipVisible(!isTooltipVisible)}>
+                                <p>{state === 10 ? "진행상태" : 
+                                         state === 0 ? "접수완료" :
+                                            state === 1 ? "계약완료" :
+                                                state === 2 ? "서류작성" :
+                                                    state === 3 ? "심사진행" :
+                                                        state === 4 ? "처리완료" : "상담종료"
+                                        }</p>
+                                <Image
+                                    aria-hidden
+                                    src="/admin/arrow_active.png"
+                                    alt="Window icon"
+                                    width={14}
+                                    height={14}
+                                />
+                            </div>
+                        }
+
 
                         <button className={first.btn} style={{ background: "black", border: "none" }}
                             onClick={() => setSearch(!search)}
                         >조회</button>
 
-                        <button className={first.btn} style={{ background: "#fff", border: "1px solid #e6eaee", color: "#000" }}>초기화</button>
+
+                        <button className={first.btn} style={{ background: "#fff", border: "1px solid #e6eaee", color: "#000" }}
+                            onClick={()=> (
+                                seTitle_bu(""),
+                                setCreate_bu(""),
+                                setState(10),
+                                setPage_bu(1)
+                            )}  
+                        >초기화</button>
                     </div>
                 </div>
 
                 <div className={styles.catebox}>
-                        {Object.values(Busioness).map((item) => (
-                            <span
-                                key={item}
-                                onClick={() => setKind(item)}
-                                style={{ borderBottom: kind === item ? "3px solid black" : "" , paddingBottom:"12px" ,
-                                            color: kind === item ? "black" : "#c1c1c5" , fontWeight:"600"
-                                 }}
-                                >
-                                {item}
-                            </span>
-                        ))}
+                    {Object.values(Busioness).map((item) => (
+                        <span
+                            key={item}
+                            onClick={() => (
+                                setKind(item) ,
+                                item === "전체" ? 
+                                setChoice(""):
+                                setChoice(item)
+                            )
+                            }
+                            style={{
+                                borderBottom: kind === item ? "3px solid black" : "", paddingBottom: "12px",
+                                color: kind === item ? "black" : "#c1c1c5", fontWeight: "600"
+                            }}
+                        >
+                            {item}
+                        </span>
+                    ))}
                 </div>
 
-                <Busionlist  search ={search}/>
+                <Busionlist search={search} />
 
             </div>
         </div>

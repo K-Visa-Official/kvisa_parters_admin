@@ -5,12 +5,15 @@ import { create } from "zustand";
 interface BusinessFilter {
   title_bu: string;
   created_at_bu: string;
+  choice: string;
   page_bu: number;
   state: number;
   seTitle_bu: (title: string) => void;
   setCreate_bu: (created_at: string) => void;
   setPage_bu: (page: number) => void;
   setState: (state: number) => void;
+  setChoice: (choice: string) => void;
+
 }
 
 const BusinessStore = create<BusinessFilter>((set, 
@@ -19,14 +22,16 @@ const BusinessStore = create<BusinessFilter>((set,
 
   title_bu: "",
   created_at_bu: "",
-  state: 0,
+  state: 10,
   page_bu: 1,
+  choice:"" ,
 
 
   seTitle_bu: (title_bu) => set({ title_bu }),
   setCreate_bu: (created_at_bu) => set({ created_at_bu }),
   setPage_bu: (page_bu) => set({ page_bu }),
   setState: (state) => set({ state }),
+  setChoice: (choice) => set({ choice }),
 
 
 

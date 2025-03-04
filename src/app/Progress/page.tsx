@@ -4,15 +4,17 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useState, useEffect, Suspense, useRef } from "react";
 import styles from "@/app/css/user_detail.module.css";
 import Image from "next/image";
-import { readlist, work_detail, 
-    registerProcess, registerProcessUser 
-    } from "../server/work";
+import {
+    readlist, work_detail,
+    registerProcess, registerProcessUser
+} from "../server/work";
 import { Question_Post, WorkResponse } from "../type/user";
 import { Korean, Ch } from "../type/typedef";
 import MoHeader from "../Component/Common/MoHeader";
 import Modal from "../Component/Common/Modal";
 import AutoComplete from "../Component/Common/AutoComplete";
 // import DatePicker from "../Component/Common/DatePicker";
+
 
 function Progress() {
     const parm = useSearchParams();
@@ -27,29 +29,55 @@ function Progress() {
     const [ac, setAc] = useState<boolean | false>(false);
     const [year, setYear] = useState<string>("");
     const [month, setMonth] = useState<string>("");
-    const [day, setDay] = useState<string>("");
+    const [day, setDay] = useState("");
+    const [days, setDays] = useState<string[]>([]); // 일수를 담을 배열
     const [phone, setPhone] = useState<string>("010");
     const [phone_second, setPhone_second] = useState<string>("");
     const [phone_third, setPhone_third] = useState<string>("");
-
+    const [aler, setAler] = useState("");
+    
+    const isLeapYear = (year: number) => {
+        return (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0));
+    };
 
     // 🔹 현재 연도를 기준으로 선택할 연도 리스트
     const years = Array.from({ length: 2099 - 2025 + 1 }, (_, i) => (2025 + i).toString());
-
 
     // 🔹 월 리스트 (01~12)
     const months = Array.from({ length: 12 }, (_, i) => (i + 1).toString().padStart(2, "0"));
 
     // 🔹 일 리스트 (1~31)
-    const days = Array.from({ length: 31 }, (_, i) => (i + 1).toString().padStart(2, "0"));
+    useEffect(() => {
+        // 2월일 경우 윤년에 따라 일수 변경
+        if (month === "02") {
+            const lastDay = isLeapYear(Number(year)) ? 29 : 28;
+            setDays(Array.from({ length: lastDay }, (_, i) => (i + 1).toString().padStart(2, "0")));
+        } else {
+            // 다른 월은 기본 31일까지
+            const maxDays: { [key: string]: number } = {
+                "01": 31,
+                "03": 31,
+                "04": 30,
+                "05": 31,
+                "06": 30,
+                "07": 31,
+                "08": 31,
+                "09": 30,
+                "10": 31,
+                "11": 30,
+                "12": 31
+            };
+            setDays(Array.from({ length: maxDays[month] || 31 }, (_, i) => (i + 1).toString().padStart(2, "0")));
+        }
+    }, [year, month]);
 
     const suggestionsList = [
         "한국", "중국", "인도네시아", "베트남", "인도", "일본", "필리핀",
-        "영국", "프랑스", "이탈리아", "독일", "그리스", "미국", "캐나다", 
-        "멕시코", "브라질", "아르헨티나", "칠레", "페루", "콜롬비아", "네팔" ,
-        "스페인", "포르투갈", "네덜란드", "벨기에", "스위스", "스웨덴", 
-        "노르웨이", "덴마크", "핀란드", "러시아", "터키", "사우디아라비아", 
-        "아랍에미리트", "이집트", "남아프리카공화국", "나이지리아", "케냐", 
+        "영국", "프랑스", "이탈리아", "독일", "그리스", "미국", "캐나다",
+        "멕시코", "브라질", "아르헨티나", "칠레", "페루", "콜롬비아", "네팔",
+        "스페인", "포르투갈", "네덜란드", "벨기에", "스위스", "스웨덴",
+        "노르웨이", "덴마크", "핀란드", "러시아", "터키", "사우디아라비아",
+        "아랍에미리트", "이집트", "남아프리카공화국", "나이지리아", "케냐",
         "호주", "뉴질랜드", "태국", "말레이시아", "싱가포르"
     ];
 
@@ -92,12 +120,22 @@ function Progress() {
     // 답변 선택 (단일/복수 공통)
     const handleAnswerSelect = (questionId: number, answer: string, answerType: number) => {
         setSelectedAnswers(prev => {
-            const currentAnswers = prev[questionId] || [];
+            let currentAnswers = prev[questionId] || [];
 
             if (answerType === 0) {
                 // 단일 선택: 기존 답변을 새로운 값으로 교체
                 return { ...prev, [questionId]: [answer] };
             } else {
+
+                if (answer === "없음") {
+                    return { ...prev, [questionId]: ["없음"] };
+                }
+
+                // 기존 선택이 "없음"이면 먼저 없애고 새 선택 시작
+                if (currentAnswers.includes("없음")) {
+                    currentAnswers = []; // "없음"을 선택하면 모든 기존 선택 해제
+                }
+
                 // 복수 선택: 선택/해제 로직
                 const newAnswers = currentAnswers.includes(answer)
                     ? currentAnswers.filter(a => a !== answer)
@@ -117,14 +155,55 @@ function Progress() {
     const handleSubmit = async () => {
 
         if (finalData.filter(a => a.answer === "").length > 0) {
-            alert(parm.get("language") === "0" ? Korean.enter_alert : Ch?.enter_alert)
+            setAc(true)
+            if(finalData.filter(a => a.answer === "")[0].question.includes("국적")){
+                setAler("국적을 선택해주세요")
+            }
+            else if(finalData.filter(a => a.answer === "")[0].question.includes("비자는")){
+                setAler("비자를 선택해주세요")
+            }
+            else if(finalData.filter(a => a.answer === "")[0].question.includes("비자 및 서비스")){
+                setAler("비자를 선택해주세요")
+            }
+            else if(finalData.filter(a => a.answer === "")[0].question.includes("나이")){
+                setAler("나이를 선택해주세요")
+            }
+            else if(finalData.filter(a => a.answer === "")[0].question.includes("소득금액")){
+                setAler("소득금액을 선택해주세요")
+            }
+            else if(finalData.filter(a => a.answer === "")[0].question.includes("체류기간")){
+                setAler("체류기간을 선택해주세요")
+            }
+            else if(finalData.filter(a => a.answer === "")[0].question.includes("비자 만료일")){
+                setAler("비자 만료일을 선택해주세요")
+            }
+            else if(finalData.filter(a => a.answer === "")[0].question.includes("아래")){
+                setAler("특이사항을 선택해주세요")
+            }
+            else if(finalData.filter(a => a.answer === "")[0].question.includes("이름")){
+                setAler("이름을 입력해주세요")
+            }
+            else if(finalData.filter(a => a.answer === "")[0].question.includes("전화번호")){
+                setAler("연락받을 전화번호를 입력해주세요")
+            }
+            else if(finalData.filter(a => a.answer === "")[0].question.includes("시간은")){
+                setAler("연락가능한 시간을 선택해주세요")
+            }
         }
         else {
             if (!modal) {
                 setModal(!modal)
             }
             else {
-
+                const today = new Date();
+                const formattedDate = today.toLocaleDateString('ko-KR', {
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false // 24시간 형식
+                });
 
                 for (let i = 0; i < finalData.length; i++) {
                     const response = await registerProcess(
@@ -136,6 +215,7 @@ function Progress() {
                             // "marketing" : "n" , 
                             "questions": finalData[i].question,
                             "answers": finalData[i].answer,
+                            "match": Number(workdetail[0]?.user) + "_" + formattedDate
                         }
                     );
                     if (response.detail === "Process created successfully") {
@@ -145,8 +225,9 @@ function Progress() {
                                     "id": response.return,
                                     "name": "미입력",
                                     "tel": 0,
-                                    "marketing": "n",
-                                    "lang": String(parm.get("language"))
+                                    "marketing": "y",
+                                    "lang": String(parm.get("language")),
+                                    "match": Number(workdetail[0]?.user) + "_" + formattedDate
                                 }
                             );
                             if (parm.get("userId") === null) {
@@ -184,9 +265,8 @@ function Progress() {
     return (
         <>
             {ac ?
-                <Modal web={"wed"} setAc={setAc} />
+                <Modal web={aler} setAc={setAc} />
                 :
-
                 <Suspense fallback={<div>Loading...</div>}>
                     {modal ?
                         <div
@@ -394,12 +474,12 @@ function Progress() {
                                                                         index === 6 ? (
                                                                             <div className="flex gap-2" style={{ marginTop: "20px" }}>
                                                                                 {/* 연도 선택 */}
-                                                                                <select value={year} 
+                                                                                <select value={year}
                                                                                     onChange={(e) => (
                                                                                         setYear(e.target.value),
-    
+
                                                                                         month === "" || day === "" ? "" :
-                                                                                        handleTextInputChange(user.id, e.target.value + "." + month + "." + day)
+                                                                                            handleTextInputChange(user.id, e.target.value + "." + month + "." + day)
                                                                                     )}
                                                                                     // onChange={(e) => setYear(e.target.value)}
                                                                                     style={{
@@ -424,9 +504,9 @@ function Progress() {
                                                                                     setMonth(e.target.value),
 
                                                                                     year === "" || day === "" ? "" :
-                                                                                    handleTextInputChange(user.id, year + "." + e.target.value + "." + day)
+                                                                                        handleTextInputChange(user.id, year + "." + e.target.value + "." + day)
                                                                                 )}
-                                                                                // onChange={(e) => setMonth(e.target.value)}
+                                                                                    // onChange={(e) => setMonth(e.target.value)}
                                                                                     style={{
                                                                                         border: "none",
                                                                                         width: "80px",
@@ -444,12 +524,14 @@ function Progress() {
                                                                                 </select>
 
                                                                                 {/* 일 선택 */}
-                                                                                <select value={day} onChange={(e) => (
-                                                                                    setDay(e.target.value),
-
-                                                                                    year === "" || month === "" ? "" :
-                                                                                    handleTextInputChange(user.id, year + "." + month + "." + e.target.value)
-                                                                                )} className="border p-2 rounded"
+                                                                                <select
+                                                                                    value={day}
+                                                                                    onChange={(e) => (
+                                                                                        setDay(e.target.value),
+    
+                                                                                        year === "" || month === "" ? "" :
+                                                                                            handleTextInputChange(user.id, year + "." + month + "." + e.target.value)
+                                                                                    )}
                                                                                     style={{
                                                                                         border: "none",
                                                                                         width: "80px",
@@ -458,6 +540,7 @@ function Progress() {
                                                                                         background: "#f5f6f9",
                                                                                         color: "black", fontSize: "14px", marginLeft: "10px"
                                                                                     }}>
+                                                                                
                                                                                     <option value="">DD</option>
                                                                                     {days.map((d) => (
                                                                                         <option key={d} value={d}>
@@ -472,69 +555,71 @@ function Progress() {
                                                                                 <div className="flex gap-2" style={{ marginTop: "20px" }}>
                                                                                     {/* 연도 선택 */}
                                                                                     <input
-                                                                                        type="text"
+                                                                                        type="number"
                                                                                         value={phone}
                                                                                         disabled
-                                                                                        onChange={(e)=> setPhone(e.target.value)}
+                                                                                        onChange={(e) => setPhone(e.target.value)}
                                                                                         placeholder=""
                                                                                         style={{
-                                                                                            border: "none", textAlign:"center" ,
+                                                                                            border: "none", textAlign: "center",
                                                                                             width: "80px",
                                                                                             height: "30px",
                                                                                             padding: "5px",
                                                                                             background: "#f5f6f9",
                                                                                             color: "black", fontSize: "14px",
-                                                                                            borderRadius: "5px" , marginRight:"10px"
+                                                                                            borderRadius: "5px", marginRight: "10px"
                                                                                         }}
                                                                                     />
                                                                                     -
                                                                                     <input
-                                                                                        type="text"
+                                                                                        type="number"
                                                                                         value={phone_second}
-                                                                                        onChange={(e)=> (
+                                                                                        onChange={(e) => (
                                                                                             setPhone_second(e.target.value),
 
                                                                                             phone_third === "" ? "" :
-                                                                                            handleTextInputChange(user.id, 
-                                                                                                phone + "-" + e.target.value + "-" + phone_third
-                                                                                            )
+                                                                                                handleTextInputChange(user.id,
+                                                                                                    phone + "-" + e.target.value + "-" + phone_third
+                                                                                                )
                                                                                         )}
                                                                                         // onChange={(e)=> setPhone_second(e.target.value)}
                                                                                         placeholder=""
                                                                                         style={{
-                                                                                            border: "none", textAlign:"center" ,
+                                                                                            border: "none", textAlign: "center",
                                                                                             width: "80px",
                                                                                             height: "30px",
                                                                                             padding: "5px",
                                                                                             background: "#f5f6f9",
                                                                                             color: "black", fontSize: "14px",
-                                                                                            borderRadius: "5px", marginRight:"10px" , marginLeft:"10px"
+                                                                                            borderRadius: "5px", marginRight: "10px", marginLeft: "10px"
                                                                                         }}
                                                                                         maxLength={4}
+                                                                                        className={styles.dfsopkdf}
                                                                                     />
                                                                                     -
                                                                                     <input
-                                                                                        type="text"
+                                                                                        type="number"
                                                                                         value={phone_third}
-                                                                                        onChange={(e)=> (
+                                                                                        onChange={(e) => (
                                                                                             setPhone_third(e.target.value),
 
                                                                                             phone_second === "" ? "" :
-                                                                                            handleTextInputChange(user.id, 
-                                                                                                phone + "-" + phone_second + "-" + e.target.value
-                                                                                            )
+                                                                                                handleTextInputChange(user.id,
+                                                                                                    phone + "-" + phone_second + "-" + e.target.value
+                                                                                                )
                                                                                         )}
                                                                                         placeholder=""
                                                                                         style={{
-                                                                                            border: "none", textAlign:"center" ,
+                                                                                            border: "none", textAlign: "center",
                                                                                             width: "80px",
                                                                                             height: "30px",
                                                                                             padding: "5px",
                                                                                             background: "#f5f6f9",
                                                                                             color: "black", fontSize: "14px",
-                                                                                            borderRadius: "5px", marginLeft:"10px"
+                                                                                            borderRadius: "5px", marginLeft: "10px"
                                                                                         }}
                                                                                         maxLength={4}
+                                                                                        className={styles.dfsopkdf}
                                                                                     />
                                                                                 </div>
                                                                             )
@@ -556,7 +641,8 @@ function Progress() {
                                                                                             lineHeight: "1.5", // 🔹 글자 간격 조정 (기본값: 1.5~2 추천)
                                                                                             // minHeight: "50px", // 🔹 최소 높이 지정 (더 안정적)
                                                                                             overflow: "hidden", // 🔹 스크롤 숨김 (자동 높이 조정)
-                                                                                            whiteSpace: "pre-wrap" // 🔹 줄바꿈 유지 (공백 포함)
+                                                                                            whiteSpace: "pre-wrap", // 🔹 줄바꿈 유지 (공백 포함)
+                                                                                            width: "345px"
                                                                                         }}
                                                                                         onChange={(e) => {
                                                                                             let newValue = e.target.value;
@@ -588,7 +674,8 @@ function Progress() {
                                                                     <div
                                                                         className={styles.answerItem}
                                                                         onClick={() => {
-                                                                            targetRefs.current[index]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                                                            user.answer_type === 0 ?
+                                                                                targetRefs.current[index]?.scrollIntoView({ behavior: 'smooth', block: 'start' }) : ""
 
                                                                             handleAnswerSelect(user.id, a.answer, user.answer_type)
                                                                         }}

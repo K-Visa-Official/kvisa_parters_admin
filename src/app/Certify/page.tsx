@@ -101,7 +101,7 @@ function Certify() {
 
     const Certify = async () => {
         const finalData = {
-            id: parm.get('user'),
+            id: Number(parm.get('user')),
             tel: tel,
             name: parm.get("userId") === null ? name : name + "^" + parm.get("userId") ,
         };

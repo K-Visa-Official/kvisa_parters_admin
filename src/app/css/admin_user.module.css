@@ -151,3 +151,21 @@
 .tooltoplist:hover{
     background: rgba(0, 0, 0, 0.1);
 }
+
+
+.quinner::-webkit-scrollbar {
+    /* width: 1px; 스크롤바의 너비 */
+    height: 10px;
+    width: 5px;
+}
+
+.quinner::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.1);
+    /* 스크롤 손잡이 배경 색상 */
+    border-radius: 4px;
+}
+
+.quinner::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+    /* 스크롤 트랙 배경 색상 */
+}

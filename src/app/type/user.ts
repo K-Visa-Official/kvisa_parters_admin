@@ -65,7 +65,7 @@ export interface WorkPost {
 }
 
 // 각 답변(Answer)의 타입 정의
-interface Answer_Post {
+export interface Answer_Post {
   id: number;
   answer: string;
   answer_count: number;

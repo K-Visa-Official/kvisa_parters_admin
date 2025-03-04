@@ -50,7 +50,7 @@ export default function UserBox() {
                         onChange={(e) => seTitle(e.target.value)}
                     />
 
-                    <FilterInputBox w={152} h={28} mt={0} bg={"#f5f6f9"} p={"가입일자"} v={created_at} 
+                    <FilterInputBox w={152} h={28} mt={0} bg={"#f5f6f9"} p={"가입일자(yyyy.mm.dd)"} v={created_at} 
                         src={"/admin/calendar.png"}
                         onChange={(e) => setCreate(e.target.value)}
                     />

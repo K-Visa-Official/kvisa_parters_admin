@@ -1,10 +1,11 @@
 const baseurl = process.env.NEXT_PUBLIC_SERVICE_VISA_URL; 
 import useAuthStore from "../store/user";
 // import {  AllUserResponse , UserList , WorkPost} from "../type/user";
-import { Question_Post,WorkResponse , Question , CRM_res , Order_Change  } from "../type/user";
+import { Question_Post,WorkResponse , Question , CRM_res , Order_Change ,   } from "../type/user";
+import { Answer_Post } from "../type/user";
 
 interface tel_change {
-  id: string | null;
+  id: number | null;
   name: string| null;  // 언어 코드 (예: 0: 한국어, 1: 영어)
   tel: string| null; // 업무 선택
 }
@@ -31,14 +32,16 @@ interface ProcessData_se {
   // marketing: "y" | "n";
   questions: string;
   answers: string;
+  match: string;
 }
 
 interface ProcessData_user {
-  id:number;
+  id:string;
   name: string;
   tel: number;
   marketing: "y" | "n";
   lang:string | "0";
+  match: string;
   }
 
 
@@ -401,6 +404,28 @@ export async function change_state( a:number , b:number) {
     
   } catch (error) {
     console.error("Error during registration:", error);
+    throw error;
+  }
+}
+
+export async function get_answer(a:number): Promise<Answer_Post[]> {
+  try {
+    
+    const response = await fetch(baseurl + '/api/admin/answer/?&id=' + a, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("token"),
+      },
+    });
+
+    if (!response.ok) {
+      // useAuthStore.getState().logout();
+      throw new Error("유저 목록 불러오기 실패");
+    }
+    const data: Answer_Post[] = await response.json();  // .json()으로 응답 데이터를 파싱
+    return data;
+  } catch (error) {
     throw error;
   }
 }

@@ -292,6 +292,19 @@
     color: black;
 }
 
+/* Chrome, Safari, Opera */
+.dfsopkdf::-webkit-outer-spin-button,
+.dfsopkdf::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.dfsopkdf {
+  -moz-appearance: textfield;
+}
+
+
 @media screen and (max-width: 414px) {
     .innerbox {
         width: 100%;

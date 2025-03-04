@@ -3,10 +3,11 @@ import { VisaApiResponse } from "../type/busioness";
 const baseurl = process.env.NEXT_PUBLIC_SERVICE_VISA_URL; 
 
 
-export async function businesslist(a:string,b:string , c:number): Promise<VisaApiResponse> {
+export async function businesslist(a:string,b:string , c:number , d:number , e:string): Promise<VisaApiResponse> {
     try {
-      
-      const response = await fetch(baseurl + '/api/admin/visa/?&business=' + a + "&create_at=" + b + "&page=" + c , {
+      var sta = c ===10 ? "" : c
+
+      const response = await fetch(baseurl + '/api/admin/visa/?&business=' + a + "&created_at=" + b + "&state=" + sta + "&page=" + d + "&choice=" + e, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

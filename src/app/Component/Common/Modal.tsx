@@ -18,8 +18,11 @@ const Modal: React.FC<ModalProps> = ({ onClose, t, c, n, s, web , setAc  }) => {
     const router = useRouter()
 
     function exit(){
-        if(web === "wed"){
-            router.back()
+        if(web){
+            if (setAc) {
+                setAc(false); // setAc가 undefined가 아닐 때만 호출
+            }
+            // router.back()
         }
         else{
             // const args = {
@@ -54,15 +57,15 @@ const Modal: React.FC<ModalProps> = ({ onClose, t, c, n, s, web , setAc  }) => {
                         width={40}
                         height={40}
                     />
-                    <p className={styles.webtiotle}>{web === "wed" ? "해당 페이지를 나가시겠어요?" : "한국비자상담접수 종료하시겠어요?"}</p>
-                    <p className={styles.webtiotlesub}>{web === "wed" ? "페이지를 나가시면 입력된 사항은 저장되지 않습니다." : "한국 비자 상담을 종료합니다"}</p>
+                    <p className={styles.webtiotle}>{web}</p>
+                    {/* <p className={styles.webtiotlesub}>{web === "wed" ? "페이지를 나가시면 입력된 사항은 저장되지 않습니다." : "한국 비자 상담을 종료합니다"}</p> */}
 
-                    <div className={styles.footerboxsds}>
-                        <div className={styles.footerboxfirst} style={{ background:"#84848f"}} onClick={()=> setAc ? setAc(false) : ""}>
-                            취소
-                        </div>
+                    <div className={styles.footerboxsds} >
+                        {/* <div className={styles.footerboxfirst} style={{ background:"#84848f"}} onClick={()=> setAc ? setAc(false) : ""}>
+                            확인
+                        </div> */}
                         <div className={styles.footerboxfirst} style={{ background:"#000"}} onClick={()=> exit()}>
-                            나가기
+                            확인
                         </div>
                     </div>
 
