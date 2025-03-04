@@ -1,7 +1,7 @@
 import React from "react";
 import styles from 'src/app/page.module.css';
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 interface ModalProps {
     onClose?: () => void;
