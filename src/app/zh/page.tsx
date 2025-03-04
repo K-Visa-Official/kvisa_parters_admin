@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect ,Suspense } from "react";
 import { useRouter ,useSearchParams } from "next/navigation"; 
 
-const Zh = () => {
+const Zhpage = () => {
     const router = useRouter();
     const params = useSearchParams();
 
@@ -12,6 +12,14 @@ const Zh = () => {
     }, [router]); // ✅ router를 의존성 배열에 추가
 
     return <div></div>;
+};
+
+const Zh = () => {
+    return (
+        <Suspense>
+            <Zhpage />
+        </Suspense>
+    );
 };
 
 export default Zh;

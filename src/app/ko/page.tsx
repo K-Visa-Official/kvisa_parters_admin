@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect , Suspense } from "react";
 import { useRouter ,useSearchParams } from "next/navigation"; 
 
-const Ko = () => {
+const Kopage = () => {
     const router = useRouter();
     const params = useSearchParams();
 
@@ -12,6 +12,15 @@ const Ko = () => {
     }, [router]); // ✅ router를 의존성 배열에 추가
 
     return <div></div>;
+};
+
+
+const Ko = () => {
+    return (
+        <Suspense>
+            <Kopage />
+        </Suspense>
+    );
 };
 
 export default Ko;
