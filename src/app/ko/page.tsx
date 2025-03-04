@@ -3,11 +3,9 @@
 import { useEffect } from "react";
 import { useRouter ,useSearchParams } from "next/navigation"; 
 
-const KoPage = () => {
+const Ko = () => {
     const router = useRouter();
     const params = useSearchParams();
-
-    
 
     useEffect(() => {
         router.push("/Member?member=6&language=0&userId=" + params.get('userId'));
@@ -16,4 +14,4 @@ const KoPage = () => {
     return <div></div>;
 };
 
-export default KoPage;
+export default Ko;
