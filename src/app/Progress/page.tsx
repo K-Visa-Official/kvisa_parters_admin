@@ -125,49 +125,50 @@ function Progress() {
 
 
                 for (let i = 0; i < finalData.length; i++) {
-                    const response = await registerProcess(
-                        {
-                            "user": Number(workdetail[0]?.user),
-                            "work": workdetail[0]?.id,
-                            // "name" : "미입력" ,
-                            // "tel" : 0 ,
-                            // "marketing" : "n" , 
-                            "questions": finalData[i].question,
-                            "answers": finalData[i].answer,
-                        }
-                    );
-                    if (response.detail === "Process created successfully") {
-                        if (i === finalData.length - 1) {
-                            const response_se = await registerProcessUser(
-                                {
-                                    "id": response.return,
-                                    "name": "미입력",
-                                    "tel": 0,
-                                    "marketing": "n",
-                                    "lang": String(parm.get("language"))
-                                }
-                            );
-                            if (parm.get("userId") === null) {
-                                if (parm.get("language") === "0") {
-                                    router.push(`/Certify/?&user=${response_se.return}&language=0&member=${parm.get("member")}`)
-                                }
-                                else {
-                                    router.push(`/Certify/?&user=${response_se.return}&language=1&member=${parm.get("member")}`)
-                                }
-                            }
-                            else {
-                                if (parm.get("language") === "0") {
-                                    router.push(`/Certify/?&user=${response_se.return}&language=0&member=${parm.get("member")}&userId=${parm.get("userId")}`)
-                                }
-                                else {
-                                    router.push(`/Certify/?&user=${response_se.return}&language=1&member=${parm.get("member")}&userId=${parm.get("userId")}`)
-                                }
-                            }
-                        }
-                    }
-                    else {
-                        alert("에러발생")
-                    }
+                    console.log(finalData)
+                    // const response = await registerProcess(
+                    //     {
+                    //         "user": Number(workdetail[0]?.user),
+                    //         "work": workdetail[0]?.id,
+                    //         // "name" : "미입력" ,
+                    //         // "tel" : 0 ,
+                    //         // "marketing" : "n" , 
+                    //         "questions": finalData[i].question,
+                    //         "answers": finalData[i].answer,
+                    //     }
+                    // );
+                    // if (response.detail === "Process created successfully") {
+                    //     if (i === finalData.length - 1) {
+                    //         const response_se = await registerProcessUser(
+                    //             {
+                    //                 "id": response.return,
+                    //                 "name": "미입력",
+                    //                 "tel": 0,
+                    //                 "marketing": "n",
+                    //                 "lang": String(parm.get("language"))
+                    //             }
+                    //         );
+                    //         if (parm.get("userId") === null) {
+                    //             if (parm.get("language") === "0") {
+                    //                 router.push(`/Certify/?&user=${response_se.return}&language=0&member=${parm.get("member")}`)
+                    //             }
+                    //             else {
+                    //                 router.push(`/Certify/?&user=${response_se.return}&language=1&member=${parm.get("member")}`)
+                    //             }
+                    //         }
+                    //         else {
+                    //             if (parm.get("language") === "0") {
+                    //                 router.push(`/Certify/?&user=${response_se.return}&language=0&member=${parm.get("member")}&userId=${parm.get("userId")}`)
+                    //             }
+                    //             else {
+                    //                 router.push(`/Certify/?&user=${response_se.return}&language=1&member=${parm.get("member")}&userId=${parm.get("userId")}`)
+                    //             }
+                    //         }
+                    //     }
+                    // }
+                    // else {
+                    //     alert("에러발생")
+                    // }
 
                 }
             }
@@ -392,7 +393,14 @@ function Progress() {
                                                                         index === 6 ? (
                                                                             <div className="flex gap-2" style={{ marginTop: "20px" }}>
                                                                                 {/* 연도 선택 */}
-                                                                                <select value={year} onChange={(e) => setYear(e.target.value)}
+                                                                                <select value={year} 
+                                                                                    onChange={(e) => (
+                                                                                        setYear(e.target.value),
+    
+                                                                                        month === "" || day === "" ? "" :
+                                                                                        handleTextInputChange(user.id, e.target.value + "." + month + "." + day)
+                                                                                    )}
+                                                                                    // onChange={(e) => setYear(e.target.value)}
                                                                                     style={{
                                                                                         border: "none",
                                                                                         width: "80px",
@@ -411,7 +419,13 @@ function Progress() {
                                                                                 </select>
 
                                                                                 {/* 월 선택 */}
-                                                                                <select value={month} onChange={(e) => setMonth(e.target.value)}
+                                                                                <select value={month} onChange={(e) => (
+                                                                                    setMonth(e.target.value),
+
+                                                                                    year === "" || day === "" ? "" :
+                                                                                    handleTextInputChange(user.id, year + "." + e.target.value + "." + day)
+                                                                                )}
+                                                                                // onChange={(e) => setMonth(e.target.value)}
                                                                                     style={{
                                                                                         border: "none",
                                                                                         width: "80px",
@@ -431,10 +445,10 @@ function Progress() {
                                                                                 {/* 일 선택 */}
                                                                                 <select value={day} onChange={(e) => (
                                                                                     setDay(e.target.value),
-                                                                                    console.log(year + "." + month + "." + e.target.value),
+
+                                                                                    year === "" || month === "" ? "" :
                                                                                     handleTextInputChange(user.id, year + "." + month + "." + e.target.value)
-                                                                                )
-                                                                                } className="border p-2 rounded"
+                                                                                )} className="border p-2 rounded"
                                                                                     style={{
                                                                                         border: "none",
                                                                                         width: "80px",
@@ -476,7 +490,15 @@ function Progress() {
                                                                                     <input
                                                                                         type="text"
                                                                                         value={phone_second}
-                                                                                        onChange={(e)=> setPhone_second(e.target.value)}
+                                                                                        onChange={(e)=> (
+                                                                                            setPhone_second(e.target.value),
+
+                                                                                            phone_third === "" ? "" :
+                                                                                            handleTextInputChange(user.id, 
+                                                                                                phone + "-" + e.target.value + "-" + phone_third
+                                                                                            )
+                                                                                        )}
+                                                                                        // onChange={(e)=> setPhone_second(e.target.value)}
                                                                                         placeholder=""
                                                                                         style={{
                                                                                             border: "none", textAlign:"center" ,
@@ -495,6 +517,8 @@ function Progress() {
                                                                                         value={phone_third}
                                                                                         onChange={(e)=> (
                                                                                             setPhone_third(e.target.value),
+
+                                                                                            phone_second === "" ? "" :
                                                                                             handleTextInputChange(user.id, 
                                                                                                 phone + "-" + phone_second + "-" + e.target.value
                                                                                             )
@@ -528,7 +552,10 @@ function Progress() {
                                                                                             // width: `${textAnswers[user.id]?.length ? textAnswers[user.id].length * 10 + 50 : 80}px`, // 텍스트 길이에 맞게 크기 조정
                                                                                             height: 'auto',
                                                                                             textAlign: "left", // 텍스트 가로 중앙 정렬
-                                                                                            lineHeight: "3px"
+                                                                                            lineHeight: "1.5", // 🔹 글자 간격 조정 (기본값: 1.5~2 추천)
+                                                                                            // minHeight: "50px", // 🔹 최소 높이 지정 (더 안정적)
+                                                                                            overflow: "hidden", // 🔹 스크롤 숨김 (자동 높이 조정)
+                                                                                            whiteSpace: "pre-wrap" // 🔹 줄바꿈 유지 (공백 포함)
                                                                                         }}
                                                                                         onChange={(e) => {
                                                                                             let newValue = e.target.value;

@@ -369,3 +369,38 @@ export async function workchangenoimage(formData: FormData) {
     throw error;
   }
 }
+
+export async function change_state( a:number , b:number) {
+  try {
+    // const token = localStorage.getItem("token");
+
+    // // 토큰이 없을 경우 에러 처리
+    // if (!token) {
+    //   throw new Error("Authorization token is missing");
+    // }
+
+    const response = await fetch(baseurl + "/api/client/work/state/" + a + "/", {
+      method: "PATCH",
+      headers: { 
+        "Authorization": "Bearer " + localStorage.getItem("token"), // Bearer token 추가
+        "Content-Type": "application/json", // JSON 형식으로 보내기 위한 헤더 추가
+      },
+      body: JSON.stringify({
+          id:a , state : b
+      }), // payload를 JSON으로 변환하여 전송
+    });
+
+    // 응답 상태가 200 OK가 아닐 경우 예외 처리
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "회원가입 실패");
+    }
+
+    // 성공 시 JSON 데이터 반환
+    return await response.json();
+    
+  } catch (error) {
+    console.error("Error during registration:", error);
+    throw error;
+  }
+}

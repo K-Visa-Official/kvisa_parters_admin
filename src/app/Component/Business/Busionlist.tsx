@@ -7,6 +7,7 @@ import BusinessStore from "@/app/store/business_store";
 import { businesslist } from "@/app/server/busioness";
 import { VisaApiResponse } from "@/app/type/busioness";
 import { useRouter } from "next/navigation";
+import { change_state } from "@/app/server/work";
 
 interface ModalProps {
     search?: boolean;
@@ -42,8 +43,8 @@ const Busionlist: React.FC<ModalProps> = ({ search }) => {
                 setBu_list(data); // 받은 데이터로 상태 업데이트
                 setIsLoading(false);
                 setMaxPage(data.count)
-                
-                router.push('/Business?&page='+ page_bu)
+
+                router.push('/Business?&page=' + page_bu)
                 // router.push('/CRM')
             }
             catch (e) {
@@ -54,7 +55,7 @@ const Busionlist: React.FC<ModalProps> = ({ search }) => {
         }
 
         fetchUsers();
-    }, [search , page_bu]);
+    }, [search, page_bu]);
 
     if (isLoading) {
         return <p>로딩 중...</p>;
@@ -86,6 +87,23 @@ const Busionlist: React.FC<ModalProps> = ({ search }) => {
         }
 
     }
+
+    const ChangeState = async ( a:number , b:number) => {
+     
+        if (!bu_list || !bu_list.results) return;
+
+        // 새로운 리스트 생성 (불변성 유지)
+        const updatedList = bu_list.results.map((item, index) => 
+            item.id === a ? { ...item, state: b } : item
+        );
+
+        // 상태 업데이트
+        setBu_list({ ...bu_list, results: updatedList });
+        
+        change_state(a , b)
+
+    }
+
 
     return (
         <div style={{ padding: "0px 30px", marginTop: "30px" }}>
@@ -145,7 +163,7 @@ const Busionlist: React.FC<ModalProps> = ({ search }) => {
             {bu_list?.results.map((a, index) => (
                 <div className={styles.listtotal} key={index} style={{ gap: "20px", fontSize: "14px", fontWeight: "500" }}>
                     <div style={{ width: "60px", display: "flex", justifyContent: "center", alignItems: "center" }} >
-                        {10*(page_bu-1) + index + 1}
+                        {10 * (page_bu - 1) + index + 1}
                     </div>
                     <div style={{ width: "90px", display: "flex", justifyContent: "center", alignItems: "center" }} >
                         {a.lang === "0" ? "한국어" : "중국어"}
@@ -198,42 +216,74 @@ const Busionlist: React.FC<ModalProps> = ({ search }) => {
                         }}>{a.user?.bu_tel_first}</p>
                     </div>
                     <div style={{ width: "140px", display: "flex", justifyContent: "flex-start", alignItems: "center" }} >
-                        {a.name}
+                        {a.name.split("^")[0]}
                     </div>
                     <div style={{ width: "140px", display: "flex", justifyContent: "center", alignItems: "center" }} >
                         {a.tel}
                     </div>
                     <div style={{ width: "105px", display: "flex", justifyContent: "center", alignItems: "center" }} >
                         <div className={first.ansbox}>
-                            답변확인하기
+                            답변 확인하기
                         </div>
                     </div>
                     <div style={{
                         width: "135px", display: "flex", justifyContent: "center", alignItems: "center", position: "relative", // 툴팁 위치를 위한 상대 위치 설정
-                        cursor: "pointer"
+                        cursor: "pointer",
                     }}
-                        onClick={() => setTooltip(tooltip === index ? null : index)} >
-                        {a.state === 0 ? "접수완료" :
-                            a.state === 1 ? "계약완료" :
-                                a.state === 2 ? "서류작성" :
-                                    a.state === 3 ? "심사진행" :
-                                        a.state === 4 ? "처리완료" : "상담종료"
-                        }
+                        onClick={() => setTooltip(tooltip === index ? null : index)}>
+                        <div style={{
+                            width: "120px", height: "28px", borderRadius: "5px", fontSize: "12px", color: "white", display: "flex", justifyContent: "space-between", alignItems: "center",
+                            background: a.state === 0 ? "#FF4B4C" :
+                                a.state === 1 ? "#FF9D4C" :
+                                    a.state === 2 ? "#B44DFF" :
+                                        a.state === 3 ? "#1B68FF" :
+                                            a.state === 4 ? "#FF1A8E" : "#A3A3A3" ,
+                                            padding:"0px 8px 0px 31px"
+                        }}>
+                            {a.state === 0 ? "접수완료" :
+                                a.state === 1 ? "계약완료" :
+                                    a.state === 2 ? "서류작성" :
+                                        a.state === 3 ? "심사진행" :
+                                            a.state === 4 ? "처리완료" : "상담종료"
+                            }
+                            <Image
+                                aria-hidden
+                                src="/common/bu_under.png"
+                                alt="Window icon"
+                                width={14}
+                                height={14}
+                            />
+                        </div>
+
 
                         {tooltip === index && (
                             <div
                                 style={{
                                     position: "absolute",
-                                    top: "35px",
+                                    top: "35px", right:"50px",
                                     background: "#fff", color: "#000",
                                     borderRadius: "5px", border: "solid 1px #ebecf1",
-                                    fontSize: "14px", whiteSpace: "nowrap", width: "174px", height: "300px",
+                                    fontSize: "14px", whiteSpace: "nowrap",
                                     boxShadow: "0 5px 20px 0 rgba(0, 0, 0, 0.05)", zIndex: 3
                                 }}
                             >
-                                {order.map((a, index) => (
-                                    <div className={styles.tooltoplist} key={index}>
-                                        {a}
+                                {order.map((b, index) => (
+                                    <div className={styles.tooltoplist} key={index} 
+                                        style={{ background: b === "접수완료" ? "#FF4B4C" :
+                                            b === "계약완료" ? "#FF9D4C" :
+                                                b === "서류작성" ? "#B44DFF" :
+                                                    b === "심사진행" ? "#1B68FF" :
+                                                    b === "처리완료" ? "#FF1A8E" : "#A3A3A3" ,
+                                                        padding:"0px 8px 0px 31px" , display: "flex", justifyContent: "space-between", alignItems: "center",}}
+                                                        onClick={()=> ChangeState( a.id , index)}>
+                                        {b}
+                                        <Image
+                                            aria-hidden
+                                            src="/common/bu_under.png"
+                                            alt="Window icon"
+                                            width={14}
+                                            height={14}
+                                        />
                                     </div>
                                 ))}
                             </div>

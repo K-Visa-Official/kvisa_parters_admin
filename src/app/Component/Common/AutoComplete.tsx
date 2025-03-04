@@ -14,7 +14,8 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({ suggestions , onSelect }) =
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         setInputValue(value);
-
+        onSelect(value); 
+        
         if (value.trim() === "") {
             setShowDropdown(false);
             return;

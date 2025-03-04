@@ -140,12 +140,12 @@
 }
 
 .tooltoplist {
-    width: 174px;
-    height: 50px;
-    padding: 17px 0 0 15px;
-    font-size: 14px;
+    width: 120px;
+    height: 28px;
+    /* padding: 17px 0 0 15px; */
+    font-size: 12px;
     font-weight: 500;
-    color: black;
+    color: white;
     border-radius: 5px;
 }
 .tooltoplist:hover{
