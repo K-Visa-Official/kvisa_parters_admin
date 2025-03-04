@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import { useRouter ,useParams } from "next/navigation"; 
+import { useRouter  } from "next/navigation"; 
 import { useEffect } from "react";
 
 
 
 const ZhPage = () => {
     const router = useRouter();
-    const params = useParams<{ userId: string }>()
+    // const params = useParams<{ userId: string }>()
 
 
     useEffect(() => {

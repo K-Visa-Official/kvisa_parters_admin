@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter ,useParams } from "next/navigation"; 
+import { useRouter } from "next/navigation"; 
 
 const KoPage = () => {
     const router = useRouter();
-    const params = useParams<{ userId: string }>()
+    // const params = useParams<{ userId: string }>()
     
     useEffect(() => {
         // router.push("/Member?member=6&language=0&userId=" + params.userId.replace("userId%3D" , ""));
