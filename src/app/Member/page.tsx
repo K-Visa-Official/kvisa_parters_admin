@@ -113,7 +113,7 @@ function CaseStoriesDetailPage() {
                                 <></>
                             }
 
-                            <div style={{ width:"345px" , display:"flex" , justifyContent:"flex-start" , alignItems:"center"}}>
+                            <div style={{ width:"100%" , display:"flex" , justifyContent:"flex-start" , alignItems:"center"}}>
                                 <p className={styles.title}>
                                     {parm.get("language") === "0" ? Korean.title : Ch.title} <br />
                                     {parm.get("language") === "0" ? Korean.title_second : Ch.title_second}
@@ -121,7 +121,7 @@ function CaseStoriesDetailPage() {
                             </div>
 
                             {work?.map((user) => (
-                                <div key={user.id} >
+                                <div key={user.id} style={{ width:"100%"}}>
                                     {work[0]?.choice === undefined ?
                                         null
                                         :
@@ -135,7 +135,8 @@ function CaseStoriesDetailPage() {
                                                     )}
                                                     >
                                                         {/* <img src={user?.detail} className={styles.postimg} alt="profile"/> */}
-                                                        <Image src={user?.detail} className={styles.postimg} alt="profile" width={345} height={200} />
+                                                        <Image src={user?.detail} className={styles.postimg} alt="profile" 
+                                                             width={345} height={200}/>
                                                         <div className={styles.nextstep}>
                                                             {parm.get("language") === "0" ? Korean.go : Ch.go}
                                                             <Image
@@ -165,7 +166,9 @@ function CaseStoriesDetailPage() {
                                                         )}
                                                         >
                                                             {/* <img src={user?.detail} className={styles.postimg} alt="profile"/> */}
-                                                            <Image src={user?.detail} className={styles.postimg} alt="profile" width={345} height={200} />
+                                                            <Image src={user?.detail} className={styles.postimg} alt="profile"
+                                                            layout="responsive" 
+                                                             width={345} height={200} />
                                                             <div className={styles.nextstep}>
                                                                 {parm.get("language") === "0" ? Korean.go : Ch.go}
                                                                 <Image
@@ -203,6 +206,7 @@ function CaseStoriesDetailPage() {
                                         alt="다음"
                                         width={345}
                                         height={200}
+                                        layout="responsive" 
                                         style={{ borderRadius:"10px" }}
                                     /></div>
                                 {/* <img src={user?.detail} className={styles.postimg} /> */}
@@ -220,7 +224,7 @@ function CaseStoriesDetailPage() {
 
                             </div>
 
-                            <div style={{ width:"345px" , display:"flex" , justifyContent:"center" , alignItems:"flex-start" , flexDirection:"column"}}>
+                            <div style={{ width:"100%" , display:"flex" , justifyContent:"center" , alignItems:"flex-start" , flexDirection:"column"}}>
  
                                 <p style={{ marginTop: "15px", fontSize: "18px", color: "black", fontWeight: "600" }}>{parm.get("language") === "0" ? Korean.progress : Ch.progress}</p>
 
@@ -233,7 +237,9 @@ function CaseStoriesDetailPage() {
                             {parm.get("userId") === null ?
                                 <></>
                                 :
-                                <Image aria-hidden src="/common/main_banner.png" alt="닫기" width={345} height={110} style={{ cursor: "pointer" , marginBottom:"100px" }}
+                                <Image aria-hidden src="/common/main_banner.png" alt="닫기" width={345} height={110} 
+                                layout="responsive" 
+                                style={{ cursor: "pointer" , marginBottom:"100px" }}
                                  onClick={() => (
                                     setUrl(work.filter(a => a?.choice === "외국인 범죄/불법체류자 구제")[0].detail_second),
                                     setState(2),

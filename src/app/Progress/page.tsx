@@ -155,7 +155,6 @@ function Progress() {
     const handleSubmit = async () => {
 
         if (finalData.filter(a => a.answer === "").length > 0) {
-            setAc(true)
             if(finalData.filter(a => a.answer === "")[0].question.includes("국적")){
                 setAler("국적을 선택해주세요")
             }
@@ -189,6 +188,7 @@ function Progress() {
             else if(finalData.filter(a => a.answer === "")[0].question.includes("시간은")){
                 setAler("연락가능한 시간을 선택해주세요")
             }
+            setAc(true)
         }
         else {
             if (!modal) {
@@ -347,12 +347,7 @@ function Progress() {
                         >
                             <div className={styles.innerbox}>
 
-                                <div style={{
-                                    position: "fixed",
-                                    top: 0,  // 상단에 고정
-                                    zIndex: 10, // 상위 요소가 덮어쓰지 않도록 zIndex를 높여줌
-                                    background: "#f0f5ff", // 배경색
-                                }}
+                                <div className={styles.dfjskd}
                                 >
                                     <MoHeader setAc={setAc} />
 
@@ -369,7 +364,7 @@ function Progress() {
                                             </p>
                                         </div>
 
-                                        <div style={{ width: "345px", height: "5px", margin: "15px", display: "flex", flexDirection: "row", borderRadius: "20px" }}>
+                                        <div style={{ width: "90%", height: "5px", margin: "15px", display: "flex", flexDirection: "row", borderRadius: "20px" }}>
                                             <div style={{
                                                 width: (finalData.filter(a => a.answer != "").length / finalData.length) * 100 + "%",
                                                 height: "100%",
@@ -567,7 +562,7 @@ function Progress() {
                                                                                             padding: "5px",
                                                                                             background: "#f5f6f9",
                                                                                             color: "black", fontSize: "14px",
-                                                                                            borderRadius: "5px", marginRight: "10px"
+                                                                                            borderRadius: "5px", marginRight: "5px"
                                                                                         }}
                                                                                     />
                                                                                     -
@@ -591,7 +586,7 @@ function Progress() {
                                                                                             padding: "5px",
                                                                                             background: "#f5f6f9",
                                                                                             color: "black", fontSize: "14px",
-                                                                                            borderRadius: "5px", marginRight: "10px", marginLeft: "10px"
+                                                                                            borderRadius: "5px", marginRight: "5px", marginLeft: "5px"
                                                                                         }}
                                                                                         maxLength={4}
                                                                                         className={styles.dfsopkdf}
@@ -616,7 +611,7 @@ function Progress() {
                                                                                             padding: "5px",
                                                                                             background: "#f5f6f9",
                                                                                             color: "black", fontSize: "14px",
-                                                                                            borderRadius: "5px", marginLeft: "10px"
+                                                                                            borderRadius: "5px", marginLeft: "5px"
                                                                                         }}
                                                                                         maxLength={4}
                                                                                         className={styles.dfsopkdf}
@@ -629,21 +624,7 @@ function Progress() {
                                                                                         value={textAnswers[user.id] || ""}
                                                                                         // placeholder="내용을 입력해주세요"
                                                                                         className={styles.quinput}
-                                                                                        style={{
-                                                                                            background: "#f5f6f9",
-                                                                                            resize: "none",
-                                                                                            padding: 15,
-                                                                                            border: "none",
-                                                                                            marginTop: "20px",
-                                                                                            // width: `${textAnswers[user.id]?.length ? textAnswers[user.id].length * 10 + 50 : 80}px`, // 텍스트 길이에 맞게 크기 조정
-                                                                                            height: 'auto',
-                                                                                            textAlign: "left", // 텍스트 가로 중앙 정렬
-                                                                                            lineHeight: "1.5", // 🔹 글자 간격 조정 (기본값: 1.5~2 추천)
-                                                                                            // minHeight: "50px", // 🔹 최소 높이 지정 (더 안정적)
-                                                                                            overflow: "hidden", // 🔹 스크롤 숨김 (자동 높이 조정)
-                                                                                            whiteSpace: "pre-wrap", // 🔹 줄바꿈 유지 (공백 포함)
-                                                                                            width: "345px"
-                                                                                        }}
+                                                                                        
                                                                                         onChange={(e) => {
                                                                                             let newValue = e.target.value;
 

@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import styles from "@/app/css/admin_user.module.css";
 import { useState } from "react";
-// import { usePathname } from "next/navigation";
+import useWindowWidth from "@/app/hooks/useWindowWidth";
 
 interface FilterInputBoxProps {
     w: number;
@@ -22,6 +22,10 @@ export default function FilterInputBox({
     w, h, mt = 50, p, type, v, bg, a , src = "", onChange }: FilterInputBoxProps) {
 
         const [inputType, setInputType] = useState(type);
+        const width = useWindowWidth(); // ✅ 현재 화면 width 가져오기
+
+        // 너비에 따라 동적 스타일 적용
+        const dynamicWidth = width < 375 ? "100%" : w;
         const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             const inputValue = e.target.value.replace(/[^\d]/g, ""); // 숫자만 남기기
             let formattedValue = inputValue;
@@ -40,7 +44,7 @@ export default function FilterInputBox({
 
     return (
         <div style={{
-            width: w,
+            width: dynamicWidth,
             height: h,
             marginTop: mt,
             background: bg,

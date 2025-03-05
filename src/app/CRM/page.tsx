@@ -11,6 +11,7 @@ import { get_crm } from "../server/work";
 import { CRM_res } from "../type/user";
 import Modal from "../Component/Common/Modal";
 
+import useWindowWidth from "@/app/hooks/useWindowWidth";
 
 
 function CRM() {
@@ -26,7 +27,7 @@ function CRM() {
 
     const [li, setLi] = useState<CRM_res[] | []>([]);
     const [ac, setAc] = useState<boolean | false>(false);
-
+    const width = useWindowWidth()
     const arra = ["접수완료", "계약완료", "서류작성", "심사진행", "처리완료", "상담종료"]
     const userId = parm.get("userId");
     // 타이머 관련 useEffect
@@ -136,7 +137,7 @@ function CRM() {
 
                             {state === 1 ?
                                 <div className={styles.crminner}>
-                                    <div style={{ width:"345px" , display:"flex" , justifyContent:"center" , alignItems:"flex-start" ,flexDirection:"column"}}>
+                                    <div style={{ width:width < 375 ? "100%" :"345px" , display:"flex" , justifyContent:"center" , alignItems:"flex-start" ,flexDirection:"column"}}>
                            
                                     <p style={{ marginTop: "10px", color: "black" }}>
                                         {parm.get("language") === "0" ? Korean.bu_progress : Ch.bu_progress}
@@ -150,14 +151,17 @@ function CRM() {
                                     </p>
                                     </div>
 
-                                    <div style={{ width: "345px", height: "50px", marginTop: "10px", background: "#f5f6f9", display: "flex", flexDirection: "row" }}>
+                                    <div style={{ width: width < 375 ? "100%" : "345px", height: "50px", marginTop: "10px", background: "#f5f6f9", display: "flex", 
+                                        flexDirection: width < 375 ? "column" : "row" }}>
                                         <FilterInputBox
                                             w={270} h={50} mt={0} bg={"#f5f6f9"}
                                             p={parm.get("language") === "0" ? Korean.bu_progress_tel : Ch.bu_progress_tel}
                                             v={workNumber} type={"tel"}
                                             onChange={(e) => setWorkNumber(e.target.value)}
                                         />
-                                        <div style={{ width: "75px", height: "50px", background: "#f5f6f9", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                        <div style={{ width:width < 375 ? "100%" : "75px", height: "50px", 
+                                            background: width < 375 ? "" :"#f5f6f9", marginTop:width < 375 ? "10px" :"" , 
+                                            display: "flex", justifyContent: "center", alignItems: "center" }}>
                                             <div
                                                 style={{
                                                     display: "flex", justifyContent: "center", alignItems: "center", background: "black", fontSize: "13px", color: "white",
@@ -171,12 +175,12 @@ function CRM() {
                                     </div>
 
                                     {firstActive && (
-                                        <p style={{ fontSize: "12px", color: "#ff1c8e", marginTop: "10px", fontWeight: "500" }}>
+                                        <p style={{ fontSize: "12px", color: "#ff1c8e", marginTop :"10px", fontWeight: "500" }}>
                                             {parm.get("language") === "0" ? Korean.certi_tel_input : Ch.certi_tel_input}
                                         </p>
                                     )}
 
-                                    <p style={{ marginTop: "10px", fontSize: "12px", color: "#1c68ff" }}>
+                                    <p style={{ marginTop: width < 375 ? "50px" : "10px", fontSize: "12px", color: "#1c68ff" }}>
                                         {parm.get("language") === "0" ? Korean.bu_progress_ex : Ch.bu_progress_ex}
                                     </p>
 
@@ -225,11 +229,12 @@ function CRM() {
                                         width={345}
                                         height={310}
                                         style={{ marginTop: "75px" }}
+                                        layout="responsive"
                                     />
                                 </div>
                                 :
                                 <div className={styles.crminner}>
-                                    <div style={{ width:"345px" , display:"flex" , justifyContent:"center" , alignItems:"flex-start" ,flexDirection:"column"}}>
+                                    <div style={{ width:width < 375 ? "100%" :"345px" , display:"flex" , justifyContent:"center" , alignItems:"flex-start" ,flexDirection:"column"}}>
                            
                                         <div style={{ marginTop: "10px", color: "black", display: "flex", flexDirection: "row" }}>
                                             <Image

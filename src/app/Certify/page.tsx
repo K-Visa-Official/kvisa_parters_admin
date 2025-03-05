@@ -14,6 +14,7 @@ import { change_name } from "../server/work";
 import MoHeader from "../Component/Common/MoHeader";
 import Modal from "../Component/Common/Modal";
 
+import useWindowWidth from "@/app/hooks/useWindowWidth";
 
 function Certify() {
     const parm = useSearchParams();
@@ -38,7 +39,8 @@ function Certify() {
 
     const member = parm.get("member");
     const userId = parm.get("userId");
-    
+    const width = useWindowWidth(); // ✅ 현재 화면 width 가져오기
+
     useEffect(() => {
         if (member === "6") {
             if(userId === null){
@@ -153,7 +155,9 @@ function Certify() {
 
                 {state === 1 ?
                     <div className={styles.innerbox} style={{ height: "100vh" }}>
-                        <div style={{ height: "100vh", marginLeft: "15px", marginRight: "15px" }}>
+                        <div style={{ height: "100vh", marginLeft: "15px", marginRight: "15px" ,
+                                width : width < 375 ? "95vw" :""
+                        }}>
                             <p style={{ fontSize: "20px", fontWeight: "bold", color: " #2f2f2f", marginTop: "30px" }}>
                                 {parm.get("language") === "0" ? Korean.certi_first : Ch.certi_first}</p>
 
@@ -172,14 +176,17 @@ function Certify() {
                                 <></>
                             }
                             <p style={{ fontSize: "12px", color: "#84848f", marginTop: "26px" }}>{parm.get("language") === "0" ? Korean.certi_tel : Ch.certi_tel}</p>
-                            <div style={{ width: "345px", height: "50px", marginTop: "10px", background: "#f5f6f9", display: "flex", flexDirection: "row" }}>
-                                <FilterInputBox w={270} h={50} mt={0} bg={"#f5f6f9"} p={
+                            <div style={{ width: width < 375 ? "300px" :"345px", height: "50px", marginTop: "10px", background: "#f5f6f9", display: "flex", 
+                                flexDirection: width < 375 ? "column" :"row" }}>
+                                <FilterInputBox w={ width < 375 ? 345:270} h={50} mt={0} bg={"#f5f6f9"} p={
                                     parm.get("language") === "0" ? Korean.certi_tel_input : Ch.certi_tel_input
                                 } v={tel} type={"tel"}
                                     // src={"/admin/search.png"} 
                                     onChange={(e) => setTel(e.target.value)}
                                 />
-                                <div style={{ width: "75px", height: "50px", background: "#f5f6f9", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                <div style={{ width: width < 375 ? "100%" : "75px", height: "50px", 
+                                    background: width < 375 ? "" : "#f5f6f9", marginTop: width < 375 ? "30px" : "" , 
+                                    display: "flex", justifyContent: "center", alignItems: "center" }}>
                                     <div style={{
                                         display: "flex", justifyContent: "center", alignItems: "center", background: "black", fontSize: "13px", color: "white",
                                         width: "65px", height: "30px", borderRadius: "5px",
@@ -234,7 +241,7 @@ function Certify() {
                             }
 
                             <div style={{
-                                marginTop: "100px", width: "345px", height: "60px", background: "linear-gradient(to left, #33405a, #112448)", color: "white",
+                                marginTop: "100px",  height: "60px", background: "linear-gradient(to left, #33405a, #112448)", color: "white",
                                 display: "flex", justifyContent: "center", alignItems: "center", fontSize: "18px", borderRadius: "5px"
                             }} onClick={() => Certify()}>
                                 {parm.get("language") === "0" ? Korean.certi_next : Ch.certi_next}
@@ -451,7 +458,7 @@ function Certify() {
                         </div>
 
                         <div style={{
-                            marginTop: "60px", width: "345px", height: "60px",
+                            marginTop: "60px", width: width < 375 ? "100%" : "345px", height: "60px",
                             background: first && second && third ? "linear-gradient(to left, #33405a, #112448)" : "#ebecf1",
                             color: first && second && third ? "white" : "#84848f", fontWeight: "600",
                             display: "flex", justifyContent: "center", alignItems: "center", fontSize: "15px", borderRadius: "5px"

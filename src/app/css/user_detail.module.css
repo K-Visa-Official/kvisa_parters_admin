@@ -9,7 +9,7 @@
 }
 
 .headerbox {
-    width: 100%;
+    width: 375px;
     height: 60px;
     padding: 0px 15px;
     border-bottom: 1px solid #ebecf1;
@@ -71,12 +71,12 @@
     height: 200px;
     display: block;
     /* 하단 여백 방지 */
-    border-radius: 10px 10px ;
+    border-radius: 10px 10px;
     /* 위쪽 모서리만 둥글게 */
 }
 
 .nextstep {
-    position: absolute; 
+    position: absolute;
     /* 이미지 위에 겹치도록 설정 */
     bottom: 0;
     left: 50%;
@@ -127,7 +127,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
 }
 
 .qubox {
@@ -155,14 +155,20 @@
 }
 
 .quinput {
-    background-color: white;
+    background-color: #f5f6f9;
     border: none;
-    /* width: 100%;
-    height: 50ㅔㅌ; */
     border-radius: 5px;
     outline: none;
     color: black;
-}
+    padding: 15px;
+    margin-top: 20px;
+    height: auto;
+    text-align: left;
+    line-height: 1.5;
+    overflow: hidden;
+    white-space: pre-wrap;
+    width: 345px;
+    }
 
 .endbox {
     width: 100%;
@@ -218,16 +224,17 @@
     justify-content: center;
     z-index: 3;
 }
-.acceptbox{
+
+.acceptbox {
     width: 375px;
-  height: 419px;
-  padding: 15px ;
-  border-radius: 10px;
-  box-shadow: 0 -3px 15px 0 rgba(0, 0, 0, 0.1);
-  background-color: #fff;
+    height: 419px;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 -3px 15px 0 rgba(0, 0, 0, 0.1);
+    background-color: #fff;
 }
 
-.crminner{
+.crminner {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -239,16 +246,17 @@
     font-size: 20px;
 }
 
-.probox{
+.probox {
     width: 345px;
-    height: 611px;;
+    height: 611px;
+    
     padding: 20px 10px;
     border-radius: 10px;
     background-color: #f5f6f9;
     margin-top: 20px;
 }
 
-.contenttal{
+.contenttal {
     width: 326px;
     height: 239px;
     border-radius: 5px;
@@ -256,21 +264,22 @@
     padding: 20px 15px;
     margin-top: 20px;
 }
-.daybox{
+
+.daybox {
     width: 114px;
     height: 23px;
     border-radius: 2px;
     background-color: #e8eaf1;
     font-size: 11px;
-  font-weight: 500;
-  color: #33405a;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    font-weight: 500;
+    color: #33405a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
 }
 
-.firstboxsd{
+.firstboxsd {
     width: 131px;
     height: 47px;
     border-radius: 5px;
@@ -281,7 +290,8 @@
     color: white;
     text-align: center;
 }
-.secondboxsd{
+
+.secondboxsd {
     width: 184px;
     height: 47px;
     border-radius: 5px;
@@ -295,18 +305,77 @@
 /* Chrome, Safari, Opera */
 .dfsopkdf::-webkit-outer-spin-button,
 .dfsopkdf::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 /* Firefox */
 .dfsopkdf {
-  -moz-appearance: textfield;
+    -moz-appearance: textfield;
 }
 
+.dfjskd {
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    background-color: #f0f5ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 375px;
+}
 
-@media screen and (max-width: 414px) {
+@media screen and (max-width: 375px) {
     .innerbox {
         width: 100%;
     }
+
+    .post {
+        width: 100%;
+    }
+
+    .postimg {
+        width: 100%
+    }
+
+    .nextstep {
+        width: 100%;
+    }
+
+    .headerbox {
+        width: 100%;
+    }
+
+    .dfjskd {
+        width: 100vw;
+    }
+
+    .quinput {
+        width: 90vw;
+    }
+
+    .endcontentbox {
+        width: 90vw;
+       
+    }
+    .acceptbox {
+        width: 100%;
+       
+    }
+    .probox {
+        width: 100%;
+    }
+    .contenttal {
+        width: 100%;
+    }
+
+    .firstboxsd {
+        width: 30%;
+    }
+    
+    .secondboxsd {
+        width: 60%;
+    }
+
 }
