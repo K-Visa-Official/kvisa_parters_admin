@@ -212,7 +212,7 @@ function Certify() {
 
                             {active ?
                                 <>
-                                    <div style={{ width: "345px", height: "50px", marginTop: "10px", background: "#f5f6f9", display: "flex", flexDirection: "row" }}>
+                                    <div style={{ width: width < 375 ? "300px" :"345px", height: "50px", marginTop: "10px", background: "#f5f6f9", display: "flex", flexDirection: "row" }}>
                                         <FilterInputBox w={270} h={50} mt={0} bg={"#f5f6f9"} p={
                                             parm.get("language") === "0" ? Korean.certi_no : Ch.certi_no
                                         } v={ce}
