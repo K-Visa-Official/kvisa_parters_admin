@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 import Modal from '../Common/Modal';
 
 export default function Login() {
-    const { email, setEmail, password, setPassword, login , isLoggedIn , admin } = useAuthStore();
+    const { email, setEmail, password, setPassword, login , isLoggedIn  } = useAuthStore();
     // const [loading, setLoading] = useState<boolean | false>(false); // 로딩 상태
     const [modal, setModal] = useState<boolean | false>(false); // 로딩 상태
     // const [error, setError] = useState<string | "">("");; // 에러 메시지 상태
