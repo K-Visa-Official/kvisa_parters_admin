@@ -49,7 +49,7 @@ export async function getUserApi(id: number, language: number): Promise<WorkResp
   }
 }
 
-// 유저정보 - 개별
+// 유저정보 - 어드민
 export async function getUser(id: number): Promise<UserList> {
   try {
     const response = await fetch(`${baseurl}/api/user/${id}/`, {
@@ -113,5 +113,30 @@ export async function UserEdit(formData: FormData , a:number) {
       return await response.json();
   } catch (error) {
       throw error;
+  }
+}
+
+
+// 유저정보 - 의뢰인
+
+export async function getUserMember(): Promise<UserList> {
+  try {
+    const response = await fetch(`${baseurl}/api/user/`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("token"),
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("유저 정보 불러오기 실패");
+    }
+
+    const data: UserList = await response.json(); // 응답을 WorkResponse[] 타입으로 변환
+    return data;
+  } catch (error) {
+    console.error("API 호출 오류:", error);
+    throw error;
   }
 }

@@ -284,7 +284,7 @@ const UserListtotla: React.FC<ModalProps> = ({ search }) => {
                                     boxShadow: "0 5px 20px 0 rgba(0, 0, 0, 0.05)", zIndex: 2
                                 }}
                             >
-                                <div className={styles.tooltoplist}
+                                <div className={styles.tooltoplist_second}
                                     onClick={() => (
                                         setLanguage("post"),
                                         setModal(true),
@@ -293,7 +293,7 @@ const UserListtotla: React.FC<ModalProps> = ({ search }) => {
                                     정보 수정하기
                                 </div>
 
-                                <div className={styles.tooltoplist}>
+                                <div className={styles.tooltoplist_second}>
                                     삭제하기 (관리자 문의)
                                 </div>
 

@@ -362,7 +362,7 @@ const Busionlist: React.FC<ModalProps> = ({ search }) => {
                                         }}
                                     >
                                         {order.map((b, index) => (
-                                            <div className={styles.tooltoplist} key={index}
+                                            <div className={styles.tooltoplist_second} key={index}
                                                 style={{
                                                     background: b === "접수완료" ? "#FF4B4C" :
                                                         b === "계약완료" ? "#FF9D4C" :
@@ -415,12 +415,12 @@ const Busionlist: React.FC<ModalProps> = ({ search }) => {
                                             boxShadow: "0 5px 20px 0 rgba(0, 0, 0, 0.05)", zIndex: 2
                                         }}
                                     >
-                                        <div className={styles.tooltoplist}
+                                        <div className={styles.tooltoplist_second}
                                         >
                                             답변확인하기
                                         </div>
 
-                                        <div className={styles.tooltoplist}>
+                                        <div className={styles.tooltoplist_second}>
                                             삭제하기 (관리자 문의)
                                         </div>
 

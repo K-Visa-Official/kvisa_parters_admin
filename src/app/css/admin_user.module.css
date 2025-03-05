@@ -139,16 +139,20 @@
     color: #84848f;
 }
 
-.tooltoplist {
-    width: 120px;
-    height: 28px;
+.tooltoplist_second {
+    width: 100%;
+    height: 50px;
     /* padding: 17px 0 0 15px; */
     font-size: 12px;
     font-weight: 500;
-    color: white;
+    /* color: white; */
     border-radius: 5px;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.tooltoplist:hover{
+.tooltoplist_second:hover{
     background: rgba(0, 0, 0, 0.1);
 }
 

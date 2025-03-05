@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 import Modal from '../Common/Modal';
 
 export default function Login() {
-    const { email, setEmail, password, setPassword, login , isLoggedIn } = useAuthStore();
+    const { email, setEmail, password, setPassword, login , isLoggedIn , admin } = useAuthStore();
     // const [loading, setLoading] = useState<boolean | false>(false); // 로딩 상태
     const [modal, setModal] = useState<boolean | false>(false); // 로딩 상태
     // const [error, setError] = useState<string | "">("");; // 에러 메시지 상태
@@ -24,9 +24,13 @@ export default function Login() {
 
         try {
             const success: boolean = await login();
-
             if(success){
-                router.push("/");
+                if(useAuthStore.getState().admin){
+                    router.push("/");
+                }
+                else{
+                    router.push("/Member_admin");
+                }
             }
             else{
                 setModal(true)
@@ -41,7 +45,12 @@ export default function Login() {
 
     useEffect(() => {
         if (isLoggedIn) {
-          router.push('/'); // 로그인 후 이동할 페이지
+            if(localStorage.getItem("admin")){
+                router.push("/");
+            }
+            else{
+                router.push("/Member_admin");
+            }
         }
       }, [isLoggedIn, router]);
 

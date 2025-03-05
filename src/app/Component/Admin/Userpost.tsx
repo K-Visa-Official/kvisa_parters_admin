@@ -180,14 +180,14 @@ export default function UserPost({ onClose, pk }: UserPostProps) {
                     <p style={{ marginTop: "30px", color: "#84848f", fontSize: "13px" }}> 아이디</p>
 
                     <FilterInputBox w={700} h={50} mt={10} bg={"#f5f6f9"} p={"아이디 입력"}
-                        v={email} a={"no"}
+                        v={email} a={user_edit ? "no" : ""}
                         onChange={(e) => setEmail(e.target.value)}
                     />
 
                     <p style={{ marginTop: "30px", color: "#84848f", fontSize: "13px" }}> 비밀번호</p>
 
                     <FilterInputBox w={700} h={50} mt={10} bg={"#f5f6f9"} p={"비밀번호 입력"}
-                        v={password} a={"no"}
+                        v={password} a={user_edit ? "no" : ""}
                         type={"password"} src={"/admin/hidden_password.png"}
                         onChange={(e) => setPassword(e.target.value)}
                     />

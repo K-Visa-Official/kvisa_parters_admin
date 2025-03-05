@@ -4,6 +4,7 @@ import Image from 'next/image';
 import {  useRouter , usePathname } from 'next/navigation';
 // import { useState } from "react";
 import styles from "@/app/css/common.module.css";
+import useAuthStore from "@/app/store/user";
 
 
 // interface EnterBtnProps {
@@ -71,6 +72,12 @@ export default function Sidebar() {
                 />
                 <span>{Category.second}</span>
             </div>
+
+            <div style={{ marginTop:"500px" , color:"#84848f" , marginLeft:"50px" , fontSize:"13px" , fontWeight:"500" , cursor:"pointer"}}
+             onClick={()=> useAuthStore.getState().logout()}>
+                로그아웃
+            </div>
+
 
             {/* :
                 <div className={styles.active_none} style={{ marginTop: "78px" }}

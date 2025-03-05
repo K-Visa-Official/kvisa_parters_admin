@@ -8,7 +8,7 @@ import UserBox from './Component/Admin/User';
 
 export default function Home() {
 
-  const { isLoggedIn } = useAuthStore();
+  const { isLoggedIn  } = useAuthStore();
   const router = useRouter(); // useRouter hook 사용
   
     
