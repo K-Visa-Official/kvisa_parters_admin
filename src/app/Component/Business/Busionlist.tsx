@@ -362,7 +362,7 @@ const Busionlist: React.FC<ModalProps> = ({ search }) => {
                                         }}
                                     >
                                         {order.map((b, index) => (
-                                            <div className={styles.tooltoplist_second} key={index}
+                                            <div className={styles.tooltoplist_second} key={index} 
                                                 style={{
                                                     background: b === "접수완료" ? "#FF4B4C" :
                                                         b === "계약완료" ? "#FF9D4C" :
@@ -370,6 +370,7 @@ const Busionlist: React.FC<ModalProps> = ({ search }) => {
                                                                 b === "심사진행" ? "#1B68FF" :
                                                                     b === "처리완료" ? "#FF1A8E" : "#A3A3A3",
                                                     padding: "0px 8px 0px 31px", display: "flex", justifyContent: "space-between", alignItems: "center",
+                                                    color:"white" , height:"30px"
                                                 }}
                                                 onClick={() => ChangeState(a.id, index)}>
                                                 {b}
