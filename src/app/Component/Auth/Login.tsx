@@ -45,7 +45,7 @@ export default function Login() {
 
     useEffect(() => {
         if (isLoggedIn) {
-            if(localStorage.getItem("admin")){
+            if(localStorage.getItem("admin") === "true"){
                 router.push("/");
             }
             else{
