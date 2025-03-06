@@ -582,7 +582,7 @@ function Progress() {
                                                                                             phone_third === "" ? "" :
                                                                                                 handleTextInputChange(user.id,
                                                                                                     phone + "-" + value + "-" + phone_third
-                                                                                                )
+                                                                                                );
                                                                                             }}
                                                                                         // onChange={(e)=> setPhone_second(e.target.value)}
                                                                                         placeholder=""
@@ -612,7 +612,7 @@ function Progress() {
                                                                                             phone_second === "" ? "" :
                                                                                                 handleTextInputChange(user.id,
                                                                                                     phone + "-" + phone_second + "-" + e.target.value
-                                                                                                )
+                                                                                                );
                                                                                             }}
                                                                                         placeholder=""
                                                                                         style={{
