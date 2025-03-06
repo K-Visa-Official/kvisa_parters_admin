@@ -1,5 +1,5 @@
 import { VisaApiResponse } from "../type/busioness";
-import useAuthStore from "../store/user";
+// import useAuthStore from "../store/user";
 
 const baseurl = process.env.NEXT_PUBLIC_SERVICE_VISA_URL; 
 
