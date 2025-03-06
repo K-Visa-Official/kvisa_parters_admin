@@ -571,7 +571,7 @@ function Progress() {
                                                                                     />
                                                                                     -
                                                                                     <input
-                                                                                        type="number"
+                                                                                        type="text"
                                                                                         value={phone_second}
                                                                                         onChange={(e) => {
                                                                                             let value = e.target.value;
@@ -603,13 +603,13 @@ function Progress() {
                                                                                     />
                                                                                     -
                                                                                     <input
-                                                                                        type="number"
+                                                                                        type="text"
                                                                                         value={phone_third}
                                                                                         onChange={(e) => {
                                                                                             let value = e.target.value;
 
                                                                                             // 숫자 4자리까지만 입력 가능하도록 제한
-                                                                                            value = value.replace(/\D/g, "").slice(0, 4);
+                                                                                            value = value.replace(/[^0-9]/g, "").slice(0, 4);
 
                                                                                             setPhone_third(value);
                                                                                             
