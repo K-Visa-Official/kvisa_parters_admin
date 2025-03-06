@@ -577,12 +577,14 @@ function Progress() {
                                                                                             // 숫자 4자리까지만 입력 가능하도록 제한
                                                                                             value = value.replace(/\D/g, "").slice(0, 4);
 
-                                                                                            setPhone_second(value);
-
-                                                                                            phone_third === "" ? "" :
+                                                                                            setPhone_second(e.target.value);
+                                                                                            
+                                                                                            if (phone_third !== "") {
                                                                                                 handleTextInputChange(user.id,
                                                                                                     phone + "-" + value + "-" + phone_third
-                                                                                                );
+                                                                                                )
+                                                                                            }
+
                                                                                             }}
                                                                                         // onChange={(e)=> setPhone_second(e.target.value)}
                                                                                         placeholder=""
@@ -608,11 +610,14 @@ function Progress() {
                                                                                             value = value.replace(/\D/g, "").slice(0, 4);
 
                                                                                             setPhone_third(value);
-
-                                                                                            phone_second === "" ? "" :
+                                                                                            
+                                                                                            if (phone_second !== "") {
                                                                                                 handleTextInputChange(user.id,
                                                                                                     phone + "-" + phone_second + "-" + e.target.value
-                                                                                                );
+                                                                                                )
+                                                                                            }
+
+                                                                                    
                                                                                             }}
                                                                                         placeholder=""
                                                                                         style={{
