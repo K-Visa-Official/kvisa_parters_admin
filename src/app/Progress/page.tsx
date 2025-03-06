@@ -15,12 +15,10 @@ import Modal from "../Component/Common/Modal";
 import AutoComplete from "../Component/Common/AutoComplete";
 // import DatePicker from "../Component/Common/DatePicker";
 
-import useWindowWidth from "../hooks/useWindowWidth";
 
 function Progress() {
     const parm = useSearchParams();
     const router = useRouter()
-    const width = useWindowWidth(); // ✅ 현재 화면 width 가져오기
     const targetRefs = useRef<(HTMLParagraphElement | null)[]>([]);
     const [progressId, setProgressId] = useState<string | null>(null);
     const [work, setWork] = useState<Question_Post[]>([]);
