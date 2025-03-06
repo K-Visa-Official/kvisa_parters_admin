@@ -672,6 +672,7 @@ function Progress() {
                                                                         className={styles.answerItem}
                                                                         onClick={() => {
                                                                             if (user.answer_type === 0) {
+                                                                                targetRefs.current[index]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                                                                                 const targetElement = targetRefs.current[index+1];
                                                                                         if (targetElement) {
                                                                                             // 화면의 가운데로 스크롤
