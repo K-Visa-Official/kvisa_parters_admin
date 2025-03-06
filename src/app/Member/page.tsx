@@ -167,7 +167,7 @@ function CaseStoriesDetailPage() {
                                                             {/* <img src={user?.detail} className={styles.postimg} alt="profile"/> */}
                                                             <Image 
                                                                 // src={user?.detail} 
-                                                                src="/bank/bank_1.png"
+                                                                src= {parm.get("userId") === null ? user?.detail : "/bank/bank_1.png" }
                                                                 className={styles.postimg} alt="profile"
                                                             layout="responsive" 
                                                              width={345} height={200} />
@@ -205,7 +205,7 @@ function CaseStoriesDetailPage() {
                                     <Image
                                         aria-hidden
                                         // src="/common/CRM.png"
-                                        src="/bank/bank_2.png"
+                                        src={parm.get("userId") === null ?"/common/CRM.png" : "/bank/bank_2.png" }
                                         alt="다음"
                                         width={345}
                                         height={200}
@@ -240,7 +240,7 @@ function CaseStoriesDetailPage() {
                             {parm.get("userId") === null ?
                                 <></>
                                 :
-                                <Image aria-hidden src="/bank/bank_3.png" alt="닫기" width={345} height={110} 
+                                <Image aria-hidden src= {parm.get("userId") === null ? "/common/main_banner.png" :"/bank/bank_3.png"} alt="닫기" width={345} height={110} 
                                 layout="responsive" 
                                 style={{ cursor: "pointer" , marginBottom:"100px" }}
                                  onClick={() => (
