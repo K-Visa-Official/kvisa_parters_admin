@@ -131,7 +131,7 @@ function CRM() {
                 <Modal web={"wed"} setAc={setAc} />
                 :
                 <Suspense fallback={<div>Loading...</div>}>
-                    <div style={{ display: "flex", justifyContent: "center", alignItems: "flex-start", background: "#f5f6f9", width: "100vw", height: "auto", overflowY: "auto" }}>
+                    <div style={{ display: "flex", justifyContent: "center", alignItems: "flex-start", background: "#f5f6f9", width: "100%", height: "auto", overflowY: "auto" }}>
                         <div className={styles.innerbox}>
                             <MoHeader setAc={setAc} />
 

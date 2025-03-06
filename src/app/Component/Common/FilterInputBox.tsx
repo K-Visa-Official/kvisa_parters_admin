@@ -24,6 +24,16 @@ export default function FilterInputBox({
         const [inputType, setInputType] = useState(type);
         const width = useWindowWidth(); // ✅ 현재 화면 width 가져오기
 
+        const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+            const inputValue = e.target.value.replace(/[0-9]/g, ""); // 숫자만 제거
+            e.target.value = inputValue;
+            if (onChange) onChange(e);
+        };
+        const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+            const inputValue = e.target.value.replace(/[^0-9]/g, ""); // 숫자만 허용
+            e.target.value = inputValue;
+            if (onChange) onChange(e);
+        };
         // 너비에 따라 동적 스타일 적용
         const dynamicWidth = width < 375 ? "100%" : w;
         const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,7 +93,7 @@ export default function FilterInputBox({
                 type={inputType}
                 placeholder={p}
                 value={v ?? ""}// "no"일 경우 빈값으로 처리
-                onChange={type === "tel" ? handlePhoneChange : onChange}
+                onChange={type === "tel" ? handlePhoneChange : type === "text" ? handleTextChange : type === "number" ? handleNumberChange : onChange}
                 disabled={a === "no"} // v가 "no"일 경우 disabled
             >
             </input>

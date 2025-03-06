@@ -145,8 +145,9 @@ function Certify() {
                 justifyContent: "center",
                 alignItems: "flex-start",
                 background: "#f5f6f9",
-                width: "100vw",
+                width: "100%",
                 height: "auto",
+                paddingBottom:"200px"
             }}
         >
             <div className={styles.innerbox}>
@@ -154,9 +155,9 @@ function Certify() {
                 <MoHeader setAc={setAc} />
 
                 {state === 1 ?
-                    <div className={styles.innerbox} style={{ height: "100vh" }}>
-                        <div style={{ height: "100vh", marginLeft: "15px", marginRight: "15px" ,
-                                width : width < 375 ? "95vw" :""
+                    <div className={styles.innerbox} style={{ height: "100%" }}>
+                        <div style={{ height: "100%", marginLeft: "15px", marginRight: "15px" ,
+                                width : width < 375 ? "95%" :""
                         }}>
                             <p style={{ fontSize: "20px", fontWeight: "bold", color: " #2f2f2f", marginTop: "30px" }}>
                                 {parm.get("language") === "0" ? Korean.certi_first : Ch.certi_first}</p>
@@ -165,7 +166,7 @@ function Certify() {
                                 {parm.get("language") === "0" ? Korean.certi_name : Ch.certi_name}</p>
                             <FilterInputBox w={345} h={50} mt={10} bg={"#f5f6f9"} p={
                                 parm.get("language") === "0" ? Korean.certi_name_input : Ch.certi_name_input
-                            } v={name}
+                            } v={name} type = {"text"}
                                 // src={"/admin/search.png"}
                                 onChange={(e) => setName(e.target.value)}
                             />
@@ -215,7 +216,7 @@ function Certify() {
                                     <div style={{ width: width < 375 ? "300px" :"345px", height: "50px", marginTop: "10px", background: "#f5f6f9", display: "flex", flexDirection: "row" }}>
                                         <FilterInputBox w={270} h={50} mt={0} bg={"#f5f6f9"} p={
                                             parm.get("language") === "0" ? Korean.certi_no : Ch.certi_no
-                                        } v={ce}
+                                        } v={ce} type={"number"}
                                             // src={"/admin/search.png"} 
                                             onChange={(e) => setCe(e.target.value)}
                                         />
@@ -250,7 +251,7 @@ function Certify() {
                         </div>
                     </div>
                     :
-                    <div  className={styles.innerbox} style={{ height: "100vh" }}>
+                    <div  className={styles.innerbox} style={{ height: "100%" }}>
                         <Image
                             aria-hidden
                             src='/admin/chech_process.png'

@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         {/* 폰트 파일 로드 */}
         <style>
           {`
@@ -35,6 +35,11 @@ export default function RootLayout({
 
             body {
               font-family: 'SpoqaHanSansNeo', sans-serif;
+            }
+              html, body {
+              height: 100%; /* body와 html의 높이를 100%로 설정 */
+              margin: 0;     /* 기본 여백 제거 */
+              padding: 0;    /* 기본 패딩 제거 */
             }
           `}
         </style>

@@ -81,7 +81,7 @@ function CaseStoriesDetailPage() {
                     justifyContent: "center",
                     alignItems: "flex-start",
                     background: "#f5f6f9",
-                    width: "100vw",
+                    width: "100%",
                     height: "auto",
                 }}
             >

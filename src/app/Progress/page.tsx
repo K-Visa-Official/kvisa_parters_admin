@@ -29,6 +29,7 @@ function Progress() {
     const [ac, setAc] = useState<boolean | false>(false);
     const [year, setYear] = useState<string>("");
     const [month, setMonth] = useState<string>("");
+    const [selectedValue, setSelectedValue] = useState<string>("");
     const [day, setDay] = useState("");
     const [days, setDays] = useState<string[]>([]); // 일수를 담을 배열
     const [phone, setPhone] = useState<string>("010");
@@ -149,7 +150,7 @@ function Progress() {
     // 텍스트 입력 변경
     const handleTextInputChange = (questionId: number, value: string) => {
         setTextAnswers(prev => ({ ...prev, [questionId]: value }));
-
+        setSelectedValue(value);
     };
 
     const handleSubmit = async () => {
@@ -275,8 +276,8 @@ function Progress() {
                                 justifyContent: "center",
                                 alignItems: "flex-end",
                                 background: "grey",
-                                width: "100vw",
-                                height: "100vh",
+                                width: "100%",
+                                height: "auto",
                                 // opacity:0.5
                             }}
                         >
@@ -341,7 +342,7 @@ function Progress() {
                                 justifyContent: "center",
                                 alignItems: "flex-start",
                                 background: "#f5f6f9",
-                                width: "100vw",
+                                width: "100%",
                                 height: "auto",
                             }}
                         >
@@ -461,6 +462,7 @@ function Progress() {
                                                                     index === 0 ? (
 
                                                                         <AutoComplete suggestions={suggestionsList}
+                                                                            selectedValue={selectedValue}
                                                                             onSelect={(value) =>
                                                                                 handleTextInputChange(user.id, value)}
                                                                         />
@@ -569,14 +571,19 @@ function Progress() {
                                                                                     <input
                                                                                         type="number"
                                                                                         value={phone_second}
-                                                                                        onChange={(e) => (
-                                                                                            setPhone_second(e.target.value),
+                                                                                        onChange={(e) => {
+                                                                                            let value = e.target.value;
+
+                                                                                            // 숫자 4자리까지만 입력 가능하도록 제한
+                                                                                            value = value.replace(/\D/g, "").slice(0, 4);
+
+                                                                                            setPhone_second(value),
 
                                                                                             phone_third === "" ? "" :
                                                                                                 handleTextInputChange(user.id,
-                                                                                                    phone + "-" + e.target.value + "-" + phone_third
+                                                                                                    phone + "-" + value + "-" + phone_third
                                                                                                 )
-                                                                                        )}
+                                                                                            }}
                                                                                         // onChange={(e)=> setPhone_second(e.target.value)}
                                                                                         placeholder=""
                                                                                         style={{
@@ -588,21 +595,25 @@ function Progress() {
                                                                                             color: "black", fontSize: "14px",
                                                                                             borderRadius: "5px", marginRight: "5px", marginLeft: "5px"
                                                                                         }}
-                                                                                        maxLength={4}
                                                                                         className={styles.dfsopkdf}
                                                                                     />
                                                                                     -
                                                                                     <input
                                                                                         type="number"
                                                                                         value={phone_third}
-                                                                                        onChange={(e) => (
-                                                                                            setPhone_third(e.target.value),
+                                                                                        onChange={(e) => {
+                                                                                            let value = e.target.value;
+
+                                                                                            // 숫자 4자리까지만 입력 가능하도록 제한
+                                                                                            value = value.replace(/\D/g, "").slice(0, 4);
+
+                                                                                            setPhone_third(value),
 
                                                                                             phone_second === "" ? "" :
                                                                                                 handleTextInputChange(user.id,
                                                                                                     phone + "-" + phone_second + "-" + e.target.value
                                                                                                 )
-                                                                                        )}
+                                                                                            }}
                                                                                         placeholder=""
                                                                                         style={{
                                                                                             border: "none", textAlign: "center",
@@ -656,7 +667,14 @@ function Progress() {
                                                                         className={styles.answerItem}
                                                                         onClick={() => {
                                                                             if (user.answer_type === 0) {
-                                                                                targetRefs.current[index]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                                                                const targetElement = targetRefs.current[index+1];
+                                                                                        if (targetElement) {
+                                                                                            // 화면의 가운데로 스크롤
+                                                                                            window.scrollTo({
+                                                                                                top: targetElement.offsetTop - (window.innerHeight / 2),
+                                                                                                behavior: 'smooth'
+                                                                                            });
+                                                                                        }
                                                                             }
 
                                                                             handleAnswerSelect(user.id, a.answer, user.answer_type)
