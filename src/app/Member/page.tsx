@@ -89,7 +89,6 @@ function CaseStoriesDetailPage() {
                     {/* 헤더 */}
                     <MoHeader state={state} setState={setState} setAc={setAc} />
 
-
                     {state === 1 ?
                         <div className={styles.contentsbox}>
 
@@ -166,10 +165,13 @@ function CaseStoriesDetailPage() {
                                                         )}
                                                         >
                                                             {/* <img src={user?.detail} className={styles.postimg} alt="profile"/> */}
-                                                            <Image src={user?.detail} className={styles.postimg} alt="profile"
+                                                            <Image 
+                                                                // src={user?.detail} 
+                                                                src="/bank/bank_1.png"
+                                                                className={styles.postimg} alt="profile"
                                                             layout="responsive" 
                                                              width={345} height={200} />
-                                                            <div className={styles.nextstep}>
+                                                            {/* <div className={styles.nextstep}>
                                                                 {parm.get("language") === "0" ? Korean.go : Ch.go}
                                                                 <Image
                                                                     aria-hidden
@@ -179,7 +181,7 @@ function CaseStoriesDetailPage() {
                                                                     height={16}
                                                                     style={{ marginLeft: "5px" }}
                                                                 />
-                                                            </div>
+                                                            </div> */}
 
                                                         </div>
                                                         <p style={{ marginTop: "15px", fontSize: "18px", color: "black", fontWeight: "600" }}>{user?.choice}</p>
@@ -202,7 +204,8 @@ function CaseStoriesDetailPage() {
                                 <div className={styles.postimg} style={{ color: "black" , }}>
                                     <Image
                                         aria-hidden
-                                        src="/common/CRM.png"
+                                        // src="/common/CRM.png"
+                                        src="/bank/bank_2.png"
                                         alt="다음"
                                         width={345}
                                         height={200}
@@ -210,7 +213,7 @@ function CaseStoriesDetailPage() {
                                         style={{ borderRadius:"10px" }}
                                     /></div>
                                 {/* <img src={user?.detail} className={styles.postimg} /> */}
-                                <div className={styles.nextstep}>
+                                {/* <div className={styles.nextstep}>
                                     {parm.get("language") === "0" ? Korean.go : Ch.go}
                                     <Image
                                         aria-hidden
@@ -220,7 +223,7 @@ function CaseStoriesDetailPage() {
                                         height={16}
                                         style={{ marginLeft: "5px" }}
                                     />
-                                </div>
+                                </div> */}
 
                             </div>
 
@@ -237,7 +240,7 @@ function CaseStoriesDetailPage() {
                             {parm.get("userId") === null ?
                                 <></>
                                 :
-                                <Image aria-hidden src="/common/main_banner.png" alt="닫기" width={345} height={110} 
+                                <Image aria-hidden src="/bank/bank_3.png" alt="닫기" width={345} height={110} 
                                 layout="responsive" 
                                 style={{ cursor: "pointer" , marginBottom:"100px" }}
                                  onClick={() => (
@@ -251,8 +254,12 @@ function CaseStoriesDetailPage() {
                         </div>
                         :
                         <>
-                            <div style={{ position: "relative", width: "100%", height: "auto" }}>
-                                <Image src={url} alt="샘플 이미지" layout="responsive" width={16} height={9} />
+                            <div style={{ position: "relative", width: "100%", height: "auto" , 
+                                top:parm.get("userId") === null ? "" : "-60px" }}>
+                                <Image 
+                                // src={url}
+                                src={parm.get("userId") === null ? url : "/bank/bank_detail.png" } 
+                                alt="샘플 이미지" layout="responsive" width={16} height={9} />
                             </div>
 
                             <div className={styles.footer}

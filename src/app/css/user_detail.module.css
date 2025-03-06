@@ -16,6 +16,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    z-index: 10;
 }
 
 .contentsbox {
@@ -97,18 +98,20 @@
 .footer {
     position: fixed;
     /* 화면 하단에 고정 */
-    bottom: 0;
+    bottom: 0px;
     left: 0;
     width: 100%;
-    height: 110px;
+    height:110px;
     background-color: #fff;
     padding: 10px 15px;
     border-top: 1px solid #ebecf1;
-    font-size: 12px;
-    font-weight: 500;
+    /* font-size: 12px;
+    font-weight: 500; */
+    font-size: 14px;
+    font-weight: 400;
     color: #84848f;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
     z-index: 100;
@@ -116,11 +119,11 @@
 }
 
 .nextStep {
-    width: 345px;
+    width: 320px;
     height: 56px;
     margin-top: 10px;
-    border-radius: 5px;
-    background-image: linear-gradient(to left, #02f, #3d7dff);
+    border-radius: 50px;
+    background: #598BF8;
     font-size: 15px;
     font-weight: 600;
     color: #fff;

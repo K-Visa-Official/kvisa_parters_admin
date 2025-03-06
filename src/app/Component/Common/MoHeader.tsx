@@ -61,14 +61,7 @@ const MoHeader: React.FC<MoHeaderProps> = ({ state = 0, setState }) => {
 
     const handleCloseEnd = () => {
         if(path === '/Member'){
-            if (state === 1) {
-                closeWebView();
-            }
-            else {
-                if (setState) {
-                    setState(1)
-                }
-            }
+            closeWebView()
         }
         else {
             closeWebView();
