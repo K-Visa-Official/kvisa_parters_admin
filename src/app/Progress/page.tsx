@@ -577,7 +577,7 @@ function Progress() {
                                                                                             // 숫자 4자리까지만 입력 가능하도록 제한
                                                                                             value = value.replace(/\D/g, "").slice(0, 4);
 
-                                                                                            setPhone_second(value),
+                                                                                            setPhone_second(value);
 
                                                                                             phone_third === "" ? "" :
                                                                                                 handleTextInputChange(user.id,
@@ -607,7 +607,7 @@ function Progress() {
                                                                                             // 숫자 4자리까지만 입력 가능하도록 제한
                                                                                             value = value.replace(/\D/g, "").slice(0, 4);
 
-                                                                                            setPhone_third(value),
+                                                                                            setPhone_third(value);
 
                                                                                             phone_second === "" ? "" :
                                                                                                 handleTextInputChange(user.id,
