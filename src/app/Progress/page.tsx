@@ -15,10 +15,12 @@ import Modal from "../Component/Common/Modal";
 import AutoComplete from "../Component/Common/AutoComplete";
 // import DatePicker from "../Component/Common/DatePicker";
 
+import useWindowWidth from "../hooks/useWindowWidth";
 
 function Progress() {
     const parm = useSearchParams();
     const router = useRouter()
+    const width = useWindowWidth(); // ✅ 현재 화면 width 가져오기
     const targetRefs = useRef<(HTMLParagraphElement | null)[]>([]);
     const [progressId, setProgressId] = useState<string | null>(null);
     const [work, setWork] = useState<Question_Post[]>([]);
@@ -29,7 +31,7 @@ function Progress() {
     const [ac, setAc] = useState<boolean | false>(false);
     const [year, setYear] = useState<string>("");
     const [month, setMonth] = useState<string>("");
-    const [selectedValue, setSelectedValue] = useState<string>("");
+    const [world, setWorld] = useState<string>("");
     const [day, setDay] = useState("");
     const [days, setDays] = useState<string[]>([]); // 일수를 담을 배열
     const [phone, setPhone] = useState<string>("010");
@@ -150,7 +152,7 @@ function Progress() {
     // 텍스트 입력 변경
     const handleTextInputChange = (questionId: number, value: string) => {
         setTextAnswers(prev => ({ ...prev, [questionId]: value }));
-        setSelectedValue(value);
+        // setWorld(value);
     };
 
     const handleSubmit = async () => {
@@ -276,7 +278,7 @@ function Progress() {
                                 justifyContent: "center",
                                 alignItems: "flex-end",
                                 background: "grey",
-                                width: "100%",
+                                width: width<375? "300px" : "100%",
                                 height: "auto",
                                 // opacity:0.5
                             }}
@@ -462,9 +464,11 @@ function Progress() {
                                                                     index === 0 ? (
 
                                                                         <AutoComplete suggestions={suggestionsList}
-                                                                            selectedValue={selectedValue}
-                                                                            onSelect={(value) =>
-                                                                                handleTextInputChange(user.id, value)}
+                                                                            selectedValue={world}
+                                                                            onSelect={(value) => {
+                                                                                handleTextInputChange(user.id, value);
+                                                                                setWorld(value);
+                                                                            }}
                                                                         />
 
                                                                     ) :
@@ -577,7 +581,7 @@ function Progress() {
                                                                                             // 숫자 4자리까지만 입력 가능하도록 제한
                                                                                             value = value.replace(/\D/g, "").slice(0, 4);
 
-                                                                                            setPhone_second(e.target.value);
+                                                                                            setPhone_second(value);
                                                                                             
                                                                                             if (phone_third !== "") {
                                                                                                 handleTextInputChange(user.id,
@@ -613,7 +617,7 @@ function Progress() {
                                                                                             
                                                                                             if (phone_second !== "") {
                                                                                                 handleTextInputChange(user.id,
-                                                                                                    phone + "-" + phone_second + "-" + e.target.value
+                                                                                                    phone + "-" + phone_second + "-" + value
                                                                                                 )
                                                                                             }
 
@@ -629,7 +633,6 @@ function Progress() {
                                                                                             color: "black", fontSize: "14px",
                                                                                             borderRadius: "5px", marginLeft: "5px"
                                                                                         }}
-                                                                                        maxLength={4}
                                                                                         className={styles.dfsopkdf}
                                                                                     />
                                                                                 </div>
@@ -672,17 +675,15 @@ function Progress() {
                                                                         className={styles.answerItem}
                                                                         onClick={() => {
                                                                             if (user.answer_type === 0) {
-                                                                                targetRefs.current[index]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                                                                                 const targetElement = targetRefs.current[index+1];
-                                                                                        if (targetElement) {
-                                                                                            // 화면의 가운데로 스크롤
-                                                                                            window.scrollTo({
-                                                                                                top: targetElement.offsetTop - (window.innerHeight / 2),
-                                                                                                behavior: 'smooth'
-                                                                                            });
-                                                                                        }
+                                                                                    if (targetElement) {
+                                                                                        // 화면의 가운데로 스크롤
+                                                                                        window.scrollTo({
+                                                                                            top: targetElement.offsetTop - (window.innerHeight / 2),
+                                                                                            behavior: 'smooth'
+                                                                                        });
+                                                                                    }
                                                                             }
-
                                                                             handleAnswerSelect(user.id, a.answer, user.answer_type)
                                                                         }}
                                                                         // onClick={() => handleAnswerSelect(user.id, a.answer, user.answer_type)}
