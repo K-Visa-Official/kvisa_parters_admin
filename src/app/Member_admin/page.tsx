@@ -13,16 +13,20 @@ import styles from "@/app/css/business.module.css";
 import first from "@/app/css/admin_user.module.css";
 import { busi_work } from "../server/busioness";
 import { VisaApiResponse } from "../type/busioness";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { ko } from "date-fns/locale"; // 한국어 locale
 
 function Member_admin() {
     const [user, setUser] = useState<UserList | null>(null);
     const [work, setWork] = useState<VisaApiResponse | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태    
-    const [pro, setPro] = useState<string>("전체"); // 로딩 상태    
+    const [pro, setPro] = useState<string>("진행중"); // 로딩 상태    
     const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
     const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>({});
     const [isTooltipVisible, setTooltipVisible] = useState(false);
-    const { title_bu, created_at_bu, seTitle_bu, setCreate_bu, state, setState } = BusinessStore();
+    const [showCalendar, setShowCalendar] = useState<boolean>(false);
+    const { title_user, created_at_user, seTitle_User, setCreate_User, state_user, setState_User } = BusinessStore();
     const order = ["접수완료", "계약완료", "서류작성", "심사진행", "처리완료", "상담종료"]
     const cate = ["전체", "맞춤형 비자상담 서비스", "범죄/불법체류자 구제"]
     const { admin, isLoggedIn } = useAuthStore();
@@ -44,7 +48,7 @@ function Member_admin() {
         const fetchUser = async () => {
             try {
                 const data = await getUserMember();
-                const data_work = await busi_work();
+                const data_work = await busi_work(title_user, created_at_user, state_user);
                 setUser(data);
                 setWork(data_work)
                 console.log(data_work)
@@ -57,7 +61,7 @@ function Member_admin() {
 
         fetchUser();
 
-    }, [admin, router]); // 🔥 `user` 제거하여 무한 루프 방지
+    }, [admin, router, isLoading]); // 🔥 `user` 제거하여 무한 루프 방지
 
     useEffect(() => {
         if (!isLoggedIn) {
@@ -75,9 +79,10 @@ function Member_admin() {
     }
 
     return (
-        <div style={{ background: "white" }}>
+        <div style={{ background: "white", overflowX: "auto", whiteSpace: "nowrap" }}>
+
             <div style={{ width: "100%", height: "auto", display: "flex", justifyContent: "center", alignItems: "center", background: "white" }}>
-                <div style={{ width: "1200px", height: "90px", background: "white" }}>
+                <div style={{ width: "1200px", height: "90px", background: "white", display: "flex", alignItems: "center", }}>
                     <Image
                         aria-hidden
                         src="/common/logo.png"
@@ -89,7 +94,7 @@ function Member_admin() {
             </div>
 
             <div style={{ width: "100%", height: "auto", display: "flex", justifyContent: "center", alignItems: "center", background: "linear-gradient(to right, #33405a 1%, #4e5f82 100%)" }}>
-                <div style={{ width: "1200px", height: "270px", display: "flex", justifyContent: "flex-start", alignItems: "center", flexDirection: "row" }}>
+                <div style={{ width: "1200px", height: "270px", display: "flex", justifyContent: "flex-start", alignItems: "center", flexDirection: "row", overflowX: "auto" }}>
                     <Image
                         aria-hidden
                         src={user ? user?.bu_logo : "/common/ic_nonprofile.svg"}
@@ -116,228 +121,262 @@ function Member_admin() {
                     고객센터
                 </div>
             </div>
-
-            <div style={{ width: "100%", height: "auto", display: "flex", justifyContent: "center", alignItems: "center", background: "white", marginTop: "52px", flexDirection: "column", paddingBottom: "100px" }}>
-                <div style={{ width: "1200px", height: "50px", background: "white", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #ebecf1" }}>
-                    <div style={{ width: "114px", height: "100%", borderBottom: "5px solid black", color: "black", fontSize: "25px", fontWeight: "bold" }}>
-                        진행현황
-                    </div>
-                    <div style={{ display: "flex", flexDirection: "row", width: "640px", height: "100%", justifyContent: "space-between" }} className={styles.filter}>
-                        <FilterInputBox w={200} h={28} mt={0} bg={"#f5f6f9"} p={"고객명 또는 연락처"} v={title_bu}
-                            src={"/admin/search.png"}
-                            onChange={(e) => seTitle_bu(e.target.value)}
-                        />
-
-                        <FilterInputBox w={200} h={28} mt={0} bg={"#f5f6f9"} p={"접수일자(yyyy.mm.dd)"} v={created_at_bu}
-                            src={"/admin/calendar.png"}
-                            onChange={(e) => setCreate_bu(e.target.value)}
-                        />
-
-                        {isTooltipVisible ?
-                            <div style={{ display: "flex", flexDirection: "column" }}>
-                                {order.map((b, index) => (
-                                    <div className={styles.statebox} key={index}
-                                        onClick={() => (
-                                            setTooltipVisible(!isTooltipVisible),
-                                            setState(index)
-                                        )
-                                        }>
-                                        <p>{b}</p>
-                                        <Image
-                                            aria-hidden
-                                            src="/admin/arrow_active.png"
-                                            alt="Window icon"
-                                            width={14}
-                                            height={14}
+            <div style={{
+                width: "1200px",
+                margin: "0 auto",
+                display: "flex",
+                flexDirection: "column",
+                minWidth: "1200px"  // 스크롤이 필요하도록 최소 너비 지정
+            }}>
+                <div style={{ width: "100%", height: "auto", display: "flex", justifyContent: "center", alignItems: "center", background: "white", marginTop: "52px", flexDirection: "column", paddingBottom: "100px" }}>
+                    <div style={{ width: "1200px", height: "50px", background: "white", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #ebecf1" }}>
+                        <div style={{ width: "114px", height: "100%", borderBottom: "5px solid black", color: "black", fontSize: "25px", fontWeight: "bold" }}>
+                            진행현황
+                        </div>
+                        <div style={{ display: "flex", flexDirection: "row", width: "640px", height: "100%", justifyContent: "space-between" }} className={styles.filter}>
+                            <FilterInputBox w={200} h={28} mt={0} bg={"#f5f6f9"} p={"고객명 또는 연락처"} v={title_user}
+                                src={"/admin/search.png"}
+                                onChange={(e) => seTitle_User(e.target.value)}
+                            />
+                            <div onClick={()=> setShowCalendar(!showCalendar)} style={{ position: "relative"}}>
+                                <FilterInputBox w={200} h={28} mt={0} bg={"#f5f6f9"} p={"접수일자(yyyy.mm.dd)"} v={created_at_user}
+                                    src={"/admin/calendar.png"}
+                                    onChange={(e) => setCreate_User(e.target.value)}
+                                />
+                             </div>    
+                                {showCalendar && (
+                                   <div style={{ position: "absolute",top: "35px", right: "50px" }}>
+                                        <DatePicker
+                                            selected={created_at_user ? new Date(created_at_user) : null}
+                                            onChange={(date) => {
+                                                if (date) {
+                                                    setCreate_User(date.toISOString().split("T")[0]); // yyyy-MM-dd 형식 저장
+                                                }
+                                                setShowCalendar(false);
+                                            }}
+                                            dateFormat="yyyy.MM.dd"
+                                            locale={ko} // 한국어 설정
+                                            inline
                                         />
+                                    </div>
+                                )}
+                           
+                            
+
+                            {isTooltipVisible ?
+                                <div style={{ display: "flex", flexDirection: "column" }}>
+                                    {order.map((b, index) => (
+                                        <div className={styles.statebox} key={index}
+                                            onClick={() => (
+                                                setTooltipVisible(!isTooltipVisible),
+                                                setState_User(index)
+                                            )
+                                            }>
+                                            <p>{b}</p>
+                                            <Image
+                                                aria-hidden
+                                                src="/admin/arrow_active.png"
+                                                alt="Window icon"
+                                                width={14}
+                                                height={14}
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                                :
+                                <div className={styles.statebox}
+                                    onClick={() => setTooltipVisible(!isTooltipVisible)}>
+                                    <p>{state_user === 10 ? "진행상태" :
+                                        state_user === 0 ? "접수완료" :
+                                            state_user === 1 ? "계약완료" :
+                                                state_user === 2 ? "서류작성" :
+                                                    state_user === 3 ? "심사진행" :
+                                                        state_user === 4 ? "처리완료" : "상담종료"
+                                    }</p>
+                                    <Image
+                                        aria-hidden
+                                        src="/admin/arrow_active.png"
+                                        alt="Window icon"
+                                        width={14}
+                                        height={14}
+                                    />
+                                </div>
+                            }
+
+                            <button className={first.btn} style={{ background: "black", border: "none" }}
+                                onClick={() => setIsLoading(!isLoading)}>조회</button>
+                            <button className={first.btn} style={{ background: "#fff", border: "1px solid #e6eaee", color: "#000" }}
+                                onClick={() => (
+                                    seTitle_User(""),
+                                    setCreate_User(""),
+                                    setState_User(10),
+                                    setIsLoading(!isLoading)
+                                )}
+                            >초기화</button>
+                        </div>
+                    </div>
+
+                    <div style={{ width: "1200px", height: "auto1", display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginTop: "30px", flexDirection: "row" }}>
+                        <div style={{ width: "180px", height: "240px", border: "solid 1px #ebecf1", borderRadius: "10px", display: "flex", justifyContent: "flex-start", alignItems: "center", flexDirection: "column" }}>
+                            <div style={{ width: "130px", height: "48px", borderBottom: "1px solid black", color: "#33405a", fontSize: "15px", fontWeight: "600", display: "flex", alignItems: "center" }}>
+                                카테고리
+                            </div>
+                            <div style={{ width: "auto", height: "auto", display: "flex", alignItems: "flex-start", flexDirection: "column", marginLeft: "20px" }}>
+                                {cate.map((b, index) => (
+                                    <div key={index} style={{ color: " #33405a", fontSize: "13px", marginTop: "10px" }}>
+                                        <input
+                                            type="checkbox"
+                                            id={`checkbox-${b}`}
+                                            checked={!!checkedItems[b]} // 상태 반영
+                                            onChange={() => handleCheckboxChange(b)}
+                                            style={{
+                                                accentColor: checkedItems[b] ? "black" : "#4CAF50", // ✅ 체크 표시 색상 변경
+                                                marginRight: "10px",
+                                                width: "14px",
+                                                height: "14px"
+                                            }}
+                                        />
+                                        <label htmlFor={`checkbox-${b}`}>{b}</label>
                                     </div>
                                 ))}
                             </div>
-                            :
-                            <div className={styles.statebox}
-                                onClick={() => setTooltipVisible(!isTooltipVisible)}>
-                                <p>{state === 10 ? "진행상태" :
-                                    state === 0 ? "접수완료" :
-                                        state === 1 ? "계약완료" :
-                                            state === 2 ? "서류작성" :
-                                                state === 3 ? "심사진행" :
-                                                    state === 4 ? "처리완료" : "상담종료"
-                                }</p>
-                                <Image
-                                    aria-hidden
-                                    src="/admin/arrow_active.png"
-                                    alt="Window icon"
-                                    width={14}
-                                    height={14}
-                                />
-                            </div>
-                        }
-
-                        <button className={first.btn} style={{ background: "black", border: "none" }}
-                        >조회</button>
-                        <button className={first.btn} style={{ background: "#fff", border: "1px solid #e6eaee", color: "#000" }}
-                            onClick={() => (
-                                seTitle_bu(""),
-                                setCreate_bu(""),
-                                setState(10)
-                            )}
-                        >초기화</button>
-                    </div>
-                </div>
-
-                <div style={{ width: "1200px", height: "auto1", display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginTop: "30px", flexDirection: "row" }}>
-                    <div style={{ width: "180px", height: "240px", border: "solid 1px #ebecf1", borderRadius: "10px", display: "flex", justifyContent: "flex-start", alignItems: "center", flexDirection: "column" }}>
-                        <div style={{ width: "130px", height: "48px", borderBottom: "1px solid black", color: "#33405a", fontSize: "15px", fontWeight: "600", display: "flex", alignItems: "center" }}>
-                            카테고리
                         </div>
-                        <div style={{ width: "auto", height: "auto", display: "flex", alignItems: "flex-start", flexDirection: "column", marginLeft: "20px" }}>
-                            {cate.map((b, index) => (
-                                <div key={index} style={{ color: " #33405a", fontSize: "13px", marginTop: "10px" }}>
-                                    <input
-                                        type="checkbox"
-                                        id={`checkbox-${b}`}
-                                        checked={!!checkedItems[b]} // 상태 반영
-                                        onChange={() => handleCheckboxChange(b)}
-                                        style={{
-                                            accentColor: checkedItems[b] ? "black" : "#4CAF50", // ✅ 체크 표시 색상 변경
-                                            marginRight: "10px",
-                                            width: "14px",
-                                            height: "14px"
-                                        }}
-                                    />
-                                    <label htmlFor={`checkbox-${b}`}>{b}</label>
+                        <div style={{ width: "980px", height: "auto" }}>
+                            <div style={{ width: "980px", height: "75px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", color: "black", flexDirection: "row" }}>
+                                <p style={{ fontSize: "20px", fontWeight: "600" }}>{work?.results?.length}개의 업무 진행</p>
+                                <div style={{ display: "flex", flexDirection: "row", fontSize: "18px", fontWeight: "600", cursor: "pointer" }}>
+                                    <p style={{ marginRight: "10px", color: pro === "진행중" ? "black" : "#84848f" }} onClick={() => (
+                                        setPro("진행중"),
+                                        setState_User(10),
+                                        setIsLoading(!isLoading)
+                                    )}>진행중</p>
+                                    <p>|</p>
+                                    <p style={{ marginLeft: "10px", color: pro === "처리완료" ? "black" : "#84848f" }} onClick={() => (
+                                        setPro("처리완료"),
+                                        setState_User(5),
+                                        setIsLoading(!isLoading)
+                                    )} >처리완료</p>
                                 </div>
-                            ))}
-                        </div>
-                    </div>
-                    <div style={{ width: "980px", height: "auto" }}>
-                        <div style={{ width: "980px", height: "75px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", color: "black", flexDirection: "row" }}>
-                            <p style={{ fontSize: "20px", fontWeight: "600" }}>{work?.results?.length}개의 업무 진행</p>
-                            <div style={{ display: "flex", flexDirection: "row", fontSize: "18px", fontWeight: "600", cursor: "pointer" }}>
-                                <p style={{ marginRight: "10px", color: pro === "진행중" ? "black" : "#84848f" }} onClick={() => setPro("진행중")}>진행중</p>
-                                <p>|</p>
-                                <p style={{ marginLeft: "10px", color: pro === "처리완료" ? "black" : "#84848f" }} onClick={() => setPro("처리완료")} >처리완료</p>
                             </div>
-                        </div>
 
-                        {work?.results.map((b, index) => (
-                            <div style={{
-                                width: "980px", height: "auto", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "25px 20px 15px 20px", background: "#f5f6f9", flexDirection: "column",
-                                borderRadius: "10px", marginTop: "15px"
-                            }} key={index} onClick={() => handleToggleExpand(index)}>
+                            {work?.results.map((b, index) => (
+                                <div style={{
+                                    width: "980px", height: "auto", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "25px 20px 15px 20px", background: "#f5f6f9", flexDirection: "column",
+                                    borderRadius: "10px", marginTop: "15px"
+                                }} key={index} onClick={() => handleToggleExpand(index)}>
 
-                                <div style={{ width: "100%", height: "auto", display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                                    <div style={{ height: "61px" }}>
-                                        <div style={{
-                                            fontSize: "12px", background: "#e8eaf1", borderRadius: "2px", color: "#33405a", width: "120px", height: "30px", display: "flex",
-                                            justifyContent: "center", alignItems: "center"
-                                        }}>
-                                            접수날짜 : {new Date(String(b?.created_at)).toLocaleDateString("ko-KR").replace(/-/g, ".").slice(2)}
-                                        </div>
-                                        <div style={{ marginTop: "10px", fontSize: "20px", color: "black", fontWeight: "600" }}>{b.work?.choice} / {b.name} / {b.work?.language === 0 ? "한국어" : "중국어"}</div>
-                                    </div>
-
-                                    <div style={{ width: "150px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                                        <div style={{
-                                            padding: "9px 20px", border: "solid 3px #fff", borderRadius: "22px",
-                                            background: b.state === 0 ? "#FF4B4C" :
-                                                b.state === 1 ? "#FF9D4C" :
-                                                    b.state === 2 ? "#B44DFF" :
-                                                        b.state === 3 ? "#1B68FF" :
-                                                            b.state === 4 ? "#FF1A8E" : "#A3A3A3"
-                                        }}>
-                                            {
-                                                b.state === 0 ? "접수완료" :
-                                                    b.state === 1 ? "계약완료" :
-                                                        b.state === 2 ? "서류작성" :
-                                                            b.state === 3 ? "심사진행" :
-                                                                b.state === 4 ? "처리완료" : "상담종료"
-                                            }
-                                        </div>
-                                        <Image
-                                            aria-hidden
-                                            src="/admin/etc.png"
-                                            alt="etc icon"
-                                            width={20}
-                                            height={20}
-                                        />
-                                    </div>
-                                </div>
-
-                                {expandedIndex === index && (
-                                    <div style={{ width: "100%", height: "167px", marginTop: "25px" }}>
-                                        <div style={{ width: "940px", height: "167px", background: "white", borderRadius: "5px", paddingTop: "15px", paddingLeft: "15px" }}>
+                                    <div style={{ width: "100%", height: "auto", display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                                        <div style={{ height: "61px" }}>
                                             <div style={{
                                                 fontSize: "12px", background: "#e8eaf1", borderRadius: "2px", color: "#33405a", width: "120px", height: "30px", display: "flex",
                                                 justifyContent: "center", alignItems: "center"
                                             }}>
                                                 접수날짜 : {new Date(String(b?.created_at)).toLocaleDateString("ko-KR").replace(/-/g, ".").slice(2)}
                                             </div>
-                                            <div style={{ display: "flex", flexDirection: "row", fontSize: "15px", marginTop: "15px", fontWeight: "500" }}>
-                                                <div style={{ width: "70px", color: "#84848f" }}>
-                                                    업무종류
-                                                </div>
-                                                <div style={{ width: "150px", color: "black" }}>
-                                                    {b.work?.choice}
-                                                </div>
+                                            <div style={{ marginTop: "10px", fontSize: "20px", color: "black", fontWeight: "600" }}>{b.work?.choice} / {b.name} / {b.work?.language === 0 ? "한국어" : "중국어"}</div>
+                                        </div>
 
-                                                <div style={{ width: "70px", color: "#84848f", marginLeft: "35px" }}>
-                                                    의뢰인명
-                                                </div>
-                                                <div style={{ width: "150px", color: "black" }}>
-                                                    {b.name}
-                                                </div>
+                                        <div style={{ width: "150px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                                            <div style={{
+                                                padding: "9px 20px", border: "solid 3px #fff", borderRadius: "22px",
+                                                background: b.state === 0 ? "#FF4B4C" :
+                                                    b.state === 1 ? "#FF9D4C" :
+                                                        b.state === 2 ? "#B44DFF" :
+                                                            b.state === 3 ? "#1B68FF" :
+                                                                b.state === 4 ? "#FF1A8E" : "#A3A3A3"
+                                            }}>
+                                                {
+                                                    b.state === 0 ? "접수완료" :
+                                                        b.state === 1 ? "계약완료" :
+                                                            b.state === 2 ? "서류작성" :
+                                                                b.state === 3 ? "심사진행" :
+                                                                    b.state === 4 ? "처리완료" : "상담종료"
+                                                }
                                             </div>
-
-                                            <div style={{ display: "flex", flexDirection: "row", fontSize: "15px", marginTop: "15px", fontWeight: "500" }}>
-                                                <div style={{ width: "70px", color: "#84848f" }}>
-                                                    연락처
-                                                </div>
-                                                <div style={{ width: "150px", color: "black" }}>
-                                                    {b.tel}
-                                                </div>
-
-                                                <div style={{ width: "70px", color: "#84848f", marginLeft: "35px" }}>
-                                                    진행상태
-                                                </div>
-                                                <div style={{ width: "150px", color: "black" }}>
-                                                    {
-                                                        b.state === 0 ? "접수완료" :
-                                                            b.state === 1 ? "계약완료" :
-                                                                b.state === 2 ? "서류작성" :
-                                                                    b.state === 3 ? "심사진행" :
-                                                                        b.state === 4 ? "처리완료" : "상담종료"
-                                                    }
-                                                </div>
-                                            </div>
-
-                                            <div style={{ display: "flex", flexDirection: "row", fontSize: "15px", marginTop: "15px", fontWeight: "500" }}>
-                                                <div style={{ width: "70px", color: "#84848f" }}>
-                                                    접수언어
-                                                </div>
-                                                <div style={{ width: "150px", color: "black" }}>
-                                                    {b.work?.language === 0 ? "한국어" : "중국어"}
-                                                </div>
-
-                                                <div style={{ width: "70px", color: "#84848f", marginLeft: "35px" }}>
-                                                   
-                                                </div>
-                                                <div style={{ width: "150px", color: "black" }}>
-                                                    
-                                                </div>
-                                            </div>
-
+                                            <Image
+                                                aria-hidden
+                                                src="/admin/etc.png"
+                                                alt="etc icon"
+                                                width={20}
+                                                height={20}
+                                            />
                                         </div>
                                     </div>
-                                )}
-                            </div>
 
-                        ))}
+                                    {expandedIndex === index && (
+                                        <div style={{ width: "100%", height: "167px", marginTop: "25px" }}>
+                                            <div style={{ width: "940px", height: "167px", background: "white", borderRadius: "5px", paddingTop: "15px", paddingLeft: "15px" }}>
+                                                <div style={{
+                                                    fontSize: "12px", background: "#e8eaf1", borderRadius: "2px", color: "#33405a", width: "120px", height: "30px", display: "flex",
+                                                    justifyContent: "center", alignItems: "center"
+                                                }}>
+                                                    접수날짜 : {new Date(String(b?.created_at)).toLocaleDateString("ko-KR").replace(/-/g, ".").slice(2)}
+                                                </div>
+                                                <div style={{ display: "flex", flexDirection: "row", fontSize: "15px", marginTop: "15px", fontWeight: "500" }}>
+                                                    <div style={{ width: "70px", color: "#84848f" }}>
+                                                        업무종류
+                                                    </div>
+                                                    <div style={{ width: "150px", color: "black" }}>
+                                                        {b.work?.choice}
+                                                    </div>
+
+                                                    <div style={{ width: "70px", color: "#84848f", marginLeft: "35px" }}>
+                                                        의뢰인명
+                                                    </div>
+                                                    <div style={{ width: "150px", color: "black" }}>
+                                                        {b.name}
+                                                    </div>
+                                                </div>
+
+                                                <div style={{ display: "flex", flexDirection: "row", fontSize: "15px", marginTop: "15px", fontWeight: "500" }}>
+                                                    <div style={{ width: "70px", color: "#84848f" }}>
+                                                        연락처
+                                                    </div>
+                                                    <div style={{ width: "150px", color: "black" }}>
+                                                        {b.tel}
+                                                    </div>
+
+                                                    <div style={{ width: "70px", color: "#84848f", marginLeft: "35px" }}>
+                                                        진행상태
+                                                    </div>
+                                                    <div style={{ width: "150px", color: "black" }}>
+                                                        {
+                                                            b.state === 0 ? "접수완료" :
+                                                                b.state === 1 ? "계약완료" :
+                                                                    b.state === 2 ? "서류작성" :
+                                                                        b.state === 3 ? "심사진행" :
+                                                                            b.state === 4 ? "처리완료" : "상담종료"
+                                                        }
+                                                    </div>
+                                                </div>
+
+                                                <div style={{ display: "flex", flexDirection: "row", fontSize: "15px", marginTop: "15px", fontWeight: "500" }}>
+                                                    <div style={{ width: "70px", color: "#84848f" }}>
+                                                        접수언어
+                                                    </div>
+                                                    <div style={{ width: "150px", color: "black" }}>
+                                                        {b.work?.language === 0 ? "한국어" : "중국어"}
+                                                    </div>
+
+                                                    <div style={{ width: "70px", color: "#84848f", marginLeft: "35px" }}>
+
+                                                    </div>
+                                                    <div style={{ width: "150px", color: "black" }}>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                            ))}
+                        </div>
                     </div>
+
                 </div>
-
             </div>
-
         </div>
     );
 }

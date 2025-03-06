@@ -14,7 +14,7 @@ export async function alluserApi(a:string,b:string , c:number): Promise<AllUserR
     });
 
     if (!response.ok) {
-      // useAuthStore.getState().logout();
+      useAuthStore.getState().logout();
       throw new Error("유저 목록 불러오기 실패");
     }
 
@@ -121,7 +121,7 @@ export async function UserEdit(formData: FormData , a:number) {
 
 export async function getUserMember(): Promise<UserList> {
   try {
-    const response = await fetch(`${baseurl}/api/user/`, {
+    const response = await fetch(`${baseurl}/api/user/?&name=` , {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -130,6 +130,7 @@ export async function getUserMember(): Promise<UserList> {
     });
 
     if (!response.ok) {
+      useAuthStore.getState().logout();
       throw new Error("유저 정보 불러오기 실패");
     }
 
