@@ -17,7 +17,7 @@ export async function businesslist(a:string,b:string , c:number , d:number , e:s
       });
   
       if (!response.ok) {
-        useAuthStore.getState().logout();
+        // useAuthStore.getState().logout();
         throw new Error("유저 목록 불러오기 실패");
       }
       const data: VisaApiResponse = await response.json();
