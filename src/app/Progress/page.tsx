@@ -276,9 +276,9 @@ function Progress() {
                             style={{
                                 display: "flex",
                                 justifyContent: "center",
-                                alignItems: "flex-end",
+                                alignItems: "center",
                                 background: "grey",
-                                width: width<375? "300px" : "100%",
+                                width: "100%",
                                 height: "auto",
                                 // opacity:0.5
                             }}
@@ -344,7 +344,7 @@ function Progress() {
                                 justifyContent: "center",
                                 alignItems: "flex-start",
                                 background: "#f5f6f9",
-                                width: "100%",
+                                width: "100% !important",
                                 height: "auto",
                             }}
                         >
@@ -489,12 +489,12 @@ function Progress() {
                                                                                         height: "30px",
                                                                                         padding: "5px",
                                                                                         background: "#f5f6f9",
-                                                                                        color: "black", fontSize: "14px"
+                                                                                        color: "black", fontSize: "16px"
                                                                                     }}
                                                                                 >
                                                                                     <option value="">YYYY</option>
                                                                                     {years.map((y) => (
-                                                                                        <option key={y} value={y} style={{ fontSize: "14px" }}>
+                                                                                        <option key={y} value={y} style={{ fontSize: "16px" }}>
                                                                                             {y}
                                                                                         </option>
                                                                                     ))}
@@ -514,7 +514,7 @@ function Progress() {
                                                                                         height: "30px",
                                                                                         padding: "5px",
                                                                                         background: "#f5f6f9", marginLeft: "10px",
-                                                                                        color: "black", fontSize: "14px"
+                                                                                        color: "black", fontSize: "16px"
                                                                                     }}>
                                                                                     <option value="">MM</option>
                                                                                     {months.map((m) => (
@@ -539,7 +539,7 @@ function Progress() {
                                                                                         height: "30px",
                                                                                         padding: "5px",
                                                                                         background: "#f5f6f9",
-                                                                                        color: "black", fontSize: "14px", marginLeft: "10px"
+                                                                                        color: "black", fontSize: "16px", marginLeft: "10px"
                                                                                     }}>
                                                                                 
                                                                                     <option value="">DD</option>
@@ -567,7 +567,7 @@ function Progress() {
                                                                                             height: "30px",
                                                                                             padding: "5px",
                                                                                             background: "#f5f6f9",
-                                                                                            color: "black", fontSize: "14px",
+                                                                                            color: "black", fontSize: "16px",
                                                                                             borderRadius: "5px", marginRight: "5px"
                                                                                         }}
                                                                                     />
@@ -579,7 +579,7 @@ function Progress() {
                                                                                             let value = e.target.value;
 
                                                                                             // 숫자 4자리까지만 입력 가능하도록 제한
-                                                                                            value = value.replace(/\D/g, "").slice(0, 4);
+                                                                                            value = value.replace(/[^0-9]/g, "").slice(0, 4);
 
                                                                                             setPhone_second(value);
                                                                                             
@@ -598,7 +598,7 @@ function Progress() {
                                                                                             height: "30px",
                                                                                             padding: "5px",
                                                                                             background: "#f5f6f9",
-                                                                                            color: "black", fontSize: "14px",
+                                                                                            color: "black", fontSize: "16px",
                                                                                             borderRadius: "5px", marginRight: "5px", marginLeft: "5px"
                                                                                         }}
                                                                                         className={styles.dfsopkdf}
@@ -630,8 +630,8 @@ function Progress() {
                                                                                             height: "30px",
                                                                                             padding: "5px",
                                                                                             background: "#f5f6f9",
-                                                                                            color: "black", fontSize: "14px",
-                                                                                            borderRadius: "5px", marginLeft: "5px"
+                                                                                            color: "black", fontSize: "16px",
+                                                                                            borderRadius: "5px", marginLeft: "5px" ,
                                                                                         }}
                                                                                         className={styles.dfsopkdf}
                                                                                     />
@@ -643,7 +643,8 @@ function Progress() {
                                                                                         value={textAnswers[user.id] || ""}
                                                                                         // placeholder="내용을 입력해주세요"
                                                                                         className={styles.quinput}
-                                                                                        
+                                                                                        style={{
+                                                                                            fontSize: "16px",}}
                                                                                         onChange={(e) => {
                                                                                             let newValue = e.target.value;
 

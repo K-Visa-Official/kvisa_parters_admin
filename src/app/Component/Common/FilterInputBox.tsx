@@ -64,7 +64,8 @@ export default function FilterInputBox({
             alignItems: "center",
             padding: src === "/admin/search.png" ? "0px 40px" : "0px 20px",
             color: "black",
-            border: "none"
+            border: "none" , 
+            fontSize:"16px"
         }}>
             {src === "" || src ===  "/admin/hidden_password.png" ? <></> :
                 <Image
@@ -88,6 +89,7 @@ export default function FilterInputBox({
                     border: "none",
                     color: "black",
                     outline: "none", // 포커스 테두리 제거
+                    fontSize:"16px"
                     // caretColor: "transparent", // 깜빡이는 커서 제거
                 }}
                 type={inputType}

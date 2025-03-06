@@ -47,8 +47,8 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({ suggestions, selectedValue,
                     padding: "5px",
                     background: "#f5f6f9",
                     color: "black",
-                    fontSize: "14px",
-                    borderRadius: "5px"
+                    fontSize: "16px",
+                    borderRadius: "5px",
                 }}
             />
             {showDropdown && (
