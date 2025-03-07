@@ -158,20 +158,25 @@ function CaseStoriesDetailPage() {
                                                     <></>
                                                     :
                                                     <div key={user.id}>
-                                                        <div className={styles.post} onClick={() => (
+                                                        
+
+                                                        <p style={{ marginTop: "40px", fontSize: "20px", color: "black", fontWeight: "600" ,  }}>{user?.choice}</p>
+
+                                                        <p style={{ marginTop: "10px", fontSize: "18px", color: "#84848f", fontWeight: "500" }}>{user?.work_detail}</p>
+                                                            {/* <img src={user?.detail} className={styles.postimg} alt="profile"/> */}
+                                                            <div className={styles.post} onClick={() => (
                                                             setUrl(user.detail_second),
                                                             setState(2),
                                                             setPk(user?.id)
-                                                        )}
-                                                        >
-                                                            {/* <img src={user?.detail} className={styles.postimg} alt="profile"/> */}
+                                                                )}
+                                                                >
                                                             <Image 
                                                                 // src={user?.detail} 
                                                                 src= {parm.get("userId") === null ? user?.detail : "/bank/bank_1.png" }
                                                                 className={styles.postimg} alt="profile"
-                                                            layout="responsive" 
-                                                             width={345} height={200} />
-                                                            {/* <div className={styles.nextstep}>
+                                                                // layout="responsive" 
+                                                                width={335} height={120} />
+                                                                <div className={styles.nextstep}>
                                                                 {parm.get("language") === "0" ? Korean.go : Ch.go}
                                                                 <Image
                                                                     aria-hidden
@@ -181,12 +186,9 @@ function CaseStoriesDetailPage() {
                                                                     height={16}
                                                                     style={{ marginLeft: "5px" }}
                                                                 />
-                                                            </div> */}
+                                                            </div>
 
                                                         </div>
-                                                        <p style={{ marginTop: "15px", fontSize: "18px", color: "black", fontWeight: "600" }}>{user?.choice}</p>
-
-                                                        <p style={{ marginTop: "6px", fontSize: "13px", color: "#84848f", fontWeight: "500" }}>{user?.work_detail}</p>
                                                     </div>
                                             }
                                         </>
@@ -195,6 +197,15 @@ function CaseStoriesDetailPage() {
                                 </div>
                             ))}
 
+                            <div style={{ width:"100%" , display:"flex" , justifyContent:"center" , alignItems:"flex-start" , flexDirection:"column"}}>
+                            
+                            <p style={{ marginTop: "40px", fontSize: "20px", color: "black", fontWeight: "600" }}>{parm.get("language") === "0" ? Korean.progress : Ch.progress}</p>
+
+                            <p style={{ marginTop: "10px", fontSize: "18px", color: "#84848f", fontWeight: "500" }}>
+                                {parm.get("language") === "0" ? Korean.progress_first : Ch?.progress_first}<br />
+                                {parm.get("language") === "0" ? Korean.progress_second : Ch.progress_second}
+                            </p>
+                            </div>
                             <div className={styles.post} onClick={() => router.push(
                                 parm.get("userId") === null ?
                                     `/CRM?&member=${parm.get("member")}&language=${parm.get("language")}`
@@ -207,13 +218,14 @@ function CaseStoriesDetailPage() {
                                         // src="/common/CRM.png"
                                         src={parm.get("userId") === null ?"/common/CRM.png" : "/bank/bank_2.png" }
                                         alt="다음"
-                                        width={345}
-                                        height={200}
-                                        layout="responsive" 
+                                        width={335}
+                                        height={120}
+                                        // layout="responsive" 
                                         style={{ borderRadius:"10px" }}
                                     /></div>
                                 {/* <img src={user?.detail} className={styles.postimg} /> */}
-                                {/* <div className={styles.nextstep}>
+                                <div className={styles.nextstep}
+                                style={{ background : parm.get("userId") === null ? "" : "#00B887"}}>
                                     {parm.get("language") === "0" ? Korean.go : Ch.go}
                                     <Image
                                         aria-hidden
@@ -223,26 +235,18 @@ function CaseStoriesDetailPage() {
                                         height={16}
                                         style={{ marginLeft: "5px" }}
                                     />
-                                </div> */}
+                                </div>
 
                             </div>
 
-                            <div style={{ width:"100%" , display:"flex" , justifyContent:"center" , alignItems:"flex-start" , flexDirection:"column"}}>
- 
-                                <p style={{ marginTop: "15px", fontSize: "18px", color: "black", fontWeight: "600" }}>{parm.get("language") === "0" ? Korean.progress : Ch.progress}</p>
-
-                                <p style={{ marginTop: "6px", fontSize: "13px", color: "#84848f", fontWeight: "500", marginBottom: "30px" }}>
-                                    {parm.get("language") === "0" ? Korean.progress_first : Ch?.progress_first}<br />
-                                    {parm.get("language") === "0" ? Korean.progress_second : Ch.progress_second}
-                                </p>
-                            </div>
+                           
                             
                             {parm.get("userId") === null ?
                                 <></>
                                 :
-                                <Image aria-hidden src= {parm.get("userId") === null ? "/common/main_banner.png" :"/bank/bank_3.png"} alt="닫기" width={345} height={110} 
-                                layout="responsive" 
-                                style={{ cursor: "pointer" , marginBottom:"100px" }}
+                                <Image aria-hidden src= {parm.get("userId") === null ? "/common/main_banner.png" :"/bank/bank_3.png"} alt="닫기" width={335} height={114} 
+                                // layout="responsive" 
+                                style={{ cursor: "pointer" , marginBottom:"40px" , marginTop:"40px" }}
                                  onClick={() => (
                                     setUrl(work.filter(a => a?.choice === "외국인 범죄/불법체류자 구제")[0].detail_second),
                                     setState(2),
