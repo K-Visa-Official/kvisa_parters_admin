@@ -35,7 +35,7 @@ export default function RootLayout({
 
             html,body {
               font-family: 'SpoqaHanSansNeo', sans-serif;
-           
+             
             }
          
         }
@@ -43,7 +43,7 @@ export default function RootLayout({
           `}
         </style>
       </head>
-      <body style={{ touchAction: "manipulation" }}>
+      <body style={{ touchAction: "manipulation" , background:"white" }}>
         <Header />
         {children}
         <Footer />

@@ -19,17 +19,17 @@ const MoHeader: React.FC<MoHeaderProps> = ({ state = 0, setState }) => {
 
     // ㅌ버튼
     const handleCloseWebView = () => {
-        if (path === '/Member') {
+        if (path === '/JB') {
             if (setState) {
                 setState(1)
             }
         }
         else if (path === '/CRM') {
             if (parm.get("language") === "0") {
-                router.push(`/Member?&member=${parm.get("member")}&language=0&userId=${parm.get("userId")}`)
+                router.push(`/JB?&member=${parm.get("member")}&language=0&userId=${parm.get("userId")}`)
             }
             else {
-                router.push(`/Member?&member=${parm.get("member")}&language=1&userId=${parm.get("userId")}`)
+                router.push(`/JB?&member=${parm.get("member")}&language=1&userId=${parm.get("userId")}`)
             }
         }
         else {

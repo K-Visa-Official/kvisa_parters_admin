@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams , useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useState, useEffect, Suspense } from "react";
 import styles from "@/app/css/user_detail.module.css";
 import Image from "next/image";
@@ -29,6 +29,7 @@ function CRM() {
     const [ac, setAc] = useState<boolean | false>(false);
     const width = useWindowWidth()
     const arra = ["접수완료", "계약완료", "서류작성", "심사진행", "처리완료", "상담종료"]
+    const arra_zh = ["提交完成", "合同完成", "资料准备", "审查进行中", "办理完成", "咨询结束"]
     const userId = parm.get("userId");
     // 타이머 관련 useEffect
     useEffect(() => {
@@ -53,13 +54,18 @@ function CRM() {
             try {
                 const member = parm.get("member");
                 if (member === "6") {
-                    if(userId === null){
+                    if (userId === null) {
                         router.replace("/404");
                     }
                 }
-                const data = userId ? await get_crm(undefined, userId + "^") : await get_crm(workNumber);
+                const data = await get_crm(
+                    userId ? undefined : workNumber, 
+                    userId ? `${userId}^` : undefined, 
+                    String(parm.get("language"))
+                  );
+                  
                 setLi(data);
-                
+
             } catch (error) {
                 console.error("유저 데이터를 불러오는 중 오류 발생:", error);
             }
@@ -68,7 +74,7 @@ function CRM() {
     }, [state]);
 
     useEffect(() => {
-        if(userId){
+        if (userId) {
             setState(2)
         }
     }, [userId]);
@@ -137,31 +143,35 @@ function CRM() {
 
                             {state === 1 ?
                                 <div className={styles.crminner}>
-                                    <div style={{ width:width < 375 ? "100%" :"345px" , display:"flex" , justifyContent:"center" , alignItems:"flex-start" ,flexDirection:"column"}}>
-                           
-                                    <p style={{ marginTop: "10px", color: "black" }}>
-                                        {parm.get("language") === "0" ? Korean.bu_progress : Ch.bu_progress}
-                                    </p>
-                                    <p style={{ marginTop: "6px", fontSize: "12px", color: "#84848f" }}>
-                                        {parm.get("language") === "0" ? Korean.bu_progress_first : Ch.bu_progress_first}<br />
-                                        {parm.get("language") === "0" ? Korean.bu_progress_second : Ch.bu_progress_second}
-                                    </p>
-                                    <p style={{ marginTop: "40px", fontSize: "12px", color: "#84848f" }}>
-                                        {parm.get("language") === "0" ? Korean.bu_progress_tel : Ch.bu_progress_tel}
-                                    </p>
+                                    <div style={{ width: width < 375 ? "100%" : "345px", display: "flex", justifyContent: "center", alignItems: "flex-start", flexDirection: "column" }}>
+
+                                        <p style={{ marginTop: "10px", color: "black" }}>
+                                            {parm.get("language") === "0" ? Korean.bu_progress : Ch.bu_progress}
+                                        </p>
+                                        <p style={{ marginTop: "6px", fontSize: "12px", color: "#84848f" }}>
+                                            {parm.get("language") === "0" ? Korean.bu_progress_first : Ch.bu_progress_first}<br />
+                                            {parm.get("language") === "0" ? Korean.bu_progress_second : Ch.bu_progress_second}
+                                        </p>
+                                        <p style={{ marginTop: "40px", fontSize: "12px", color: "#84848f" }}>
+                                            {parm.get("language") === "0" ? Korean.bu_progress_tel : Ch.bu_progress_tel}
+                                        </p>
                                     </div>
 
-                                    <div style={{ width: width < 375 ? "100%" : "345px", height: "50px", marginTop: "10px", background: "#f5f6f9", display: "flex", 
-                                        flexDirection: width < 375 ? "column" : "row" }}>
+                                    <div style={{
+                                        width: width < 375 ? "100%" : "345px", height: "50px", marginTop: "10px", background: "#f5f6f9", display: "flex",
+                                        flexDirection: width < 375 ? "column" : "row"
+                                    }}>
                                         <FilterInputBox
                                             w={270} h={50} mt={0} bg={"#f5f6f9"}
                                             p={parm.get("language") === "0" ? Korean.bu_progress_tel : Ch.bu_progress_tel}
                                             v={workNumber} type={"tel"}
                                             onChange={(e) => setWorkNumber(e.target.value)}
                                         />
-                                        <div style={{ width:width < 375 ? "100%" : "75px", height: "50px", 
-                                            background: width < 375 ? "" :"#f5f6f9", marginTop:width < 375 ? "10px" :"" , 
-                                            display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                        <div style={{
+                                            width: width < 375 ? "100%" : "75px", height: "50px",
+                                            background: width < 375 ? "" : "#f5f6f9", marginTop: width < 375 ? "10px" : "",
+                                            display: "flex", justifyContent: "center", alignItems: "center"
+                                        }}>
                                             <div
                                                 style={{
                                                     display: "flex", justifyContent: "center", alignItems: "center", background: "black", fontSize: "13px", color: "white",
@@ -175,7 +185,7 @@ function CRM() {
                                     </div>
 
                                     {firstActive && (
-                                        <p style={{ fontSize: "12px", color: "#ff1c8e", marginTop :"10px", fontWeight: "500" }}>
+                                        <p style={{ fontSize: "12px", color: "#ff1c8e", marginTop: "10px", fontWeight: "500" }}>
                                             {parm.get("language") === "0" ? Korean.certi_tel_input : Ch.certi_tel_input}
                                         </p>
                                     )}
@@ -230,12 +240,13 @@ function CRM() {
                                         height={310}
                                         style={{ marginTop: "75px" }}
                                         layout="responsive"
+                                        onClick={() => window.open("https://www.k-visa.net", "_blank")}
                                     />
                                 </div>
                                 :
                                 <div className={styles.crminner}>
-                                    <div style={{ width:width < 375 ? "100%" :"345px" , display:"flex" , justifyContent:"center" , alignItems:"flex-start" ,flexDirection:"column"}}>
-                           
+                                    <div style={{ width: width < 375 ? "100%" : "345px", display: "flex", justifyContent: "center", alignItems: "flex-start", flexDirection: "column" }}>
+
                                         <div style={{ marginTop: "10px", color: "black", display: "flex", flexDirection: "row" }}>
                                             <Image
                                                 aria-hidden
@@ -301,9 +312,11 @@ function CRM() {
                                                     </div>
                                                 </div>
                                                 <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
-
-                                                    {arra?.map((user, index) => (
-                                                        <div key={index} style={{ fontSize: "12px", color: "#84848f", marginTop: "3px", display: "flex", justifyContent: "space-between", width: "100%" }}>
+                                                    {(parm.get("language") === "0" ? arra : arra_zh)?.map((user, index) => (
+                                                        <div
+                                                            key={index}
+                                                            style={{ fontSize: "12px", color: "#84848f", marginTop: "3px", display: "flex", justifyContent: "space-between", width: "100%" }}
+                                                        >
                                                             {user}
                                                         </div>
                                                     ))}
@@ -323,7 +336,7 @@ function CRM() {
                                                             접수언어
                                                         </div>
                                                         <div style={{ width: "70%", color: "black" }}>
-                                                            {user.lang === "0" ? "중국어" : "한국어"}
+                                                        {Number(user.lang) === 0 ? "한국어"  : "중국어"}
                                                         </div>
                                                     </div>
 
@@ -359,13 +372,24 @@ function CRM() {
                                                             진행상태
                                                         </div>
                                                         <div style={{ width: "70%", color: "black" }}>
-                                                            {
-                                                                user.state === 0 ? "접수완료" :
-                                                                    user.state === 1 ? "계약완료" :
-                                                                        user.state === 2 ? "서류작성" :
-                                                                            user.state === 3 ? "심사진행" :
-                                                                                user.state === 4 ? "처리완료" : "상담종료"
-                                                            }
+                                                            {(() => {
+                                                                const stateText =
+                                                                    user.state === 0 ? "접수완료" :
+                                                                        user.state === 1 ? "계약완료" :
+                                                                            user.state === 2 ? "서류작성" :
+                                                                                user.state === 3 ? "심사진행" :
+                                                                                    user.state === 4 ? "처리완료" : "상담종료";
+
+                                                                const stateText_zh =
+                                                                    user.state === 0 ? "提交完成" :
+                                                                        user.state === 1 ? "合同完成" :
+                                                                            user.state === 2 ? "资料准备" :
+                                                                                user.state === 3 ? "审查进行中" :
+                                                                                    user.state === 4 ? "办理完成" : "咨询结束";
+
+
+                                                                return parm.get("language") === "0" ? stateText : stateText_zh;
+                                                            })()}
                                                         </div>
                                                     </div>
 

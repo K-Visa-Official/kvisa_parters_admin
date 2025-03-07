@@ -113,7 +113,8 @@ function CaseStoriesDetailPage() {
                             }
 
                             <div style={{ width:"100%" , display:"flex" , justifyContent:"flex-start" , alignItems:"center"}}>
-                                <p className={styles.title}>
+                                <p className={styles.title} 
+                                style={{  marginTop:parm.get("userId") === null ? "40px" : ""}}>
                                     {parm.get("language") === "0" ? Korean.title : Ch.title} <br />
                                     {parm.get("language") === "0" ? Korean.title_second : Ch.title_second}
                                 </p>
@@ -135,7 +136,7 @@ function CaseStoriesDetailPage() {
                                                     >
                                                         {/* <img src={user?.detail} className={styles.postimg} alt="profile"/> */}
                                                         <Image src={user?.detail} className={styles.postimg} alt="profile" 
-                                                             width={345} height={200}/>
+                                                             width={335} height={120}/>
                                                         <div className={styles.nextstep}>
                                                             {parm.get("language") === "0" ? Korean.go : Ch.go}
                                                             <Image
@@ -259,7 +260,7 @@ function CaseStoriesDetailPage() {
                         :
                         <>
                             <div style={{ position: "relative", width: "100%", height: "auto" , 
-                                top:parm.get("userId") === null ? "" :"0px" }}>
+                                top:parm.get("userId") === null ? "60px" :"0px" }}>
                                 <Image 
                                 // src={url}
                                 src={parm.get("userId") === null ? url : "/bank/bank_detail.png" } 
@@ -290,7 +291,6 @@ function CaseStoriesDetailPage() {
                                 </div>
                             </div>
                         </>
-
                     }
 
                     {ac ?

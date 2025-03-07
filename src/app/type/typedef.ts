@@ -88,6 +88,8 @@ export enum Korean {
 
     pro_cer = "나의 진행상황을 한 눈에 확인하세요"
 
+
+
 }
 
 
@@ -95,7 +97,7 @@ export enum Ch {
     title = "与 K-VISA 一起",
     title_second = "开启安全的韩国生活",
 
-    work_post_ko = "一对一客製化签证谘询服务" ,
+    work_post_ko = "客製化签证谘询服务" ,
     work_post_ko_second = "外国人犯罪/非法滞留者救济" ,
 
     go = "立即前往" ,
@@ -104,8 +106,8 @@ export enum Ch {
 
     // crm
     progress = "查看办理进度",
-    progress_first = "K-VISA 客户可轻",
-    progress_second = "松查看办理进度",
+    progress_first = "透过K-VISA代办，",
+    progress_second = "可随时查看办理进度",
 
     safety = "您提供的信息将被安全保管", 
     enter = "提交",
@@ -149,15 +151,15 @@ export enum Ch {
 
     accept_nine = "请放心，K-VISA 遵守《个人信息保护法》" ,
 
-    accept_ten = "工作人员确认后将与您联系(平均 1~2 天内)" ,
-    accept_ten_s = "后将与您联系(平均 1~2 天内)" ,
+    accept_ten = "负责人确认后将与您联系" ,
+    accept_ten_s = "(平均 1~2 天内)" ,
     
     accept_eleven = "提交完成" ,
 
     bu_progress = "业务办理进度" ,
 
     bu_progress_first = "您可以查询业务办理进度，" ,
-    bu_progress_second = "请查看 Kakao 通知短信。" ,
+    bu_progress_second = "请查看 Kakao 通知信息。" ,
 
     bu_progress_tel = "输入手机号码." ,
     
