@@ -5,7 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 // import { UserList, WorkResponse } from "../type/user";
 import { useState, Suspense } from "react";
 // import Image from "next/image";
-// import { Korean, Ch } from "../type/typedef";
+import { Korean, Ch } from "../type/typedef";
 import MoHeader from "../Component/Common/MoHeader";
 import '../css/style.css';
 
@@ -29,7 +29,8 @@ function Jbank() {
                 <div className="inner">
 
                     <div className="tit-wrap mt-0">
-                        <h2 className="page-tit">케이비자와 함께<br />안전한 한국생활을 시작하세요!</h2>
+                        <h2 className="page-tit">{parm.get("language") === "0" ? Korean.title : Ch?.title}<br />
+                        {parm.get("language") === "0" ? Korean.title_second : Ch?.title_second}</h2>
                     </div>
 
                     <div className="txt-cont">
@@ -44,12 +45,13 @@ function Jbank() {
                         <div className="img blue">
                             <img src="/images/img_service1.png" alt="진행상황 확인하기 이미지"/>
                         </div>
-                        <a className="btn">바로가기</a>
+                        <a className="btn">{parm.get("language") === "0" ? Korean.go : Ch?.go}</a>
                     </div>
 
                     <div className="txt-cont">
-                        <div className="main-tit">진행상황 확인하기</div>
-                        <p className="txt">케이비자 고객님들의 진행상황을<br />손쉽게 확인하세요</p>
+                        <div className="main-tit"> {parm.get("language") === "0" ? Korean.progress : Ch?.progress}
+                        </div>
+                        <p className="txt">{parm.get("language") === "0" ? Korean.progress_first : Ch?.progress_first}<br />{parm.get("language") === "0" ? Korean.progress_second : Ch?.progress_second}</p>
                     </div>
 
                     <div className="img-wrap green"
@@ -59,7 +61,7 @@ function Jbank() {
                         <div className="img green">
                             <img src="/images/img_service2.png" alt="진행상황 확인하기 이미지" />
                         </div>
-                        <a href="#" className="btn">바로가기</a>
+                        <a href="#" className="btn">{parm.get("language") === "0" ? Korean.go : Ch?.go}</a>
                     </div>
 
                     <div className="banner" onClick={() => (
