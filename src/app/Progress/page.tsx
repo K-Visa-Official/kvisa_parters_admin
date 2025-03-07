@@ -352,7 +352,7 @@ function Progress() {
                                 >
                                     <MoHeader setAc={setAc} />
 
-                                    <div style={{ width: "100%", height: "117px", display: "flex", flexDirection: "column", background: "#f0f5ff" }}>
+                                    <div style={{ width: "100%", height: "117px", display: "flex", flexDirection: "column", background: "#f0f5ff" , marginTop:"60px" }}>
                                         <p style={{ marginTop: "18px", fontSize: "20px", fontWeight: "bold", marginLeft: "24px", color: "black" }}>
                                             {workdetail[0]?.choice}
                                         </p>

@@ -259,7 +259,7 @@ function CaseStoriesDetailPage() {
                         :
                         <>
                             <div style={{ position: "relative", width: "100%", height: "auto" , 
-                                top:parm.get("userId") === null ? "" :"-60px" }}>
+                                top:parm.get("userId") === null ? "" :"0px" }}>
                                 <Image 
                                 // src={url}
                                 src={parm.get("userId") === null ? url : "/bank/bank_detail.png" } 

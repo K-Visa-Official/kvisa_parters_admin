@@ -17,6 +17,9 @@
     align-items: center;
     justify-content: space-between;
     z-index: 10;
+    position: fixed;
+    background: white;
+    top: 0px;
 }
 
 .contentsbox {
@@ -50,7 +53,7 @@
 .title {
     font-size: 22px;
     font-weight: bold;
-    margin-top: 40px;
+    margin-top: 100px;
     color: #000;
 }
 
@@ -248,6 +251,7 @@
     flex-direction: column;
     font-weight: bold;
     font-size: 20px;
+    margin-top: 60px;
 }
 
 .probox {
