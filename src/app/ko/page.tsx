@@ -8,7 +8,7 @@ const Kopage = () => {
     const params = useSearchParams();
 
     useEffect(() => {
-        router.push("/Member?member=6&language=0&userId=" + params.get('userId'));
+        // router.push("/Member?member=6&language=0&userId=" + params.get('userId'));
 
         // 전북은행용 라우팅을 추가해서 변경을 진행
         router.push("/JB?member=6&language=0&userId=" + params.get('userId'));
