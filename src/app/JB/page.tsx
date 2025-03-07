@@ -5,7 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 // import { UserList, WorkResponse } from "../type/user";
 import { useState, Suspense } from "react";
 // import Image from "next/image";
-import { Korean, Ch } from "../type/typedef";
+// import { Korean, Ch } from "../type/typedef";
 import MoHeader from "../Component/Common/MoHeader";
 import '../css/style.css';
 
@@ -14,14 +14,14 @@ function Jbank() {
     const router = useRouter()
     const [pk, setPk] = useState<number | 1>(1);
     const [state, setState] = useState<number | 1>(1);
-    const [ac, setAc] = useState<boolean | false>(false);
+    // const [ac, setAc] = useState<boolean | false>(false);
 
 
     return (
 
         <Suspense fallback={<div>Loading...</div>}>
 
-            <MoHeader state={state} setState={setState} setAc={setAc} />
+            <MoHeader state={state} setState={setState}  />
             {state === 1 ?
 
             
