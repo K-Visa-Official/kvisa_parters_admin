@@ -277,11 +277,13 @@ function Progress() {
                                 alignItems: "center",
                                 background: "grey",
                                 width: "100%",
-                                height: "auto",
+                                height: "100%",
+                                position:"absolute",
+                                bottom:0
                                 // opacity:0.5
                             }}
                         >
-                            <div className={styles.innerbox} style={{ borderRadius: "10px 10px 0 0" }}>
+                            <div className={styles.innerbox} style={{ borderRadius: "10px 10px 0 0" , position:"absolute" , bottom:"0" }}>
                                 <div className={styles.endbox}>
                                     <div className={styles.endheader}>
                                         <div style={{ width: "30px", height: "100%" }}>
