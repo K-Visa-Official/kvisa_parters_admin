@@ -290,7 +290,7 @@ function Progress() {
 
                                         </div>
                                         <div style={{ width: "250px", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                            내 답변확인
+                                        {parm.get("language") === "0" ? Korean.prce_end : Ch?.prce_end}
                                         </div>
                                         <div style={{ width: "30px", height: "100%", display: "flex", justifyContent: "flex-start", alignItems: "center", marginRight: "20px" }}>
                                             <Image aria-hidden src="/common/close.png" alt="닫기" width={30} height={30} style={{ cursor: "pointer" }}

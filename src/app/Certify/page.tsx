@@ -187,7 +187,7 @@ function Certify() {
                                     }
                                     <p style={{ fontSize: "12px", color: "#84848f", marginTop: "26px" }}>{parm.get("language") === "0" ? Korean.certi_tel : Ch.certi_tel}</p>
                                     <div style={{
-                                        width: width < 375 ? "300px" : "345px", height: "50px", marginTop: "10px", background: "#f5f6f9", display: "flex",
+                                        width: width < 375 ? "100%" : "345px", height: "50px", marginTop: "10px", background: "#f5f6f9", display: "flex",
                                         flexDirection: width < 375 ? "column" : "row"
                                     }}>
                                         <FilterInputBox w={width < 375 ? 345 : 270} h={50} mt={0} bg={"#f5f6f9"} p={
@@ -226,7 +226,7 @@ function Certify() {
 
                                     {active ?
                                         <>
-                                            <div style={{ width: width < 375 ? "300px" : "345px", height: "50px", marginTop: "10px", background: "#f5f6f9", display: "flex", flexDirection: "row" }}>
+                                            <div style={{ width: width < 375 ? "100%" : "345px", height: "50px", marginTop: "10px", background: "#f5f6f9", display: "flex", flexDirection: "row" }}>
                                                 <FilterInputBox w={270} h={50} mt={0} bg={"#f5f6f9"} p={
                                                     parm.get("language") === "0" ? Korean.certi_no : Ch.certi_no
                                                 } v={ce} type={"number"}

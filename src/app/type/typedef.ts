@@ -86,9 +86,87 @@ export enum Korean {
     
     bu_progress_ex = "* 예시) 1234567890123 ‘-‘를 제외한 숫자만 입력해 주세요" ,
 
-    pro_cer = "나의 진행상황을 한 눈에 확인하세요"
+    pro_cer = "나의 진행상황을 한 눈에 확인하세요" ,
+
+    prce_end = "내 답변확인" ,
+
+    crm_first = "안전하게 처리하고 있어요" ,
+    crm_second = "고객님의 업무처리" ,
+    crm_third = "과정을 확인하세요" ,
+    crm_four = "진행과정은 고객님의 카카오톡으로 알려드려요" ,
 
 
+    crm_info_first = "접수날짜" ,
+    crm_info_second = "접수언어" ,
+    crm_info_third = "업무종류" ,
+    crm_info_four = "의뢰인명" ,
+    crm_info_five = "연락처" ,
+    crm_info_six = "진행상태" ,
+
+
+    work_time = "업무시간 : 평일 9:00 ~ 18:00 ( 점심시간 : 12:00 ~13:00 )" ,
+
+    work_tel = "전화문의" ,
+    work_kakao = "카톡으로 문의하기" ,
+
+    cate_first = "맞춤형 비자상담 서비스" , 
+    cate_second = "타 업체대비 평균 30% 저렴하게 업무를" ,
+    cate_third = "진행할 수 있어요" ,
+    
+    cate_crime_first = "범죄/불법체류자 구제"  ,
+    cate_crime_second = "국내에서 발생한 외국인 문제를" , 
+    cate_crime_third = "상담받고, 해결하세요" ,
+
+    detail_title  = "외국인 맞춤형 비자상담" ,
+    detail_title_second  = "비자상담은" , 
+    detail_title_third = ",어떤 서비스인가요?" ,
+
+    detail_intro = "상품 대상" ,
+    detail_intro_detail = "비자 변경 / 비자 연장 상담 필요한 외국인" ,
+
+    detail_intro_second = "상품 소개" ,
+    detail_intro_second_detail = "외국인 비자 대행 의뢰시, 타 업체 대비 평균 30%가 저렴하게 업무를 진행 할 수 있어요" ,
+
+    detail_intro_third = "업무처리 안내" ,
+    detail_intro_third_detail = "상담 신청을 위해 상담폼을 작성해주세요." ,
+    detail_intro_third_detail_se = "보다 정확한 상담을 도와드리기 위해 정확한 개인 정보 기재해주세요." ,
+
+
+
+    step_title = "상담은 어떻게 진행되나요?" ,
+    step_first = "상담폼 작성 및 제출" ,
+    step_first_content = "상담사 해피콜 / 유선으로 절차 안내" ,
+
+    step_second = "요건 확인" ,
+    step_second_content = "상담폼을 확인 후 요건 파악 진행" ,
+
+    step_third = "맞춤 상담 진행" ,
+    step_third_content = "상담사가 직접 연락드려 비자 상담 진행" ,
+
+
+    step_four = "비자 대행 의뢰" ,
+    step_four_se = "(선택/협의 후 진행)" ,
+    step_four_content = "상담 완료 후 비자 대행 의뢰 진행" ,
+
+
+    step_five = "대행완료" ,
+    step_five_content = "비자 대행 업무 진행 및 비자" ,
+
+    step_five_content_se = "연장/발급 완료" ,
+
+    consult_data = "상담하기까지" ,
+
+    consult_data_se = "몇 일 소요되나요?" ,
+
+    consult_first = "1일이내" ,
+    consult_second = "2일이내" ,
+    consult_third = "3일이내" ,
+    consult_four = "4일이내" ,
+
+    de_end = "제공한 정보가 허위거나 사실을 누락한 경우, 또는 본인의 출입국 고나련 법령 위반 이력으로 인해 비자가 허가되지 않을 경우, 이에 대한 책임은 케이비자에 있지 않습니다." ,
+
+    de_accept = "위 내용을 확인하였고, 내용에 동의합니다." ,
+    process_enter = "맞춤형 상담폼 작성하기"
 
 }
 
@@ -165,5 +243,86 @@ export enum Ch {
     
     bu_progress_ex = "*  范例：1234567890123 请仅输入数字，不要输入 ‘-’" ,
 
-    pro_cer_second = "查看我的办理进度"
+    pro_cer_second = "查看我的办理进度"  ,
+
+    prce_end = "我的填答" , 
+
+    crm_first = "您的代办业务 正在安全地进行中" ,
+    crm_second = "请确认您的" ,
+    crm_third = "业务处理过程" ,
+    crm_four = "处理进程將会通过KakaoTalk通知" ,
+
+    crm_info_first = "申请日期" ,
+    crm_info_second = "受理语言" ,
+    crm_info_third = "业务种类" ,
+    crm_info_four = "委托人姓名" ,
+    crm_info_five = "联系方式" ,
+    crm_info_six = "处理状态" ,
+
+
+    work_time = "工作时间：平日 9:00 ~ 18:00（午休时间：12:00 ~ 13:00）" ,
+
+    work_tel = "电话客服" ,
+    work_kakao = "KakaoTalk客服" ,
+
+
+    cate_first = "客製化签证谘询服务" , 
+    cate_second = "相比其他公司，" ,
+    cate_third = "代办费用平均便宜30%" ,
+    
+    cate_crime_first = "犯罪/非法滞留者救济"  ,
+    cate_crime_second = "谘询并解决" , 
+    cate_crime_third = "在韩国发生的问题" ,
+
+
+    detail_title  = "外国人客製化签证谘询" ,
+    detail_title_second  = "什么是签证" , 
+    detail_title_third = "谘询服务？" ,
+
+    detail_intro = "服务对象" ,
+    detail_intro_detail = "需要签证变更/签证延期的外国人" ,
+
+    detail_intro_second = "服务介绍" ,
+    detail_intro_second_detail = "委托外国人签证代办时，相比其他公司，办理费用平均便宜30%" ,
+
+    detail_intro_third = "办理指南" ,
+    detail_intro_third_detail = "请填写谘询表单申请谘询。" ,
+    detail_intro_third_detail_se = "为了提供更准确的谘询，请填写准确的个人信息。" ,
+
+
+
+    step_title = "谘询如何进行" ,
+    step_first = "填写并提交谘询表单" ,
+    step_first_content = "客服回访或电话指导流程" ,
+
+    step_second = "条件确认" ,
+    step_second_content = "核对谘询表单后确认申请条件" ,
+
+    step_third = "签证谘询进行" ,
+    step_third_content = "顾问直接联系进行签证谘询" ,
+
+
+    step_four = "签证代办委托" ,
+    step_four_se = "(选择或协商后进行)" ,
+    step_four_content = "谘询完成后可选择委托签证代办" ,
+
+
+    step_five = "代办完成" ,
+    step_five_content = "办理签证代办业务 " ,
+    step_five_content_se = "并完成签证延期或签发" ,
+
+    consult_data = "從提交到咨询 需要几天时间？" ,
+    consult_data_se = "需要几天时间？" ,
+
+    consult_first = "1天以內" ,
+    consult_second = "2天以內" ,
+    consult_third = "3天以內" ,
+    consult_four = "4天以內" ,
+
+    de_end = "申请如果您提供的信息造假、遗漏部分事实，或因本人违反出入境相关法律法规，导致签证未获批准时，K-VISA 概不负责。" ,
+
+    de_accept = "我已确认上述内容并同意相关条款" ,
+    process_enter = "提交谘询申请表单"
+
+
 }

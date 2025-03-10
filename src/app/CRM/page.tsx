@@ -22,7 +22,7 @@ function CRM() {
     const [active, setActive] = useState<boolean>(false);
     const [firstActive, setFirstActive] = useState<boolean>(false);
     const [secondActive, setSecondActive] = useState<boolean>(false);
-    const [timer, setTimer] = useState<number>(180); // 3분 타이머 설정 (180초)
+    const [timer, setTimer] = useState<number>(60); // 3분 타이머 설정 (180초)
     const [state, setState] = useState<number>(1); // 3분 타이머 설정 (180초)
 
     const [li, setLi] = useState<CRM_res[] | []>([]);
@@ -32,6 +32,12 @@ function CRM() {
     const arra_zh = ["提交完成", "合同完成", "资料准备", "审查进行中", "办理完成", "咨询结束"]
     const userId = parm.get("userId");
     // 타이머 관련 useEffect
+    useEffect(() => {
+        if (active) {
+            setActive(false);
+        }
+    }, [workNumber]); // tel이 변경될 때 실행
+
     useEffect(() => {
         let interval: NodeJS.Timeout;
 
@@ -268,9 +274,11 @@ function CRM() {
 
                                     {li?.map((user) => (
                                         <div className={styles.probox} key={user.id}>
-                                            <p style={{ fontSize: "20px", color: "black", fontWeight: "600" }}>안전하게 처리하고 있어요</p>
-                                            <p style={{ fontSize: "15px", color: "#84848f", fontWeight: "500", marginTop: "10px" }}>고객님의 업무처리를<br />
-                                                과정을 확인하세요</p>
+                                            <p style={{ fontSize: "20px", color: "black", fontWeight: "600" }}>
+                                            {parm.get("language") === "0" ? Korean.crm_first : Ch.crm_first}
+                                                </p>
+                                            <p style={{ fontSize: "15px", color: "#84848f", fontWeight: "500", marginTop: "10px" }}>{parm.get("language") === "0" ? Korean.crm_second : Ch.crm_second}<br />
+                                            {parm.get("language") === "0" ? Korean.crm_third : Ch.crm_third}</p>
                                             <div style={{ display: "flex", flexDirection: "column", marginTop: "23px" }}>
                                                 <Image
                                                     aria-hidden
@@ -323,26 +331,27 @@ function CRM() {
                                                 </div>
 
                                                 <p style={{ marginTop: "10px", color: "#1c69ff", fontSize: "12px", fontWeight: "500" }}>
-                                                    진행과정은 고객님의 카카오톡으로 알려드려요
+                                                {parm.get("language") === "0" ? Korean.crm_four: Ch.crm_four}
                                                 </p>
 
                                                 <div className={styles.contenttal}>
                                                     <div className={styles.daybox}>
-                                                        접수날짜 : {formatDate(user.created_at)}
+                                                    {parm.get("language") === "0" ? Korean.crm_info_first: Ch.crm_info_first} : {formatDate(user.created_at)}
                                                     </div>
 
                                                     <div style={{ width: "100%", height: "15px", fontSize: "13px", fontWeight: "500", display: "flex", flexDirection: "row", marginTop: "20px" }}>
                                                         <div style={{ width: "30%", color: "rgb(132, 132, 143)" }}>
-                                                            접수언어
+                                                            {parm.get("language") === "0" ? Korean.crm_info_second: Ch.crm_info_second}
                                                         </div>
                                                         <div style={{ width: "70%", color: "black" }}>
-                                                        {Number(user.lang) === 0 ? "한국어"  : "중국어"}
+                                                        {Number(user.lang) === 0 ? "한국어"  : "中文"}
                                                         </div>
                                                     </div>
 
                                                     <div style={{ width: "100%", height: "15px", fontSize: "13px", fontWeight: "500", display: "flex", flexDirection: "row", marginTop: "20px" }}>
                                                         <div style={{ width: "30%", color: "rgb(132, 132, 143)" }}>
-                                                            업무종류
+                                                            
+                                                        {parm.get("language") === "0" ? Korean.crm_info_third: Ch.crm_info_third}
                                                         </div>
                                                         <div style={{ width: "70%", color: "black" }}>
                                                             {user.work.choice}
@@ -351,7 +360,8 @@ function CRM() {
 
                                                     <div style={{ width: "100%", height: "15px", fontSize: "13px", fontWeight: "500", display: "flex", flexDirection: "row", marginTop: "20px" }}>
                                                         <div style={{ width: "30%", color: "rgb(132, 132, 143)" }}>
-                                                            의뢰인명
+                                                            
+                                                        {parm.get("language") === "0" ? Korean.crm_info_four: Ch.crm_info_four}
                                                         </div>
                                                         <div style={{ width: "70%", color: "black" }}>
                                                             {user.name.split("^")[0]}
@@ -360,7 +370,8 @@ function CRM() {
 
                                                     <div style={{ width: "100%", height: "15px", fontSize: "13px", fontWeight: "500", display: "flex", flexDirection: "row", marginTop: "20px" }}>
                                                         <div style={{ width: "30%", color: "rgb(132, 132, 143)" }}>
-                                                            연락처
+                                                            
+                                                        {parm.get("language") === "0" ? Korean.crm_info_five: Ch.crm_info_five}
                                                         </div>
                                                         <div style={{ width: "70%", color: "black" }}>
                                                             {user.tel}
@@ -369,7 +380,8 @@ function CRM() {
 
                                                     <div style={{ width: "100%", height: "15px", fontSize: "13px", fontWeight: "500", display: "flex", flexDirection: "row", marginTop: "20px" }}>
                                                         <div style={{ width: "30%", color: "rgb(132, 132, 143)" }}>
-                                                            진행상태
+                                                            
+                                                        {parm.get("language") === "0" ? Korean.crm_info_six: Ch.crm_info_six}
                                                         </div>
                                                         <div style={{ width: "70%", color: "black" }}>
                                                             {(() => {
@@ -400,17 +412,23 @@ function CRM() {
 
                                                 <div style={{ width: "100%", height: "47px", fontSize: "12px", fontWeight: "500", display: "flex", flexDirection: "row", marginTop: "20px", justifyContent: "space-between" }}>
                                                     <div className={styles.firstboxsd}>
-                                                        전화문의<br />
+                                                    <a href="tel:+821811-1942">
+                                                    {parm.get("language") === "0" ? Korean.work_tel: Ch.work_tel}<br />
                                                         1811-1942
+                                                        </a>
                                                     </div>
 
                                                     <div className={styles.secondboxsd}>
-                                                        카톡으로 문의하기
+                                                    <a href="https://pf.kakao.com/_mYlIxj">
+        
+                                                    {parm.get("language") === "0" ? Korean.work_kakao: Ch.work_kakao}
+                                                    </a>
                                                     </div>
                                                 </div>
 
                                                 <p style={{ marginTop: "10px", color: "#1c69ff", fontSize: "12px", fontWeight: "500" }}>
-                                                    업무시간 : 평일 9:00 ~ 18:00 ( 점심시간 : 12:00 ~13:00 )
+                                                {parm.get("language") === "0" ? Korean.work_time: Ch.work_time}
+                                                    {/* 업무시간 : 평일 9:00 ~ 18:00 ( 점심시간 : 12:00 ~13:00 ) */}
                                                 </p>
 
                                             </div>

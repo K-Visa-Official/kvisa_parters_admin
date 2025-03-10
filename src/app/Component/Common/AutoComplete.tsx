@@ -1,4 +1,5 @@
 import React from "react";
+import { useSearchParams } from "next/navigation";
 
 interface AutoCompleteProps {
     suggestions: string[];
@@ -9,7 +10,8 @@ interface AutoCompleteProps {
 const AutoComplete: React.FC<AutoCompleteProps> = ({ suggestions, selectedValue, onSelect }) => {
     const [filteredSuggestions, setFilteredSuggestions] = React.useState<string[]>([]);
     const [showDropdown, setShowDropdown] = React.useState(false);
-
+    const parm = useSearchParams();
+        
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = e.target.value;
         onSelect(newValue);
@@ -38,7 +40,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({ suggestions, selectedValue,
                 type="text"
                 value={selectedValue}
                 onChange={handleInputChange}
-                placeholder="국적 입력"
+                placeholder={parm.get("language") === "0" ? "국적 입력" : "请输入国籍"}
                 className="w-full p-2 border border-gray-300 rounded"
                 style={{
                     border: "none",

@@ -92,7 +92,6 @@ function CaseStoriesDetailPage() {
                     {state === 1 ?
                         <div className={styles.contentsbox}>
 
-                            {parm.get("userId") === null ?
                                 <div className={styles.cardbox}>
                                     {/* <img src
                                 ={user ? user?.bu_logo : "/common/ic_nonprofile.svg"}
@@ -108,9 +107,7 @@ function CaseStoriesDetailPage() {
                                         <p style={{ color: "#84848f", fontSize: "15px", fontWeight: "500" }}>{parm.get("language") === "0" ? user?.bu_intro : user?.bu_intro_ch}</p>
                                     </div>
                                 </div>
-                                :
-                                <></>
-                            }
+                            
 
                             <div style={{ width:"100%" , display:"flex" , justifyContent:"flex-start" , alignItems:"center"}}>
                                 <p className={styles.title} 
@@ -126,7 +123,6 @@ function CaseStoriesDetailPage() {
                                         null
                                         :
                                         <>
-                                            {parm.get("userId") === null ?
                                                 <div key={user.id}>
                                                     <div className={styles.post} onClick={() => (
                                                         setUrl(user.detail_second),
@@ -154,44 +150,7 @@ function CaseStoriesDetailPage() {
 
                                                     <p style={{ marginTop: "6px", fontSize: "13px", color: "#84848f", fontWeight: "500" }}>{user?.work_detail}</p>
                                                 </div>
-                                                :
-                                                user.choice === "외국인 범죄/불법체류자 구제" ?
-                                                    <></>
-                                                    :
-                                                    <div key={user.id}>
-                                                        
-
-                                                        <p style={{ marginTop: "40px", fontSize: "20px", color: "black", fontWeight: "600" ,  }}>{user?.choice}</p>
-
-                                                        <p style={{ marginTop: "10px", fontSize: "18px", color: "#84848f", fontWeight: "500" }}>{user?.work_detail}</p>
-                                                            {/* <img src={user?.detail} className={styles.postimg} alt="profile"/> */}
-                                                            <div className={styles.post} onClick={() => (
-                                                            setUrl(user.detail_second),
-                                                            setState(2),
-                                                            setPk(user?.id)
-                                                                )}
-                                                                >
-                                                            <Image 
-                                                                // src={user?.detail} 
-                                                                src= {parm.get("userId") === null ? user?.detail : "/bank/bank_1.png" }
-                                                                className={styles.postimg} alt="profile"
-                                                                // layout="responsive" 
-                                                                width={335} height={120} />
-                                                                <div className={styles.nextstep}>
-                                                                {parm.get("language") === "0" ? Korean.go : Ch.go}
-                                                                <Image
-                                                                    aria-hidden
-                                                                    src="/member/next_white.png"
-                                                                    alt="다음"
-                                                                    width={16}
-                                                                    height={16}
-                                                                    style={{ marginLeft: "5px" }}
-                                                                />
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                            }
+                                              
                                         </>
                                     }
 
@@ -242,7 +201,7 @@ function CaseStoriesDetailPage() {
 
                            
                             
-                            {parm.get("userId") === null ?
+                            {/* {parm.get("userId") === null ?
                                 <></>
                                 :
                                 <Image aria-hidden src= {parm.get("userId") === null ? "/common/main_banner.png" :"/bank/bank_3.png"} alt="닫기" width={335} height={114} 
@@ -254,7 +213,7 @@ function CaseStoriesDetailPage() {
                                     setPk(work.filter(a => a?.choice === "외국인 범죄/불법체류자 구제")[0].id)
                                 )}
                                 />
-                            }
+                            } */}
                             
                         </div>
                         :
