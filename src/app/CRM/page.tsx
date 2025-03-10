@@ -154,7 +154,7 @@ function CRM() {
                                 <div className={styles.crminner}>
                                     <div style={{ width: width < 375 ? "100%" : "345px", display: "flex", justifyContent: "center", alignItems: "flex-start", flexDirection: "column" }}>
 
-                                        <p style={{ marginTop: "10px", color: "black" }}>
+                                        <p style={{ marginTop: "10px", color: "black" , fontWeight:"bold" }}>
                                             {parm.get("language") === "0" ? Korean.bu_progress : Ch.bu_progress}
                                         </p>
                                         <p style={{ marginTop: "6px", fontSize: "12px", color: "#84848f" }}>

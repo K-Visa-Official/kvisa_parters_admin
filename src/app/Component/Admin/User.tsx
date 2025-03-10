@@ -61,7 +61,7 @@ export default function UserBox() {
                         />
                     </div>
                         {showCalendar && (
-                             <div style={{ position: "absolute",top: "35px", right: "50px" }}>
+                             <div style={{ position: "absolute",top: "200px", left: "330px" }}>
                                 <DatePicker
                                     selected={created_at ? new Date(created_at) : null}
                                     onChange={(date) => {

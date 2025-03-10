@@ -119,17 +119,17 @@ export enum Korean {
 
     detail_title  = "외국인 맞춤형 비자상담" ,
     detail_title_second  = "비자상담은" , 
-    detail_title_third = ",어떤 서비스인가요?" ,
+    detail_title_third = "어떤 서비스인가요?" ,
 
     detail_intro = "상품 대상" ,
     detail_intro_detail = "비자 변경 / 비자 연장 상담 필요한 외국인" ,
 
     detail_intro_second = "상품 소개" ,
-    detail_intro_second_detail = "외국인 비자 대행 의뢰시, 타 업체 대비 평균 30%가 저렴하게 업무를 진행 할 수 있어요" ,
+    detail_intro_second_detail = "외국인 비자 대행 의뢰시, 타 업체 대비 평균 30% 저렴하게 업무를 진행 할 수 있어요" ,
 
     detail_intro_third = "업무처리 안내" ,
     detail_intro_third_detail = "상담 신청을 위해 상담폼을 작성해주세요." ,
-    detail_intro_third_detail_se = "보다 정확한 상담을 도와드리기 위해 정확한 개인 정보 기재해주세요." ,
+    detail_intro_third_detail_se = "보다 정확한 상담을 위해 정확한 개인 정보 기재해주세요." ,
 
 
 
