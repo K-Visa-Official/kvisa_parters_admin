@@ -418,7 +418,8 @@ function CRM() {
                                                 </div>
 
 
-                                                <div style={{ width: "100%", height: "47px", fontSize: "12px", fontWeight: "500", display: "flex", flexDirection: "row", marginTop: "20px", justifyContent: "space-between" }}>
+                                                <div style={{ width: "100%", height: "47px", fontSize: "12px", fontWeight: "500", display: "flex", flexDirection: "row", marginTop: "20px", 
+                                                    justifyContent: parm.get("userId") === null ? "space-between" : "center" }}>
                                                     <div className={styles.firstboxsd}>
                                                     <a href="tel:+821811-1942">
                                                     {parm.get("language") === "0" ? Korean.work_tel: Ch.work_tel}<br />
