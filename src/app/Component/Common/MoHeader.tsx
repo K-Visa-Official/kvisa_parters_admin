@@ -80,7 +80,7 @@ const MoHeader: React.FC<MoHeaderProps> = ({ state = 0, setState }) => {
 
     return (
         <div className={styles.headerbox}>
-            {path === '/Member' && state === 1 ?
+            {path === '/JB' && state === 1 ?
                 <></>
                 :
                 <Image aria-hidden src="/member/back.png" alt="뒤로가기" width={30} height={30} onClick={handleCloseWebView}  style={{ cursor: "pointer" }} />
