@@ -412,9 +412,6 @@ function CRM() {
                                                             })()}
                                                         </div>
                                                     </div>
-
-
-
                                                 </div>
 
 
@@ -427,7 +424,6 @@ function CRM() {
                                                         </a>
                                                     </div>
 
-                                                   
                                                     
                                                     {parm.get("userId") === null ?
                                                      <div className={styles.secondboxsd}>

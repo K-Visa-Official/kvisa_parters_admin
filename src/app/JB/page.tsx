@@ -3,7 +3,7 @@
 import { useSearchParams, useRouter } from "next/navigation";
 // import { getUser, getUserApi } from "@/app/server/admin_user";
 // import { UserList, WorkResponse } from "../type/user";
-import { useState, Suspense  } from "react";
+import { useState, Suspense , useEffect } from "react";
 // import Image from "next/image";
 import { Korean, Ch } from "../type/typedef";
 import MoHeader from "../Component/Common/MoHeader";
@@ -18,7 +18,11 @@ function Jbank() {
     const [state, setState] = useState<number | 1>(1);
     // const [ac, setAc] = useState<boolean | false>(false);
 
-
+    useEffect(() => {
+        if (state === 2) {
+          window.scrollTo(0, 0);
+        }
+      }, [state]);
     
 
     return (
