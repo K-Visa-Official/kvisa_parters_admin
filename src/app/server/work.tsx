@@ -242,14 +242,13 @@ export async function change_name(payload: tel_change) {
   }
 }
 
-export async function get_crm(tel?: string, name?: string , lang?: string): Promise<CRM_res[]> {
+export async function get_crm(tel?: string, name?: string ): Promise<CRM_res[]> {
   try {
     let url = baseurl + "/api/client/crm?";
 
     // 파라미터가 있을 경우 URL에 추가
     if (tel) url += `&tel=${tel}`;
     if (name) url += `&name=${name}`;
-    if (lang) url += `&lang=${lang}`;
 
     const response = await fetch(url, {
       method: "GET",

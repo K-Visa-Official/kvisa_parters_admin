@@ -67,7 +67,7 @@ function CRM() {
                 const data = await get_crm(
                     userId ? undefined : workNumber, 
                     userId ? `${userId}^` : undefined, 
-                    String(parm.get("language"))
+                    // String(parm.get("language"))
                   );
                   
                 setLi(data);
@@ -347,16 +347,21 @@ function CRM() {
                                                             {parm.get("language") === "0" ? Korean.crm_info_second: Ch.crm_info_second}
                                                         </div>
                                                         <div style={{ width: "70%", color: "black" }}>
-                                                        {Number(user.lang) === 0 ? "한국어"  : "中文"}
+                                                        {parm.get("language") === "0" ? 
+                                                        (Number(user.lang) === 0 ? "한국어"  : "중국어")
+                                                        :
+                                                        (Number(user.lang) === 0 ? "韩文"  : "中文")
+                                                        }
+
                                                         </div>
                                                     </div>
 
                                                     <div style={{ width: "100%", height: "15px", fontSize: "13px", fontWeight: "500", display: "flex", flexDirection: "row", marginTop: "20px" }}>
                                                         <div style={{ width: "30%", color: "rgb(132, 132, 143)" }}>
-                                                            
                                                         {parm.get("language") === "0" ? Korean.crm_info_third: Ch.crm_info_third}
                                                         </div>
                                                         <div style={{ width: "70%", color: "black" }}>
+                                                            
                                                             {user.work.choice}
                                                         </div>
                                                     </div>
@@ -421,19 +426,20 @@ function CRM() {
                                                         </a>
                                                     </div>
 
-                                                    <div className={styles.secondboxsd}>
+                                                   
                                                     
                                                     {parm.get("userId") === null ?
-                                                    <a href="https://pf.kakao.com/_mYlIxj/chat">
-                                                    {parm.get("language") === "0" ? Korean.work_kakao: Ch.work_kakao}
-                                                    </a>
+                                                     <div className={styles.secondboxsd}>
+                                                        <a href="https://pf.kakao.com/_mYlIxj/chat">
+                                                            {parm.get("language") === "0" ? Korean.work_kakao: Ch.work_kakao}
+                                                        </a>
+                                                    </div>
                                                     :
                                                     <>
-                                                    {parm.get("language") === "0" ? Korean.work_kakao: Ch.work_kakao}
+                                                  
                                                     </>
                                                     }
 
-                                                    </div>
                                                 </div>
 
                                                 <p style={{ marginTop: "10px", color: "#1c69ff", fontSize: "12px", fontWeight: "500" }}>
