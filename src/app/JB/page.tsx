@@ -3,7 +3,7 @@
 import { useSearchParams, useRouter } from "next/navigation";
 // import { getUser, getUserApi } from "@/app/server/admin_user";
 // import { UserList, WorkResponse } from "../type/user";
-import { useState, Suspense , useEffect } from "react";
+import { useState, Suspense  } from "react";
 // import Image from "next/image";
 import { Korean, Ch } from "../type/typedef";
 import MoHeader from "../Component/Common/MoHeader";
