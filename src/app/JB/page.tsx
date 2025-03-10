@@ -32,7 +32,7 @@ function Jbank() {
                     </div>
 
                     <div className="txt-cont">
-                        <div className="main-tit">{parm.get("language") === "0" ? Korean.cate_first : Ch?.cate_first}</div>
+                        <div className="main-tit">{parm.get("language") === "0" ? Korean.work_post_ko : Ch?.work_post_ko}</div>
                         <p className="txt">{parm.get("language") === "0" ? Korean.cate_second : Ch?.cate_second}<br />
                         {parm.get("language") === "0" ? Korean.cate_third : Ch?.cate_third}</p>
                     </div>
@@ -186,7 +186,7 @@ function Jbank() {
                 <div className="info">{parm.get("language") === "0" ? Korean.de_end : Ch?.de_end}</div>
     
                 <div className="btn-wrap">
-                    <p className="txt-s">{parm.get("language") === "0" ? Korean.de_accept : Ch?.de_accept}</p>
+                    <p className="txt-s">{parm.get("language") === "0" ? Korean.go_third : Ch?.de_accept}</p>
                     <button type="button" className="btn"
                      onClick={() => router.push(
                         `/Progress/?&progress=${pk}&language=${parm.get("language")}&member=${parm.get("member")}&userId=${parm.get("userId")}`

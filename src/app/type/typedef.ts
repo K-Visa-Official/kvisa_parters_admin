@@ -100,7 +100,7 @@ export enum Korean {
     crm_info_second = "접수언어" ,
     crm_info_third = "업무종류" ,
     crm_info_four = "의뢰인명" ,
-    crm_info_five = "연락처" ,
+    // crm_info_five = "연락처" ,
     crm_info_six = "진행상태" ,
 
 
@@ -109,7 +109,7 @@ export enum Korean {
     work_tel = "전화문의" ,
     work_kakao = "카톡으로 문의하기" ,
 
-    cate_first = "맞춤형 비자상담 서비스" , 
+    // cate_first = "맞춤형 비자상담 서비스" , 
     cate_second = "타 업체대비 평균 30% 저렴하게 업무를" ,
     cate_third = "진행할 수 있어요" ,
     
@@ -165,7 +165,7 @@ export enum Korean {
 
     de_end = "제공한 정보가 허위거나 사실을 누락한 경우, 또는 본인의 출입국 고나련 법령 위반 이력으로 인해 비자가 허가되지 않을 경우, 이에 대한 책임은 케이비자에 있지 않습니다." ,
 
-    de_accept = "위 내용을 확인하였고, 내용에 동의합니다." ,
+    // de_accept = "위 내용을 확인하였고, 내용에 동의합니다." ,
     process_enter = "맞춤형 상담폼 작성하기"
 
 }
@@ -256,7 +256,7 @@ export enum Ch {
     crm_info_second = "受理语言" ,
     crm_info_third = "业务种类" ,
     crm_info_four = "委托人姓名" ,
-    crm_info_five = "联系方式" ,
+    // crm_info_five = "联系方式" ,
     crm_info_six = "处理状态" ,
 
 
@@ -266,7 +266,7 @@ export enum Ch {
     work_kakao = "KakaoTalk客服" ,
 
 
-    cate_first = "客製化签证谘询服务" , 
+    // cate_first = "客製化签证谘询服务" , 
     cate_second = "相比其他公司，" ,
     cate_third = "代办费用平均便宜30%" ,
     

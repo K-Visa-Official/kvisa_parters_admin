@@ -371,7 +371,7 @@ function CRM() {
                                                     <div style={{ width: "100%", height: "15px", fontSize: "13px", fontWeight: "500", display: "flex", flexDirection: "row", marginTop: "20px" }}>
                                                         <div style={{ width: "30%", color: "rgb(132, 132, 143)" }}>
                                                             
-                                                        {parm.get("language") === "0" ? Korean.crm_info_five: Ch.crm_info_five}
+                                                        {parm.get("language") === "0" ? Korean.certi_tel: Ch.certi_tel}
                                                         </div>
                                                         <div style={{ width: "70%", color: "black" }}>
                                                             {user.tel}
