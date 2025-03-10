@@ -265,7 +265,7 @@ function CRM() {
                                                 height={24}
                                                 style={{ marginRight: "4px" }}
                                             />
-                                            <p >
+                                            <p style={{ fontWeight:"bold"}}>
                                                 {parm.get("language") === "0" ? Korean.progress : Ch.progress}
                                             </p>
                                         </div>
