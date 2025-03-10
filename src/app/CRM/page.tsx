@@ -422,10 +422,17 @@ function CRM() {
                                                     </div>
 
                                                     <div className={styles.secondboxsd}>
-                                                    <a href="https://pf.kakao.com/_mYlIxj">
-        
+                                                    
+                                                    {parm.get("userId") === null ?
+                                                    <a href="https://pf.kakao.com/_mYlIxj/chat">
                                                     {parm.get("language") === "0" ? Korean.work_kakao: Ch.work_kakao}
                                                     </a>
+                                                    :
+                                                    <>
+                                                    {parm.get("language") === "0" ? Korean.work_kakao: Ch.work_kakao}
+                                                    </>
+                                                    }
+
                                                     </div>
                                                 </div>
 
