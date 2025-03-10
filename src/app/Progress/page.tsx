@@ -279,7 +279,9 @@ function Progress() {
                                 width: "100%",
                                 height: "100%",
                                 position:"absolute",
-                                bottom:0
+                                bottom:0 ,
+                                fontFamily: parm.get("language") === "0" ? "'Spoqa Han Sans Neo', 'malgun', 'Apple SD Gothic Neo', Verdana, Arial, Helvetica, Geneva, Tahoma, sans-serif" : 
+                                "Noto Sans, sans-serif",
                                 // opacity:0.5
                             }}
                         >
@@ -346,6 +348,9 @@ function Progress() {
                                 background: "#f5f6f9",
                                 width: "100% !important",
                                 height: "auto",
+                                fontFamily: parm.get("language") === "0" ? "'Spoqa Han Sans Neo', 'malgun', 'Apple SD Gothic Neo', Verdana, Arial, Helvetica, Geneva, Tahoma, sans-serif" : 
+                                "Noto Sans, sans-serif",
+                               
                             }}
                         >
                             <div className={styles.innerbox}>

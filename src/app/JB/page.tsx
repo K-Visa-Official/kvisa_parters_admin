@@ -3,19 +3,23 @@
 import { useSearchParams, useRouter } from "next/navigation";
 // import { getUser, getUserApi } from "@/app/server/admin_user";
 // import { UserList, WorkResponse } from "../type/user";
-import { useState, Suspense } from "react";
+import { useState, Suspense , useEffect } from "react";
 // import Image from "next/image";
 import { Korean, Ch } from "../type/typedef";
 import MoHeader from "../Component/Common/MoHeader";
 import '../css/style.css';
 
+
 function Jbank() {
     const parm = useSearchParams();
-    const router = useRouter()
+    const router = useRouter();
+    const language = parm.get("language");
     const [pk, setPk] = useState<number | 1>(1);
     const [state, setState] = useState<number | 1>(1);
     // const [ac, setAc] = useState<boolean | false>(false);
 
+
+    
 
     return (
 
@@ -23,7 +27,10 @@ function Jbank() {
 
             <MoHeader state={state} setState={setState}  />
             {state === 1 ?
-            <div className="wrap">
+            <div className="wrap" style={{
+                fontFamily: language === "0" ? "'Spoqa Han Sans Neo', 'malgun', 'Apple SD Gothic Neo', Verdana, Arial, Helvetica, Geneva, Tahoma, sans-serif" : 
+                "Noto Sans, sans-serif",
+              }}>
                 <div className="inner">
 
                     <div className="tit-wrap mt-0">
@@ -75,7 +82,10 @@ function Jbank() {
                 </div>
             </div>
             :
-            <div className="wrap">
+            <div className="wrap" style={{
+                fontFamily: language === "0" ? "'Spoqa Han Sans Neo', 'malgun', 'Apple SD Gothic Neo', Verdana, Arial, Helvetica, Geneva, Tahoma, sans-serif" : 
+                "Noto Sans, sans-serif",
+              }}>
             <div className="inner fix-btn">
                 <div className="tit-wrap mb-0 mt-0">
                     <h2 className="page-tit">{parm.get("language") === "0" ? Korean.detail_title : Ch?.detail_title}</h2>

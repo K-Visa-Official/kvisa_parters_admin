@@ -143,7 +143,10 @@ function CRM() {
                 <Modal web={"wed"} setAc={setAc} />
                 :
                 <Suspense fallback={<div>Loading...</div>}>
-                    <div style={{ display: "flex", justifyContent: "center", alignItems: "flex-start", background: "#f5f6f9", width: "100%", height: "auto", overflowY: "auto" }}>
+                    <div style={{ display: "flex", justifyContent: "center", alignItems: "flex-start", background: "#f5f6f9", width: "100%", height: "auto", overflowY: "auto" ,
+                         fontFamily: parm.get("language") === "0" ? "'Spoqa Han Sans Neo', 'malgun', 'Apple SD Gothic Neo', Verdana, Arial, Helvetica, Geneva, Tahoma, sans-serif" : 
+                         "Noto Sans, sans-serif",
+                     }}>
                         <div className={styles.innerbox}>
                             <MoHeader setAc={setAc} />
 

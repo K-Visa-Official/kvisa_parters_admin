@@ -4,7 +4,10 @@ html {
     font-size: 10px;
   }
 /**** 다국어 언어별 letter-spacing, font-family, line-height 설정 ****/
-body, body * { font-family: 'Spoqa Han Sans Neo', 'malgun', 'Apple SD Gothic Neo', Verdana, Arial, Helvetica, Geneva, Tahoma, sans-serif; font-weight: 400;}
+body, body * { 
+  /* font-family: 'Spoqa Han Sans Neo', 'malgun', 'Apple SD Gothic Neo', Verdana, Arial, Helvetica, Geneva, Tahoma, sans-serif;  */
+  font-weight: 400;}
+
 
 /********* BODY *********/
 body.main-body { background: linear-gradient(180deg, #131f3c 0%, #1b2642 100%); }

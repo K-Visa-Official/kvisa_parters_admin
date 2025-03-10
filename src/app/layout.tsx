@@ -34,7 +34,6 @@ export default function RootLayout({
             }
 
             html,body {
-              font-family: 'SpoqaHanSansNeo', sans-serif;
              
             }
          

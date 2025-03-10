@@ -155,7 +155,10 @@ function Certify() {
                         background: "#f5f6f9",
                         width: "100%",
                         height: "auto",
-                        paddingBottom: "200px"
+                        paddingBottom: "200px" ,
+                        fontFamily: parm.get("language") === "0" ? "'Spoqa Han Sans Neo', 'malgun', 'Apple SD Gothic Neo', Verdana, Arial, Helvetica, Geneva, Tahoma, sans-serif" : 
+                        "Noto Sans, sans-serif",
+                       
                     }}
                 >
                     <div className={styles.innerbox}>
