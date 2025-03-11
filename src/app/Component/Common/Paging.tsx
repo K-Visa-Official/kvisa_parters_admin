@@ -6,16 +6,17 @@ import { usePathname } from "next/navigation";
 
 interface PagingProps {
     w: number;
+    la?:string;
     before?: () => void;
     onClick?: () => void;
     choice?: (page: number) => void;
 }
 
 export default function Paging({
-    w, onClick, before, choice }: PagingProps) {
+    w, onClick, before, choice , la }: PagingProps) {
 
     const pages = Array.from({ length: w }, (_, index) => index + 1);
-    const { page_bu } = BusinessStore();
+    const { page_bu , pa } = BusinessStore();
     const { page } = useAdminStore();
     // const parm = useSearchParams()
     const pathname = usePathname()
@@ -43,12 +44,18 @@ export default function Paging({
                             pathname === "/Business" ? (
                                 page_bu === a ? "#000" : "#84848f"
                             )
+                            :la === "work" ? (
+                                pa === a ? "#000" : "#84848f"
+                            )
                             :(
                                 page === a ? "#000" : "#84848f"
                             ),
                         fontWeight:
                             pathname === "/Business" ? (
                                 page_bu === a ? "bold" : ""
+                            )
+                            :la === "work" ? (
+                                pa === a ? "bold" : ""
                             )
                             :(
                                 page === a ? "bold" : ""

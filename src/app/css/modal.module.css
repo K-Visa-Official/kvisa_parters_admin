@@ -484,3 +484,10 @@
 .tooltoplist:hover{
     background: rgba(0, 0, 0, 0.1);
 }
+
+.modalwork {
+    width: 996px;
+    height: 720px;
+    border-radius: 10px;
+    background-color: #fff;
+}

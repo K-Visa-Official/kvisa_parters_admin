@@ -26,7 +26,6 @@ const UserListtotla: React.FC<ModalProps> = ({ search }) => {
     const list = ["순번", "가입일", "회사/업체명", "업체 소개문구", "담당자", "계정정보", "입금계좌", "중국어 업무", "한국어 업무",
         // "접수 현황", "a"
     ];
-
     useEffect(() => {
         async function fetchUsers() {
             try {
@@ -249,8 +248,13 @@ const UserListtotla: React.FC<ModalProps> = ({ search }) => {
                     </div>
 
                     <div style={{ width: "90px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                        <div style={{ height: "16px", borderBottom: "1px solid black" }}>
-                            <span style={{ textDecoration: "underline" }}>{Number(user.work_count_ch) + Number(user.work_count)}</span>
+                        <div style={{ height: "16px", borderBottom: "1px solid black" }}
+                         onClick={() => (
+                            setLanguage("work"),
+                            setModal(true),
+                            setPk(user.id)
+                        )}>
+                            <span style={{ textDecoration: "underline" }}>{user.work_business}</span>
                         </div>
                     </div>
 

@@ -15,6 +15,7 @@ export interface UserList {
   bu_bank_number: string;
   work_count: number;
   work_count_ch: number;
+  work_business: number;
   is_admin: boolean;
   
 }

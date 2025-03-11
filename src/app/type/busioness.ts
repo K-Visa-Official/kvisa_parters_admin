@@ -4,6 +4,7 @@ export interface VisaApiResponse {
   count: number;
   next: string | null;
   match: string | null;
+  message?: string | null;
   previous: string | null;
   results: ProcessData[];
 }
