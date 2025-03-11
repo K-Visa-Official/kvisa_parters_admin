@@ -91,8 +91,7 @@ const PostModal: React.FC<ModalProps> = ({ onClose, la, pk = 0 }) => {
           setWork(data)
           setMaxPage(data.count)  
       } catch (error) {
-        const data_user = await getUser(pk);
-        
+        console.log(error)
       }
     };
     fetchUser();
