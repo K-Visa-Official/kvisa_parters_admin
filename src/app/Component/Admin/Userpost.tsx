@@ -39,6 +39,7 @@ export default function UserPost({ onClose, pk }: UserPostProps) {
         }
     };
 
+
     async function handleRegister() {
         const userData = {
             email: email,
@@ -121,6 +122,7 @@ export default function UserPost({ onClose, pk }: UserPostProps) {
         }
     }
 
+    console.log(pk)
     useEffect(() => {
         const fetchUser = async () => {
             try {
@@ -151,7 +153,7 @@ export default function UserPost({ onClose, pk }: UserPostProps) {
         }
 
     }, [pk]); // u)
-
+    console.log(pk)
     // user_edit.email . password
     // bu_logo . bu_name . bu_intro . bu_name_ch . bu_intro_ch
     // bu_tel_name . bu_tel_first . bu_bank_name . bu_bank_name . bu_bank_number

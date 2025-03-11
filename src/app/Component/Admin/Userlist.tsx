@@ -26,6 +26,8 @@ const UserListtotla: React.FC<ModalProps> = ({ search }) => {
     const list = ["순번", "가입일", "회사/업체명", "업체 소개문구", "담당자", "계정정보", "입금계좌", "중국어 업무", "한국어 업무",
         // "접수 현황", "a"
     ];
+
+
     useEffect(() => {
         async function fetchUsers() {
             try {

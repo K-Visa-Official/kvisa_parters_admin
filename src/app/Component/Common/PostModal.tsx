@@ -50,33 +50,38 @@ const PostModal: React.FC<ModalProps> = ({ onClose, la, pk = 0 }) => {
   const year_list = Array.from({ length: 21 }, (_, i) => currentYear + i);
   const month_list = Array.from({ length: 12 }, (_, i) => i + 1);
 
+
+
   useEffect(() => {
     const fetchUser = async () => {
       setIsLoading(true);
 
       try {
-        const data = await getUserApi(pk, la === "ko" ? 0 : 1);
-        const data_user = await getUser(pk);
-        setUserNo(data_user)
-        setUser(data);  // 성공적으로 데이터 받으면 상태에 저장
-        setIsLoading(false);
-
-        if (la === "ko") {
-          if (data_user.work_count === 0) {
-            setMax(0)
+        if(pk !== 0){
+          const data = await getUserApi(pk, la === "ko" ? 0 : 1);
+          const data_user = await getUser(pk);
+          setUserNo(data_user)
+          setUser(data);  // 성공적으로 데이터 받으면 상태에 저장
+          setIsLoading(false);
+  
+          if (la === "ko") {
+            if (data_user.work_count === 0) {
+              setMax(0)
+            }
+            else {
+              setMax(data_user.work_count)
+            }
           }
           else {
-            setMax(data_user.work_count)
+            if (data_user.work_count_ch === 0) {
+              setMax(0)
+            }
+            else {
+              setMax(data_user.work_count_ch)
+            }
           }
         }
-        else {
-          if (data_user.work_count_ch === 0) {
-            setMax(0)
-          }
-          else {
-            setMax(data_user.work_count_ch)
-          }
-        }
+      
       } catch (error) {
         console.log(error)
       }
@@ -96,6 +101,7 @@ const PostModal: React.FC<ModalProps> = ({ onClose, la, pk = 0 }) => {
     };
     fetchUser();
   }, [pk, pa]); // u)
+
 
 
   const UpGrade = async (index: number, id: number) => {
@@ -184,16 +190,17 @@ const PostModal: React.FC<ModalProps> = ({ onClose, la, pk = 0 }) => {
     }
   }
 
+  
+  // if (!work) {
+  //   return <div>로딩 중...</div>;  // 데이터가 없을 때 로딩 메시지 표시
+  // }
 
-  if (!work) {
-    return <div>로딩 중...</div>;  // 데이터가 없을 때 로딩 메시지 표시
-  }
 
+  // if (isLoading) {
+  //   return <p style={{ color: "black" }}>로딩 중...</p>;
+  // }
 
-  if (isLoading) {
-    return <p style={{ color: "black" }}>로딩 중...</p>;
-  }
-
+  
   return (
     <div className={styles.modalBackdrop}>
       <style>
@@ -368,8 +375,8 @@ const PostModal: React.FC<ModalProps> = ({ onClose, la, pk = 0 }) => {
           }
         </>
         :
-        la === "post" ?
-          <UserPost onClose={() => onClose()} pk={pk} />
+        la === "post"  ?
+          <UserPost onClose={() => onClose()} pk={pk === 0 ? 123 : pk} />
           :
           ac === true ?
             <div className={modal.modalBackdrop}>
@@ -556,7 +563,7 @@ const PostModal: React.FC<ModalProps> = ({ onClose, la, pk = 0 }) => {
 
               <div className={styles.modaltitle} style={{ borderBottom: "none", display: "flex", justifyContent: "center", alignItems: "center", marginTop: "7px", fontSize: "18px", fontWeight: "500", height: "20px" }}>
                 <div style={{ width: "90%", height: "100%", borderRadius: "10px", display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                  <p>{work?.message ? 0 : work.results.length }개의 받은견적</p>
+                  <p>{work?.message ? 0 : work?.results.length }개의 받은견적</p>
                   <div style={{ display: "flex", flexDirection: "row" }}>
                     <p style={{ marginRight: "10px", color: choice === "진행중" ? "black" : "#84848f" }}
                       onClick={() => setChoice("진행중")}>진행중</p>
@@ -606,7 +613,7 @@ const PostModal: React.FC<ModalProps> = ({ onClose, la, pk = 0 }) => {
                   ))}
                 </div>
 
-                {work.results?.map((a, index) => (
+                {work?.results?.map((a, index) => (
                   <div style={{
                     width: "90%", height: "60px", display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center",
                     background: "white", borderBottom: "1px solid #ebecf1", fontSize: "13px"
@@ -637,7 +644,7 @@ const PostModal: React.FC<ModalProps> = ({ onClose, la, pk = 0 }) => {
                     <div style={{
                       display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer",
                     }} onClick={() => setTooltip(tooltip === index ? null : index)}>
-                      <div style={{
+                      <div style={{position: "relative",
                         background: a.state === 0 ? "#FF4B4C" :
                           a.state === 1 ? "#FF9D4C" :
                             a.state === 2 ? "#B44DFF" :
