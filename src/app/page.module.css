@@ -16,6 +16,252 @@
   font-family: var(--font-geist-sans);
 }
 
+.footer_v2024 {
+  background: #181f29;
+  width: 100%;
+  margin-top: 100px;
+}
+
+.footer_v2024 .wrapper {
+  padding-top: 40px;
+  padding-bottom: 70px;
+  padding-right: 10px;
+    padding-left: 10px;
+
+}
+
+.footer_v2024 .wrapper .logo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.footer_v2024 .wrapper .logo .k_visa img {
+  width: 118px;
+  height: 40px;
+}
+
+.footer_v2024 .wrapper .logo ul {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+
+.footer_v2024 .wrapper .logo ul li a img {
+  width: 30px;
+  height: 30px;
+}
+
+.footer_v2024 .wrapper .cont {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer_v2024 .wrapper .cont .box ul {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  list-style: none;
+}
+
+.footer_v2024 .wrapper .cont .box ul li a {
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff
+}
+
+.footer_v2024 .wrapper .cont .box p.company {
+  display: block;
+  margin-top: 15px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.38;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.footer_v2024 .wrapper .cont .box p.company a {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.38;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.footer_v2024 .wrapper .cont .box p.copyright {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.footer_v2024 .wrapper .cont .contact p.telTitle {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.footer_v2024 .wrapper .cont .contact p.tel {
+  margin-top: 5px;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.footer_v2024 .wrapper .cont .contact p.tel a {
+  color: #fff;
+}
+
+.footer_v2024 .wrapper .cont .contact p.hour {
+  margin-top: 9px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.38;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: left;
+}
+
+#footer-v2024 {
+  background: #181f29;
+  font-family: 'Pretendard';
+}
+
+#footer-v2024 .wrapper {
+  padding-top: 30px;
+  padding-bottom: 40px;
+}
+
+#footer-v2024 .wrapper .logo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#footer-v2024 .wrapper .logo .k-visa img {
+  width: 118px;
+  height: 40px;
+}
+
+#footer-v2024 .wrapper .cont {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+#footer-v2024 .wrapper .cont .box ul {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+#footer-v2024 .wrapper .cont .box ul li {
+  display: flex;
+}
+
+#footer-v2024 .wrapper .cont .box ul li a {
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff
+}
+
+#footer-v2024 .wrapper .cont .box p.company {
+  margin-top: 16px;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 16px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+#footer-v2024 .wrapper .cont .box p.company a {
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 16px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+#footer-v2024 .wrapper .cont .box p.copyright {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+#footer-v2024 .wrapper .cont .social {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+
+#footer-v2024 .wrapper .cont .contact {
+  margin-top: 15px;
+}
+
+#footer-v2024 .wrapper .cont .contact p.tel-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+#footer-v2024 .wrapper .cont .contact p.tel {
+  margin-top: 5px;
+}
+
+#footer-v2024 .wrapper .cont .contact p.tel a {
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.0;
+}
+
+#footer-v2024 .wrapper .cont .contact p.hour {
+  margin-top: 9px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.33;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.footertitlesecond {
+  font-size: 11px;
+  margin-right: 0px;
+  color: #84848F;
+}
+
+.footertitlethird {
+  font-size: 11px;
+  margin-right: 0px;
+  color: #84848F;
+
+}
+
+.footertitleeifghjt {
+  font-size: 12px;
+  margin-right: 15px;
+  color: #84848F;
+
+}
+
+.footertitlefour {
+  font-size: 11px;
+  margin-right: 10px;
+  color: rgba(132, 132, 143, 0.5);
+
+}
+
+.footertitlefive {
+  font-size: 11px;
+  margin-right: 0px;
+  color: rgba(132, 132, 143, 0.5);
+
+}
+
 .modalBackdrop {
   position: fixed;
   top: 0;
@@ -48,6 +294,7 @@
   height: 56px;
   border-radius: 5px;
 }
+
 .activeButton {
   padding: 20px 16px;
   background: linear-gradient(to right, #1c68ff, #053cf0);
@@ -63,7 +310,7 @@
   background: #0056b3;
 }
 
-.webmo{
+.webmo {
   width: 315px;
   height: 253px;
   border-radius: 10px;
@@ -73,20 +320,23 @@
   align-items: center;
   flex-direction: column;
 }
-.webtiotle{
+
+.webtiotle {
   font-size: 18px;
   font-weight: bold;
   color: #000;
   margin-top: 15px;
 }
-.webtiotlesub{
+
+.webtiotlesub {
   font-size: 14px;
   font-weight: 500;
   text-align: center;
   color: #84848f;
   margin-top: 10px;
 }
-.footerboxsds{
+
+.footerboxsds {
   width: 280px;
   height: 56px;
   display: flex;
@@ -94,7 +344,8 @@
   align-items: center;
   margin-top: 30px;
 }
-.footerboxfirst{
+
+.footerboxfirst {
   width: 135px;
   height: 56px;
   display: flex;
@@ -183,7 +434,7 @@ a.secondary {
   min-width: 180px;
 }
 
-.footer {
+/* .footer {
   grid-row-start: 3;
   display: flex;
   gap: 24px;
@@ -197,7 +448,7 @@ a.secondary {
 
 .footer img {
   flex-shrink: 0;
-}
+} */
 
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
@@ -254,7 +505,6 @@ a.secondary {
 
 @media (prefers-color-scheme: dark) {
   .logo {
-    filter: invert();
+    /* filter: invert(); */
   }
 }
-

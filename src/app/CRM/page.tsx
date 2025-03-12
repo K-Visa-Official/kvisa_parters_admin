@@ -12,7 +12,7 @@ import { CRM_res } from "../type/user";
 import Modal from "../Component/Common/Modal";
 
 import useWindowWidth from "@/app/hooks/useWindowWidth";
-
+import Footer from "../Component/Common/Footer";
 
 function CRM() {
     const parm = useSearchParams();
@@ -372,7 +372,7 @@ function CRM() {
                                                         {parm.get("language") === "0" ? Korean.crm_info_four: Ch.crm_info_four}
                                                         </div>
                                                         <div style={{ width: "70%", color: "black" }}>
-                                                            {user.name.split("^")[0]}
+                                                        {user.name.split("^")[0].replace(/.(.+)/, (match, p1) => match[0] + "*".repeat(p1.length))}
                                                         </div>
                                                     </div>
 
@@ -382,7 +382,7 @@ function CRM() {
                                                         {parm.get("language") === "0" ? Korean.certi_tel: Ch.certi_tel}
                                                         </div>
                                                         <div style={{ width: "70%", color: "black" }}>
-                                                            {user.tel}
+                                                            {user.tel.replace(/(\d{3})-\d{4}-(\d{4})/, "$1-****-$2")}
                                                         </div>
                                                     </div>
 
@@ -449,6 +449,7 @@ function CRM() {
                                     ))}
                                 </div>
                             }
+                            <Footer/>
 
                         </div>
                     </div>

@@ -15,6 +15,7 @@ import MoHeader from "../Component/Common/MoHeader";
 import Modal from "../Component/Common/Modal";
 
 import useWindowWidth from "@/app/hooks/useWindowWidth";
+import Footer from "../Component/Common/Footer";
 
 function Certify() {
     const parm = useSearchParams();
@@ -155,10 +156,10 @@ function Certify() {
                         background: "#f5f6f9",
                         width: "100%",
                         height: "auto",
-                        paddingBottom: "200px" ,
-                        fontFamily: parm.get("language") === "0" ? "'Spoqa Han Sans Neo', 'malgun', 'Apple SD Gothic Neo', Verdana, Arial, Helvetica, Geneva, Tahoma, sans-serif" : 
-                        "Noto Sans, sans-serif",
-                       
+                        paddingBottom: "200px",
+                        fontFamily: parm.get("language") === "0" ? "'Spoqa Han Sans Neo', 'malgun', 'Apple SD Gothic Neo', Verdana, Arial, Helvetica, Geneva, Tahoma, sans-serif" :
+                            "Noto Sans, sans-serif",
+
                     }}
                 >
                     <div className={styles.innerbox}>
@@ -276,7 +277,7 @@ function Certify() {
                                     height={50}
                                     style={{ marginTop: "150px" }}
                                 />
-                                <p style={{ marginTop: "15px", fontWeight: "bold", fontSize: "20px" }}> {parm.get("language") === "0" ? Korean.accept_eight : Ch.accept_eleven}
+                                <p style={{ marginTop: "15px", fontWeight: "bold", fontSize: "20px", color: "black" }}> {parm.get("language") === "0" ? Korean.accept_eight : Ch.accept_eleven}
                                     {/* 접수가 완료되었습니다 */}
                                 </p>
                                 <p style={{ marginTop: "10px", fontWeight: "500", fontSize: "13px", color: "#84848f" }}>
@@ -311,6 +312,8 @@ function Certify() {
 
                             </div>
                         }
+
+                        <Footer />
                     </div>
 
                     {modal ?

@@ -13,6 +13,7 @@ import { Korean, Ch } from "../type/typedef";
 import MoHeader from "../Component/Common/MoHeader";
 import Modal from "../Component/Common/Modal";
 import AutoComplete from "../Component/Common/AutoComplete";
+import Footer from "../Component/Common/Footer";
 // import DatePicker from "../Component/Common/DatePicker";
 
 
@@ -748,6 +749,7 @@ function Progress() {
                                 </div>
 
 
+                                <Footer/>
                             </div>
                         </div>
                     }

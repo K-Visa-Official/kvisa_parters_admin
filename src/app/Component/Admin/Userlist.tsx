@@ -13,7 +13,7 @@ interface ModalProps {
 }
 
 const UserListtotla: React.FC<ModalProps> = ({ search }) => {
-    const { title, created_at, page, setPage } = useAdminStore();
+    const { title, created_at, page, setPage ,order_by , setOrderBy } = useAdminStore();
     const [users, setUsers] = useState<UserList[]>([]); // 유저 데이터 상태
     const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태
     const [error, setError] = useState<string | null>(null); // 에러 상태
@@ -31,7 +31,7 @@ const UserListtotla: React.FC<ModalProps> = ({ search }) => {
     useEffect(() => {
         async function fetchUsers() {
             try {
-                const data: AllUserResponse = await alluserApi(title, created_at, page); // 파라미터 값은 실제로 적절하게 설정
+                const data: AllUserResponse = await alluserApi(title, created_at, page ,order_by  ); // 파라미터 값은 실제로 적절하게 설정
                 setUsers(data.results); // 받은 데이터로 상태 업데이트
                 setIsLoading(false);
                 setMaxPage(data.count)
@@ -46,7 +46,7 @@ const UserListtotla: React.FC<ModalProps> = ({ search }) => {
         }
 
         fetchUsers();
-    }, [modal, search]);
+    }, [modal, search , order_by]);
 
     if (isLoading) {
         return <p>로딩 중...</p>;
@@ -149,6 +149,13 @@ const UserListtotla: React.FC<ModalProps> = ({ search }) => {
                                                             : "60px",
                             flexGrow: 0, // `flex-grow`를 0으로 설정하여 이 요소가 늘어나지 않도록
                             flexShrink: 0, // `flex-shrink`를 0으로 설정하여 이 요소가 줄어들지 않도록
+                        }}
+                         onClick={()=> {
+                            if (user === "순번") {
+                                setOrderBy(order_by === "-id" ? "id" : "-id");
+                            } else if (user === "가입일") {
+                                setOrderBy(order_by === "-sign_in" ? "sign_in" : "-sign_in");
+                            }
                         }}>
                         {user}
                         {user === "순번" || user === "가입일" || user === "접수현황" ?

@@ -3,9 +3,9 @@ import useAuthStore from "../store/user";
 import {  AllUserResponse , UserList , WorkResponse} from "../type/user";
 
 // ✅ API 함수
-export async function alluserApi(a:string,b:string , c:number): Promise<AllUserResponse> {
+export async function alluserApi(a:string,b:string , c:number , d:string): Promise<AllUserResponse> {
   try {
-    const response = await fetch(baseurl + '/api/user/all?&business=' + a + "&create_at=" + b + "&page=" + c, {
+    const response = await fetch(baseurl + '/api/user/all?&business=' + a + "&create_at=" + b + "&page=" + c + "&order_by=" + d, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

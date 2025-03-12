@@ -21,6 +21,7 @@ export enum Korean {
 
     work_post_ko = "맞춤형 비자상담 서비스" ,
     work_post_ko_second = "외국인 범죄/불법체류자 구제" ,
+    work_post_ko_third = "비자 기간연장 서비스" ,
 
     go = "바로가기" , 
     go_second = "맞춤형 상담폼 접수하기" , 
@@ -177,6 +178,7 @@ export enum Ch {
 
     work_post_ko = "客製化签证谘询服务" ,
     work_post_ko_second = "外国人犯罪/非法滞留者救济" ,
+    work_post_ko_third = "비자 기간연장 서비스[중국어]" ,
 
     go = "立即前往" ,
     go_second = "提交谘询表单" ,

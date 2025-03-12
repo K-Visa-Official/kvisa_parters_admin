@@ -45,7 +45,7 @@ export default function RootLayout({
       <body style={{ touchAction: "manipulation" , background:"white" }}>
         <Header />
         {children}
-        <Footer />
+        {/* <Footer /> */}
       </body>
     </html>
   );

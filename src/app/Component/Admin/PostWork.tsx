@@ -337,7 +337,7 @@ export default function PostWork({ onClose, n = 0, la, max, work_id }: WorkPostP
                                 <div className={styles.woch} onClick={() => setActive(!active)}>
                                     <p style={{
                                         marginLeft: "15px",
-                                        color: work !== "업무를 선택해주세요" ? "black" : "#bcbdc4"
+                                        color: work !== "업무를 선택해주세요" ? "black" : "black"
                                     }}>{work}</p>
                                     <Image
                                         aria-hidden
@@ -357,7 +357,7 @@ export default function PostWork({ onClose, n = 0, la, max, work_id }: WorkPostP
                                                 setWork(la === "ko" ? Korean.work_post_ko : Ch.work_post_ko)
                                             )}
                                         >
-                                            <p style={{ marginLeft: "15px" }}>
+                                            <p style={{ marginLeft: "15px" , color:"black"}}>
                                                 {la === "ko" ? Korean.work_post_ko : Ch.work_post_ko}
                                             </p>
                                         </div>
@@ -368,7 +368,16 @@ export default function PostWork({ onClose, n = 0, la, max, work_id }: WorkPostP
                                                 setWork(la === "ko" ? Korean.work_post_ko_second : Ch.work_post_ko_second)
                                             )}
                                         >
-                                            <p style={{ marginLeft: "15px" }}>{la === "ko" ? Korean.work_post_ko_second : Ch.work_post_ko_second}</p>
+                                            <p style={{ marginLeft: "15px"  , color:"black" }}>{la === "ko" ? Korean.work_post_ko_second : Ch.work_post_ko_second}</p>
+                                        </div>
+                                        <div className={styles.woch}
+                                            style={{ background: "white", borderTop: "solid 1px #ebecf1" }}
+                                            onClick={() => (
+                                                setActive(true),
+                                                setWork(la === "ko" ? Korean.work_post_ko_third : Ch.work_post_ko_third)
+                                            )}
+                                        >
+                                            <p style={{ marginLeft: "15px"  , color:"black" }}>{la === "ko" ? Korean.work_post_ko_third : Ch.work_post_ko_third}</p>
                                         </div>
                                     </div>
                                     : <></>

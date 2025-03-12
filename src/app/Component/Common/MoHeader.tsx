@@ -86,7 +86,12 @@ const MoHeader: React.FC<MoHeaderProps> = ({ state = 0, setState }) => {
                 <Image aria-hidden src="/member/back.png" alt="뒤로가기" width={30} height={30} onClick={handleCloseWebView}  style={{ cursor: "pointer" }} />
             }
             <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "center", width:"345px" }} >
-                <Image aria-hidden src="/common/KPJB.png" alt="로고" width={260} height={30} layout="responsive" 
+                <Image aria-hidden src=
+                    {parm.get("userId") === null ? "/common/logo.png" : "/common/KPJB.png"}
+                     alt="로고" 
+                     width={ parm.get("userId") === null ? 105 : 260} 
+                     height={parm.get("userId") === null ? 38 :30} 
+                     layout={parm.get("userId") === null? "" :"responsive" }
                    />
             </div>
             <Image

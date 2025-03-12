@@ -19,7 +19,7 @@ const Busionlist: React.FC<ModalProps> = ({ search }) => {
 
     const {
         title_bu, created_at_bu,
-        page_bu, state , choice , 
+        page_bu, state , choice , order_by_bu , setOrderBy_bu ,
         // seTitle_bu, setCreate_bu, setState , 
         setPage_bu } = BusinessStore();
     const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태
@@ -43,7 +43,7 @@ const Busionlist: React.FC<ModalProps> = ({ search }) => {
         async function fetchUsers() {
             setIsLoading(true);
             try {
-                const data: VisaApiResponse = await businesslist(title_bu, created_at_bu, state , page_bu , choice); // 파라미터 값은 실제로 적절하게 설정
+                const data: VisaApiResponse = await businesslist(title_bu, created_at_bu, state , page_bu , choice , order_by_bu); // 파라미터 값은 실제로 적절하게 설정
                 setBu_list(data); // 받은 데이터로 상태 업데이트
                 setIsLoading(false);
                 setMaxPage(data.count)
@@ -59,7 +59,7 @@ const Busionlist: React.FC<ModalProps> = ({ search }) => {
         }
 
         fetchUsers();
-    }, [search, page_bu ,choice]);
+    }, [search, page_bu ,choice , order_by_bu]);
 
     // useEffect(() => {
     //     async function fetchUsers() {
@@ -231,9 +231,21 @@ const Busionlist: React.FC<ModalProps> = ({ search }) => {
                                                                         : user === "진행상황" ? "135px" : "60px",
                                     justifyContent: user === "B2B담당회사" || user === "담당자" || user === "접수고객명" ? "flex-start" : "center",
                                     marginLeft: user === "B2B담당회사" ? "20px" : "0px",
-                                }}>
+                                }}
+                                onClick={()=> {
+                                    if (user === "순번") {
+                                        setOrderBy_bu(order_by_bu === "-id" ? "id" : "-id");
+                                    } else if (user === "접수언어") {
+                                        setOrderBy_bu(order_by_bu === "-lang" ? "lang" : "-lang");
+                                    } else if (user === "업무종류") {
+                                        setOrderBy_bu(order_by_bu === "-process__work__choice" ? "process__work__choice" : "-process__work__choice");
+                                    } else if (user === "접수날짜") {
+                                        setOrderBy_bu(order_by_bu === "-created_at" ? "created_at" : "-created_at");
+                                    }
+                                }}
+                                >
                                 {user}
-                                {user === "순번" || user === "접수언어" || user === "업무종류" || user === "접수날짜" || user === "B2B담당회사" || user === "진행상황" ?
+                                {user === "순번" || user === "접수언어" || user === "업무종류" || user === "접수날짜" || user === "진행상황" ?
                                     <Image
                                         aria-hidden
                                         src="/admin/sort.png"
@@ -260,7 +272,7 @@ const Busionlist: React.FC<ModalProps> = ({ search }) => {
                                 {10 * (page_bu - 1) + index + 1}
                             </div>
                             <div style={{ width: "90px", display: "flex", justifyContent: "center", alignItems: "center" }} >
-                                {a.lang === "0" ? "한국어" : "중국어"}
+                                {Number(a.lang) === 0 ? "한국어" : "중국어"}
                             </div>
                             <div style={{ width: "203px", display: "flex", justifyContent: "center", alignItems: "center" }} >
                                 {a.work?.choice}

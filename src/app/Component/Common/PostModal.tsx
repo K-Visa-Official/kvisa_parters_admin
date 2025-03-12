@@ -15,6 +15,7 @@ import FilterInputBox from "./FilterInputBox";
 import Paging from "../Common/Paging";
 import { change_state, get_answer, workchangeorder } from "@/app/server/work";
 import modal from 'src/app/page.module.css';
+import { workdelete } from "@/app/server/work";
 
 interface ModalProps {
   onClose: () => void;
@@ -32,7 +33,6 @@ const PostModal: React.FC<ModalProps> = ({ onClose, la, pk = 0 }) => {
   const [user_no, setUserNo] = useState<UserList>();
   const [modal_post, setModalPost] = useState<boolean>(false); // 로딩 상태
   const [tooltipIndex, setTooltipIndex] = useState<number | null>(null)
-  const [tooltip, setTooltip] = useState<number | null>(null)
   const [work_id, setWork_id] = useState<number | 0>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태
   const [maxpage, setMaxPage] = useState<number>(1); // 로딩 상태
@@ -51,46 +51,46 @@ const PostModal: React.FC<ModalProps> = ({ onClose, la, pk = 0 }) => {
   const month_list = Array.from({ length: 12 }, (_, i) => i + 1);
 
 
+  const fetchUser = async () => {
+    setIsLoading(true);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      setIsLoading(true);
+    try {
+      if(pk !== 0){
+        const data = await getUserApi(pk, la === "ko" ? 0 : 1);
+        const data_user = await getUser(pk);
+        setUserNo(data_user)
+        setUser(data);  // 성공적으로 데이터 받으면 상태에 저장
+        setIsLoading(false);
 
-      try {
-        if(pk !== 0){
-          const data = await getUserApi(pk, la === "ko" ? 0 : 1);
-          const data_user = await getUser(pk);
-          setUserNo(data_user)
-          setUser(data);  // 성공적으로 데이터 받으면 상태에 저장
-          setIsLoading(false);
-  
-          if (la === "ko") {
-            if (data_user.work_count === 0) {
-              setMax(0)
-            }
-            else {
-              setMax(data_user.work_count)
-            }
+        if (la === "ko") {
+          if (data_user.work_count === 0) {
+            setMax(0)
           }
           else {
-            if (data_user.work_count_ch === 0) {
-              setMax(0)
-            }
-            else {
-              setMax(data_user.work_count_ch)
-            }
+            setMax(data_user.work_count)
           }
         }
-      
-      } catch (error) {
-        console.log(error)
+        else {
+          if (data_user.work_count_ch === 0) {
+            setMax(0)
+          }
+          else {
+            setMax(data_user.work_count_ch)
+          }
+        }
       }
-    };
+    
+    } catch (error) {
+      console.log(error)
+    }
+  };
+  
+  useEffect(() => {
     fetchUser();
   }, [pk]); // u)
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const fetchUser_work = async () => {
       try {
         const data = await work_Detail(pk, pa);
           setWork(data)
@@ -99,7 +99,7 @@ const PostModal: React.FC<ModalProps> = ({ onClose, la, pk = 0 }) => {
         console.log(error)
       }
     };
-    fetchUser();
+    fetchUser_work();
   }, [pk, pa]); // u)
 
 
@@ -355,7 +355,11 @@ const PostModal: React.FC<ModalProps> = ({ onClose, la, pk = 0 }) => {
                               정보 수정하기
                             </div>
 
-                            <div className={styles.tooltoplist}>
+                            <div className={styles.tooltoplist} 
+                              onClick={()=> (
+                                workdelete(user.id) ,
+                                fetchUser()
+                                )}>
                               삭제하기 (관리자 문의)
                             </div>
 
@@ -643,7 +647,7 @@ const PostModal: React.FC<ModalProps> = ({ onClose, la, pk = 0 }) => {
                     </div>
                     <div style={{
                       display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer",
-                    }} onClick={() => setTooltip(tooltip === index ? null : index)}>
+                    }} >
                       <div style={{position: "relative",
                         background: a.state === 0 ? "#FF4B4C" :
                           a.state === 1 ? "#FF9D4C" :
@@ -658,41 +662,7 @@ const PostModal: React.FC<ModalProps> = ({ onClose, la, pk = 0 }) => {
                                 a.state === 4 ? "처리완료" : "상담종료"
                         }
                       </div>
-                      {tooltip === index && (
-                        <div
-                          style={{
-                            position: "absolute",
-                            top: `${450 + index * 60}px`, right: "178px",
-                            background: "#fff", color: "#000",
-                            borderRadius: "5px", border: "solid 1px #ebecf1",
-                            fontSize: "14px", whiteSpace: "nowrap",
-                            boxShadow: "0 5px 20px 0 rgba(0, 0, 0, 0.05)", zIndex: 3
-                          }}
-                        >
-                          {order.map((b, index) => (
-                            <div className={styles.tooltoplist_second} key={index}
-                              style={{
-                                background: b === "접수완료" ? "#FF4B4C" :
-                                  b === "계약완료" ? "#FF9D4C" :
-                                    b === "서류작성" ? "#B44DFF" :
-                                      b === "심사진행" ? "#1B68FF" :
-                                        b === "처리완료" ? "#FF1A8E" : "#A3A3A3",
-                                padding: "0px 30px 0px 30px", display: "flex", justifyContent: "space-between", alignItems: "center",
-                                color: "white", height: "30px"
-                              }}
-                              onClick={() => ChangeState(a.id, index)}>
-                              {b}
-                              <Image
-                                aria-hidden
-                                src="/common/bu_under.png"
-                                alt="Window icon"
-                                width={14}
-                                height={14}
-                              />
-                            </div>
-                          ))}
-                        </div>
-                      )}
+                      
                     </div>
                   </div>
 

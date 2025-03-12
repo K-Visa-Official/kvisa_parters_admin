@@ -9,7 +9,8 @@ interface BusinessFilter {
   page_bu: number;
   state: number;
   pa: number;
-  
+  order_by_bu :string;
+
   title_user: string;
   created_at_user: string;
   state_user: number;
@@ -25,6 +26,7 @@ interface BusinessFilter {
   seTitle_User: (title_user: string) => void;
   setCreate_User: (created_at_user: string) => void;
   setState_User: (state_user: number) => void;
+  setOrderBy_bu: (order_by_bu: string) => void;
   
 }
 
@@ -41,6 +43,7 @@ const BusinessStore = create<BusinessFilter>((set,
   title_user: "",
   created_at_user: "",
   state_user: 10,
+  order_by_bu : "-id" ,
 
   seTitle_bu: (title_bu) => set({ title_bu }),
   setCreate_bu: (created_at_bu) => set({ created_at_bu }),
@@ -52,6 +55,7 @@ const BusinessStore = create<BusinessFilter>((set,
   seTitle_User: (title_user) => set({ title_user }),
   setCreate_User: (created_at_user) => set({ created_at_user }),
   setState_User: (state_user) => set({ state_user }),
+  setOrderBy_bu: (order_by_bu) => set({ order_by_bu }), // 함수명 수정 ✅
 
 
 }));

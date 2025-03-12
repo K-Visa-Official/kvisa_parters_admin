@@ -42,10 +42,10 @@ export default function UserBox() {
                         onClick={() => setActive(User.total)}>
                         {User.total}
                     </p>
-                    <p style={active === User.ex ? { color: "#000" } : { color: "#c1c1c5" }}
+                    {/* <p style={active === User.ex ? { color: "#000" } : { color: "#c1c1c5" }}
                         onClick={() => setActive(User.ex)}>
                         {User.ex}
-                    </p>
+                    </p> */}
                 </div>
 
                 <div className={styles.catebox}>

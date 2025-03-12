@@ -311,7 +311,7 @@ export async function workdelete(a:number) {
       throw new Error("Authorization token is missing");
     }
 
-    const response = await fetch(baseurl + "/api/admin/work/delete/" + a + "/", {
+    const response = await fetch(baseurl + "/api/admin/work/delete/" + a , {
       method: "DELETE",
       headers: { 
         "Authorization": "Bearer " + token, // Bearer token 추가

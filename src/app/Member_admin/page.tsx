@@ -16,28 +16,79 @@ import { VisaApiResponse } from "../type/busioness";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/locale"; // 한국어 locale
+import { Busioness } from "@/app/type/typedef";
 
 function Member_admin() {
     const [user, setUser] = useState<UserList | null>(null);
     const [work, setWork] = useState<VisaApiResponse | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태    
     const [pro, setPro] = useState<string>("진행중"); // 로딩 상태    
+    const [choice, setChoice] = useState<string>(""); // 로딩 상태    
     const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
-    const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>({});
+    // const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>({});
+    const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>({
+        "전체": true, // "전체"만 체크된 상태로 설정
+        "맞춤형 비자상담 서비스": false, // "전체"만 체크된 상태로 설정
+        "범죄/불법체류자 구제": false, // "전체"만 체크된 상태로 설정
+    });
     const [isTooltipVisible, setTooltipVisible] = useState(false);
     const [showCalendar, setShowCalendar] = useState<boolean>(false);
     const { title_user, created_at_user, seTitle_User, setCreate_User, state_user, setState_User } = BusinessStore();
     const order = ["접수완료", "계약완료", "서류작성", "심사진행", "처리완료", "상담종료"]
     const cate = ["전체", "맞춤형 비자상담 서비스", "범죄/불법체류자 구제"]
     const { admin, isLoggedIn } = useAuthStore();
-    const handleCheckboxChange = (index: string) => {
-        setCheckedItems((prev) => ({
-            ...prev,
-            [index]: !prev[index], // 체크 여부 토글
-        }));
-    };
     const router = useRouter();
 
+    const handleCheckboxChange = (index: string) => {
+
+        
+        if (index === "전체") {
+            setCheckedItems({
+                "전체": true,
+                "맞춤형 비자상담 서비스": false,
+                "범죄/불법체류자 구제": false,
+            });
+            setChoice("")
+        } 
+        else if (index === "맞춤형 비자상담 서비스") {
+            if (checkedItems["범죄/불법체류자 구제"]) {
+                setCheckedItems({
+                    "전체": true, // 범죄/불법체류자 구제가 true면 전체 활성화
+                    "맞춤형 비자상담 서비스": false,
+                    "범죄/불법체류자 구제": false,
+                });
+                setChoice("")
+            } 
+            else {
+                setCheckedItems({
+                    "전체": false,
+                    "맞춤형 비자상담 서비스": true,
+                    "범죄/불법체류자 구제": false,
+                });
+                setChoice(Busioness.first)
+            }
+        } 
+        else if (index === "범죄/불법체류자 구제") {
+            if (checkedItems["맞춤형 비자상담 서비스"]) {
+                setCheckedItems({
+                    "전체": true, // 범죄/불법체류자 구제가 true면 전체 활성화
+                    "맞춤형 비자상담 서비스": false,
+                    "범죄/불법체류자 구제": false,
+                });
+
+                setChoice("")
+            } 
+            else {
+                setCheckedItems({
+                    "전체": false,
+                    "맞춤형 비자상담 서비스": false,
+                    "범죄/불법체류자 구제": true,
+                });
+                setChoice(Busioness.second)
+            }
+        }
+    };
+    
     useEffect(() => {
         if (admin) {
             router.push("/");  // 운영진이면 즉시 리다이렉트 후 함수 종료
@@ -48,10 +99,9 @@ function Member_admin() {
         const fetchUser = async () => {
             try {
                 const data = await getUserMember();
-                const data_work = await busi_work(title_user, created_at_user, state_user);
+                const data_work = await busi_work(title_user, created_at_user, state_user , choice);
                 setUser(data);
                 setWork(data_work)
-                console.log(data_work)
             } catch (error) {
                 console.error("유저 데이터를 불러오는 중 오류 발생:", error);
             } finally {
@@ -61,7 +111,7 @@ function Member_admin() {
 
         fetchUser();
 
-    }, [admin, router, isLoading]); // 🔥 `user` 제거하여 무한 루프 방지
+    }, [admin, router, isLoading ,choice]); // 🔥 `user` 제거하여 무한 루프 방지
 
     useEffect(() => {
         if (!isLoggedIn) {
@@ -94,7 +144,7 @@ function Member_admin() {
             </div>
 
             <div style={{ width: "100%", height: "auto", display: "flex", justifyContent: "center", alignItems: "center", background: "linear-gradient(to right, #33405a 1%, #4e5f82 100%)" }}>
-                <div style={{ width: "1200px", height: "270px", display: "flex", justifyContent: "flex-start", alignItems: "center", flexDirection: "row", overflowX: "auto" }}>
+                <div style={{ width: "1200px", height: "240px", display: "flex", justifyContent: "flex-start", alignItems: "center", flexDirection: "row", overflowX: "auto" }}>
                     <Image
                         aria-hidden
                         src={user ? user?.bu_logo : "/common/ic_nonprofile.svg"}
@@ -117,7 +167,8 @@ function Member_admin() {
             </div>
 
             <div style={{ width: "100%", height: "60px", background: "#515d78", display: "flex", justifyContent: "center", alignItems: "center", fontSize: "16px", fontWeight: "600" }}>
-                <div style={{ width: "1200px", height: "60px", display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
+                <div style={{ width: "1200px", height: "60px", display: "flex", justifyContent: "flex-end", alignItems: "center" }}
+                onClick={() => window.location.href = "mailto:official@k-visa.co.kr?subject=문의드립니다&body=안녕하세요."}>
                     고객센터
                 </div>
             </div>
@@ -138,30 +189,30 @@ function Member_admin() {
                                 src={"/admin/search.png"}
                                 onChange={(e) => seTitle_User(e.target.value)}
                             />
-                            <div onClick={()=> setShowCalendar(!showCalendar)} style={{ position: "relative"}}>
+                            <div onClick={() => setShowCalendar(!showCalendar)} style={{ position: "relative" }}>
                                 <FilterInputBox w={200} h={28} mt={0} bg={"#f5f6f9"} p={"접수일자(yyyy.mm.dd)"} v={created_at_user}
                                     src={"/admin/calendar.png"}
                                     onChange={(e) => setCreate_User(e.target.value)}
                                 />
-                             </div>    
-                                {showCalendar && (
-                                   <div style={{ position: "absolute",top: "35px", right: "50px" }}>
-                                        <DatePicker
-                                            selected={created_at_user ? new Date(created_at_user) : null}
-                                            onChange={(date) => {
-                                                if (date) {
-                                                    setCreate_User(date.toISOString().split("T")[0]); // yyyy-MM-dd 형식 저장
-                                                }
-                                                setShowCalendar(false);
-                                            }}
-                                            dateFormat="yyyy.MM.dd"
-                                            locale={ko} // 한국어 설정
-                                            inline
-                                        />
-                                    </div>
-                                )}
-                           
-                            
+                            </div>
+                            {showCalendar && (
+                                <div style={{ position: "absolute", top: "35px", right: "50px" }}>
+                                    <DatePicker
+                                        selected={created_at_user ? new Date(created_at_user) : null}
+                                        onChange={(date) => {
+                                            if (date) {
+                                                setCreate_User(date.toISOString().split("T")[0]); // yyyy-MM-dd 형식 저장
+                                            }
+                                            setShowCalendar(false);
+                                        }}
+                                        dateFormat="yyyy.MM.dd"
+                                        locale={ko} // 한국어 설정
+                                        inline
+                                    />
+                                </div>
+                            )}
+
+
 
                             {isTooltipVisible ?
                                 <div style={{ display: "flex", flexDirection: "column" }}>

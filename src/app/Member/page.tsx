@@ -9,6 +9,7 @@ import Image from "next/image";
 import { Korean, Ch } from "../type/typedef";
 import MoHeader from "../Component/Common/MoHeader";
 import Modal from "../Component/Common/Modal";
+import Footer from "../Component/Common/Footer";
 
 function CaseStoriesDetailPage() {
     const parm = useSearchParams();
@@ -90,6 +91,7 @@ function CaseStoriesDetailPage() {
                     <MoHeader state={state} setState={setState} setAc={setAc} />
 
                     {state === 1 ?
+                    <>
                         <div className={styles.contentsbox}>
 
                                 <div className={styles.cardbox}>
@@ -216,6 +218,9 @@ function CaseStoriesDetailPage() {
                             } */}
                             
                         </div>
+
+                        <Footer/>
+                    </>
                         :
                         <>
                             <div style={{ position: "relative", width: "100%", height: "auto" , 
@@ -260,6 +265,7 @@ function CaseStoriesDetailPage() {
 
 
                 </div>
+                
 
 
             </div>

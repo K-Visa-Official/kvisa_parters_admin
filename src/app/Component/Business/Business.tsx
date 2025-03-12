@@ -133,7 +133,8 @@ export default function Business() {
                                 setKind(item),
                                 item === "전체" ?
                                     setChoice("") :
-                                    setChoice(item)
+                                    setChoice(item),
+                                setPage_bu(1)
                             )
                             }
                             style={{
