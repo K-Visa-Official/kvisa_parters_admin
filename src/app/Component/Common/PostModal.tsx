@@ -16,7 +16,6 @@ import Paging from "../Common/Paging";
 import {  get_answer, workchangeorder } from "@/app/server/work";
 import modal from 'src/app/page.module.css';
 import { workdelete } from "@/app/server/work";
-import { tr } from "date-fns/locale";
 
 interface ModalProps {
   onClose: () => void;
