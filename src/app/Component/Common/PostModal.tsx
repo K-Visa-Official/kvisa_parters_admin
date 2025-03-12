@@ -42,7 +42,7 @@ const PostModal: React.FC<ModalProps> = ({ onClose, la, pk = 0 }) => {
   const [year_active, setYear_active] = useState<boolean | false>(false);
   const [month, setMonth] = useState<string | number>(new Date().getMonth());
   const [month_active, setMonth_active] = useState<boolean | false>(false);
-  const order = ["접수완료", "계약완료", "서류작성", "심사진행", "처리완료", "상담종료"]
+  // const order = ["접수완료", "계약완료", "서류작성", "심사진행", "처리완료", "상담종료"]
   const { pa, setPa } = BusinessStore();
   const list = ["접수날짜", "접수언어", "업무종류", "접수고객명", "고객연락처", "질문내용", "진행상태"];
   const currentYear = new Date().getFullYear();
@@ -164,21 +164,21 @@ const PostModal: React.FC<ModalProps> = ({ onClose, la, pk = 0 }) => {
 
   }
 
-  const ChangeState = async (a: number, b: number) => {
+  // const ChangeState = async (a: number, b: number) => {
 
-    if (!work || !work.results) return;
+  //   if (!work || !work.results) return;
 
-    // 새로운 리스트 생성 (불변성 유지)
-    const updatedList = work.results.map((item) =>
-      item.id === a ? { ...item, state: b } : item
-    );
+  //   // 새로운 리스트 생성 (불변성 유지)
+  //   const updatedList = work.results.map((item) =>
+  //     item.id === a ? { ...item, state: b } : item
+  //   );
 
-    // 상태 업데이트
-    setWork({ ...work, results: updatedList });
+  //   // 상태 업데이트
+  //   setWork({ ...work, results: updatedList });
 
-    change_state(a, b)
+  //   change_state(a, b)
 
-  }
+  // }
 
   async function AnswerLook(a: number) {
     try {

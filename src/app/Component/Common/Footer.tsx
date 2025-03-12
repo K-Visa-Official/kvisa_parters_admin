@@ -1,12 +1,12 @@
 "use client"
 // import Image from "next/image";
 import styles from 'src/app/page.module.css';
-import AuthStore from "@/app/store/user";
+// import AuthStore from "@/app/store/user";
 import Image from 'next/image';
 
 export default function Footer() {
 
-    const { isLoggedIn } = AuthStore()
+    // const { isLoggedIn } = AuthStore()
 
     return (
         <>
