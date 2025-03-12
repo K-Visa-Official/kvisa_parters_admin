@@ -13,7 +13,7 @@ import { work_Detail } from "@/app/server/busioness";
 import { VisaApiResponse } from "@/app/type/busioness";
 import FilterInputBox from "./FilterInputBox";
 import Paging from "../Common/Paging";
-import { change_state, get_answer, workchangeorder } from "@/app/server/work";
+import {  get_answer, workchangeorder } from "@/app/server/work";
 import modal from 'src/app/page.module.css';
 import { workdelete } from "@/app/server/work";
 
