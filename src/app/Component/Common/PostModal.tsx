@@ -16,6 +16,7 @@ import Paging from "../Common/Paging";
 import {  get_answer, workchangeorder } from "@/app/server/work";
 import modal from 'src/app/page.module.css';
 import { workdelete } from "@/app/server/work";
+import { tr } from "date-fns/locale";
 
 interface ModalProps {
   onClose: () => void;
@@ -50,44 +51,70 @@ const PostModal: React.FC<ModalProps> = ({ onClose, la, pk = 0 }) => {
   const year_list = Array.from({ length: 21 }, (_, i) => currentYear + i);
   const month_list = Array.from({ length: 12 }, (_, i) => i + 1);
 
-
   const fetchUser = async () => {
-    setIsLoading(true);
-
     try {
-      if(pk !== 0){
+      if (pk !== 0) {
         const data = await getUserApi(pk, la === "ko" ? 0 : 1);
         const data_user = await getUser(pk);
-        setUserNo(data_user)
-        setUser(data);  // 성공적으로 데이터 받으면 상태에 저장
-        setIsLoading(false);
-
-        if (la === "ko") {
-          if (data_user.work_count === 0) {
-            setMax(0)
-          }
-          else {
-            setMax(data_user.work_count)
-          }
-        }
-        else {
-          if (data_user.work_count_ch === 0) {
-            setMax(0)
-          }
-          else {
-            setMax(data_user.work_count_ch)
-          }
-        }
+  
+        setUserNo(data_user);
+        setUser(data);
+  
+        setMax(la === "ko" ? data_user.work_count || 0 : data_user.work_count_ch || 0);
       }
-    
     } catch (error) {
-      console.log(error)
+      console.error("데이터 가져오기 오류:", error);
+    } finally {
+      setIsLoading(false); // 항상 실행되도록 보장
     }
   };
-  
+
+  const handleDelete = async (id: number) => {
+    try {
+      await workdelete(id); // 삭제 실행
+      await fetchUser(); // 삭제 후 데이터 새로고침
+    } catch (error) {
+      console.error("삭제 오류:", error);
+    }
+  };
+
+
   useEffect(() => {
+    const fetchUser = async () => {
+      setIsLoading(true);
+  
+      try {
+        if(pk !== 0){
+          const data = await getUserApi(pk, la === "ko" ? 0 : 1);
+          const data_user = await getUser(pk);
+          setUserNo(data_user)
+          setUser(data);  // 성공적으로 데이터 받으면 상태에 저장
+          setIsLoading(false);
+  
+          if (la === "ko") {
+            if (data_user.work_count === 0) {
+              setMax(0)
+            }
+            else {
+              setMax(data_user.work_count)
+            }
+          }
+          else {
+            if (data_user.work_count_ch === 0) {
+              setMax(0)
+            }
+            else {
+              setMax(data_user.work_count_ch)
+            }
+          }
+        }
+      
+      } catch (error) {
+        console.log(error)
+      }
+    };
     fetchUser();
-  }, [pk]); // u)
+  }, [pk ]); // u)
 
   useEffect(() => {
     const fetchUser_work = async () => {
@@ -356,10 +383,7 @@ const PostModal: React.FC<ModalProps> = ({ onClose, la, pk = 0 }) => {
                             </div>
 
                             <div className={styles.tooltoplist} 
-                              onClick={()=> (
-                                workdelete(user.id) ,
-                                fetchUser()
-                                )}>
+                              onClick={()=> handleDelete(user.id)}>
                               삭제하기 (관리자 문의)
                             </div>
 
