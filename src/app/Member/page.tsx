@@ -179,7 +179,7 @@ function CaseStoriesDetailPage() {
                                     :
                                     `/CRM?&member=${parm.get("member")}&language=${parm.get("language")}&userId=${parm.get("userId")}`
                                 )}>
-                                <div className={styles.postimg} style={{ color: "black" , }}>
+                                {/* <div className={styles.postimg} style={{ color: "black" , }}> */}
                                     <Image
                                         aria-hidden
                                         // src="/common/CRM.png"
@@ -187,9 +187,11 @@ function CaseStoriesDetailPage() {
                                         alt="다음"
                                         width={335}
                                         height={120}
+                                        className={styles.postimg}
                                         // layout="responsive" 
                                         style={{ borderRadius:"10px" }}
-                                    /></div>
+                                    />
+                                    {/* </div> */}
                                 {/* <img src={user?.detail} className={styles.postimg} /> */}
                                 <div className={styles.nextstep}
                                 style={{ 
