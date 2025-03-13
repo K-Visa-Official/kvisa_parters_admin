@@ -138,7 +138,7 @@ function CaseStoriesDetailPage() {
                                                         <div className={styles.nextstep}
                                                             style={{ background: 
                                                                 parm.get("member") === "9" ? "#652B8B" :
-                                                                parm.get("member") === "10" ? "#41048D"
+                                                                parm.get("member") === "10" ? "#linear-gradient(#eb008b 0%, #3b058e 100%)"
                                                                 :""
                                                                 }}>
                                                             {parm.get("language") === "0" ? Korean.go : Ch.go}
@@ -264,7 +264,7 @@ function CaseStoriesDetailPage() {
                                 <div className={styles.nextStep}
                                     style={{ background: 
                                         parm.get("member") === "9" ? "#652B8B" :
-                                        parm.get("member") === "10" ? "#41048D"
+                                        parm.get("member") === "10" ? "#linear-gradient(#eb008b 0%, #3b058e 100%)"
                                         :""
                                         }}>
                                     {parm.get("language") === "0" ? Korean.go_second : Ch.go_second}
