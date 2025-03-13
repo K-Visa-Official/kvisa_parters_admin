@@ -394,7 +394,7 @@ function Progress() {
                                     <div key={user.id} className={styles.qubox}
                                         style={{ marginTop: index === 0 ? "180px" : "" }}>
 
-                                        {parm.get("userId") === null ?
+                                        {/* {parm.get("userId") === null ?
                                             <p className={styles.qutitle}>
                                                 {user.answer_type === 0 ? "단일선택" :
                                                     user.answer_type === 1 ? "복수선택" :
@@ -402,7 +402,7 @@ function Progress() {
                                             </p>
                                             :
                                             <></>
-                                        }
+                                        } */}
 
                                         <p className={styles.titlesub} style={{
                                             display: "-webkit-box",
@@ -421,49 +421,7 @@ function Progress() {
 
                                                 return (
                                                     <>
-                                                        {parm.get("userId") === null ?
-                                                            <div key={a.id} className={styles.answerWrapper}>
-                                                                {user.answer_type >= 2 ? (
-                                                                    // 단문형 또는 장문형 입력 처리
-                                                                    <textarea
-                                                                        value={textAnswers[user.id] || ""}
-                                                                        placeholder="내용을 입력해주세요"
-                                                                        className={styles.quinput}
-                                                                        style={{
-                                                                            background: "#f5f6f9", height: "100px", resize: "none", padding: 20,
-                                                                            border: "none", marginTop: "20px", width: "300px",
-                                                                        }}
-                                                                        onChange={(e) => handleTextInputChange(user.id, e.target.value)}
-                                                                    />
-                                                                ) : (
-                                                                    // 단일/복수 선택 처리
-                                                                    <div
-                                                                        className={styles.answerItem}
-                                                                        onClick={() => handleAnswerSelect(user.id, a.answer, user.answer_type)}
-                                                                        style={{
-                                                                            marginTop: "16px", display: "flex", flexDirection: "row",
-                                                                            color: isSelected ? "#1b67ff" : "#444", // 선택된 항목 글자 색
-                                                                        }}
-                                                                    >
-
-                                                                        <Image
-                                                                            src={isSelected ? "/member/check_active.png" : "/member/check.png"}
-                                                                            alt={isSelected ? "선택됨" : "선택 안됨"}
-                                                                            width={20} height={20} />
-
-                                                                        <p style={{
-                                                                            display: "-webkit-box",
-                                                                            WebkitLineClamp: 2,
-                                                                            WebkitBoxOrient: "vertical",
-                                                                            overflow: "hidden",
-                                                                            textOverflow: "ellipsis",
-                                                                            wordBreak: "break-word",
-                                                                            marginLeft: "8px"
-                                                                        }}>{a.answer}</p>
-                                                                    </div>
-                                                                )}
-                                                            </div>
-                                                            :
+                                                        {workdetail[0]?.choice === "맞춤형 비자상담 서비스" ?
                                                             <div key={a.id} className={styles.answerWrapper}>
                                                                 {user.answer_type >= 2 ? (
                                                                     // 단문형 또는 장문형 입력 처리
@@ -717,6 +675,48 @@ function Progress() {
                                                                     </div>
                                                                 )}
                                                             </div>
+                                                            :
+                                                            <div key={a.id} className={styles.answerWrapper}>
+                                                            {user.answer_type >= 2 ? (
+                                                                // 단문형 또는 장문형 입력 처리
+                                                                <textarea
+                                                                    value={textAnswers[user.id] || ""}
+                                                                    placeholder="내용을 입력해주세요"
+                                                                    className={styles.quinput}
+                                                                    style={{
+                                                                        background: "#f5f6f9", height: "100px", resize: "none", padding: 20,
+                                                                        border: "none", marginTop: "20px", width: "300px",
+                                                                    }}
+                                                                    onChange={(e) => handleTextInputChange(user.id, e.target.value)}
+                                                                />
+                                                            ) : (
+                                                                // 단일/복수 선택 처리
+                                                                <div
+                                                                    className={styles.answerItem}
+                                                                    onClick={() => handleAnswerSelect(user.id, a.answer, user.answer_type)}
+                                                                    style={{
+                                                                        marginTop: "16px", display: "flex", flexDirection: "row",
+                                                                        color: isSelected ? "#1b67ff" : "#444", // 선택된 항목 글자 색
+                                                                    }}
+                                                                >
+
+                                                                    <Image
+                                                                        src={isSelected ? "/member/check_active.png" : "/member/check.png"}
+                                                                        alt={isSelected ? "선택됨" : "선택 안됨"}
+                                                                        width={20} height={20} />
+
+                                                                    <p style={{
+                                                                        display: "-webkit-box",
+                                                                        WebkitLineClamp: 2,
+                                                                        WebkitBoxOrient: "vertical",
+                                                                        overflow: "hidden",
+                                                                        textOverflow: "ellipsis",
+                                                                        wordBreak: "break-word",
+                                                                        marginLeft: "8px"
+                                                                    }}>{a.answer}</p>
+                                                                </div>
+                                                            )}
+                                                        </div>
                                                         }
                                                     </>
                                                 );

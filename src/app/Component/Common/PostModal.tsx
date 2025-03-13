@@ -89,7 +89,7 @@ const PostModal: React.FC<ModalProps> = ({ onClose, la, pk = 0 }) => {
           setUserNo(data_user)
           setUser(data);  // 성공적으로 데이터 받으면 상태에 저장
           setIsLoading(false);
-  
+
           if (la === "ko") {
             if (data_user.work_count === 0) {
               setMax(0)
@@ -128,7 +128,8 @@ const PostModal: React.FC<ModalProps> = ({ onClose, la, pk = 0 }) => {
     fetchUser_work();
   }, [pk, pa]); // u)
 
-
+  console.log(user)
+  console.log(user_no)
 
   const UpGrade = async (index: number, id: number) => {
     setUser((prevUsers) => {
