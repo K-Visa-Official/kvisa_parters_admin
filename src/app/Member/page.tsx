@@ -135,7 +135,12 @@ function CaseStoriesDetailPage() {
                                                         {/* <img src={user?.detail} className={styles.postimg} alt="profile"/> */}
                                                         <Image src={user?.detail} className={styles.postimg} alt="profile" 
                                                              width={335} height={120}/>
-                                                        <div className={styles.nextstep}>
+                                                        <div className={styles.nextstep}
+                                                            style={{ background: 
+                                                                parm.get("member") === "9" ? "#652B8B" :
+                                                                parm.get("member") === "10" ? "#41048D"
+                                                                :""
+                                                                }}>
                                                             {parm.get("language") === "0" ? Korean.go : Ch.go}
                                                             <Image
                                                                 aria-hidden
@@ -187,7 +192,13 @@ function CaseStoriesDetailPage() {
                                     /></div>
                                 {/* <img src={user?.detail} className={styles.postimg} /> */}
                                 <div className={styles.nextstep}
-                                style={{ background : parm.get("userId") === null ? "" : "#00B887"}}>
+                                style={{ 
+                                    background: 
+                                    parm.get("member") === "9" ? "#652B8B" :
+                                    parm.get("member") === "10" ? "#41048D" :
+                                    parm.get("member") === "6" ? "#00B887" :
+                                    ""
+                                    }}>
                                     {parm.get("language") === "0" ? Korean.go : Ch.go}
                                     <Image
                                         aria-hidden
@@ -250,7 +261,12 @@ function CaseStoriesDetailPage() {
                                 <p>
                                     {parm.get("language") === "0" ? Korean.go_third : Ch.go_third}
                                 </p>
-                                <div className={styles.nextStep}>
+                                <div className={styles.nextStep}
+                                    style={{ background: 
+                                        parm.get("member") === "9" ? "#652B8B" :
+                                        parm.get("member") === "10" ? "#41048D"
+                                        :""
+                                        }}>
                                     {parm.get("language") === "0" ? Korean.go_second : Ch.go_second}
                                 </div>
                             </div>
