@@ -178,7 +178,7 @@ function CaseStoriesDetailPage() {
                                     <Image
                                         aria-hidden
                                         // src="/common/CRM.png"
-                                        src={parm.get("userId") === null ?"/common/CRM.png" : "/bank/bank_2.png" }
+                                        src={parm.get("userId") === null ?"/common/CRM_second.png" : "/bank/bank_2.png" }
                                         alt="다음"
                                         width={335}
                                         height={120}
