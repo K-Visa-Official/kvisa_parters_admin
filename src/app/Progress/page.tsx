@@ -157,38 +157,78 @@ function Progress() {
     const handleSubmit = async () => {
 
         if (finalData.filter(a => a.answer === "").length > 0) {
-            if(finalData.filter(a => a.answer === "")[0].question.includes("국적")){
-                setAler("국적을 선택해주세요")
+            if(workdetail[0]?.choice === "맞춤형 비자상담 서비스"){
+                if(finalData.filter(a => a.answer === "")[0].question.includes("국적")){
+                    setAler("국적을 선택해주세요")
+                }
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("비자는")){
+                    setAler("비자를 선택해주세요")
+                }
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("비자 및 서비스")){
+                    setAler("비자를 선택해주세요")
+                }
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("나이")){
+                    setAler("나이를 선택해주세요")
+                }
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("소득금액")){
+                    setAler("소득금액을 선택해주세요")
+                }
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("체류기간")){
+                    setAler("체류기간을 선택해주세요")
+                }
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("비자 만료일")){
+                    setAler("비자 만료일을 선택해주세요")
+                }
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("아래")){
+                    setAler("특이사항을 선택해주세요")
+                }
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("이름")){
+                    setAler("이름을 입력해주세요")
+                }
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("전화번호")){
+                    setAler("연락받을 전화번호를 입력해주세요")
+                }
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("시간은")){
+                    setAler("연락가능한 시간을 선택해주세요")
+                }
             }
-            else if(finalData.filter(a => a.answer === "")[0].question.includes("비자는")){
-                setAler("비자를 선택해주세요")
+            else if(workdetail[0]?.choice === "客製化签证谘询服务"){
+                if(finalData.filter(a => a.answer === "")[0].question.includes("请问你的")){
+                    setAler("请选择国籍")
+                }
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("您现在持")){
+                    setAler("请选择签证类型")
+                }
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("请选择想要变更")){
+                    setAler("请选择签证类型")
+                }
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("请问您")){
+                    setAler("请选择年龄")
+                }
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("请问您的年")){
+                    setAler("请选择收入金额")
+                }
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("您以目前的签")){
+                    setAler("请选择居留期限")
+                }
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("目前签证")){
+                    setAler("请选择签证到期日")
+                }
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("以下有符合")){
+                    setAler("请选择特殊事项")
+                }
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("请留下您的姓")){
+                    setAler("请输入姓名")
+                }
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("请留下您")){
+                    setAler("请输入联系电话")
+                }
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("方便联繫的")){
+                    setAler("请选择可联系时间")
+                }
             }
-            else if(finalData.filter(a => a.answer === "")[0].question.includes("비자 및 서비스")){
-                setAler("비자를 선택해주세요")
-            }
-            else if(finalData.filter(a => a.answer === "")[0].question.includes("나이")){
-                setAler("나이를 선택해주세요")
-            }
-            else if(finalData.filter(a => a.answer === "")[0].question.includes("소득금액")){
-                setAler("소득금액을 선택해주세요")
-            }
-            else if(finalData.filter(a => a.answer === "")[0].question.includes("체류기간")){
-                setAler("체류기간을 선택해주세요")
-            }
-            else if(finalData.filter(a => a.answer === "")[0].question.includes("비자 만료일")){
-                setAler("비자 만료일을 선택해주세요")
-            }
-            else if(finalData.filter(a => a.answer === "")[0].question.includes("아래")){
-                setAler("특이사항을 선택해주세요")
-            }
-            else if(finalData.filter(a => a.answer === "")[0].question.includes("이름")){
-                setAler("이름을 입력해주세요")
-            }
-            else if(finalData.filter(a => a.answer === "")[0].question.includes("전화번호")){
-                setAler("연락받을 전화번호를 입력해주세요")
-            }
-            else if(finalData.filter(a => a.answer === "")[0].question.includes("시간은")){
-                setAler("연락가능한 시간을 선택해주세요")
+            else{
+                setAler("답변을 선택해주세요")
             }
             setAc(true)
         }

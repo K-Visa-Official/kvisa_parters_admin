@@ -167,7 +167,30 @@ export enum Korean {
     de_end = "제공한 정보가 허위거나 사실을 누락한 경우, 또는 본인의 출입국 관련 법령 위반 이력으로 인해 비자가 허가되지 않을 경우, 이에 대한 책임은 케이비자에 있지 않습니다." ,
 
     // de_accept = "위 내용을 확인하였고, 내용에 동의합니다." ,
-    process_enter = "맞춤형 상담폼 작성하기"
+    process_enter = "맞춤형 상담폼 작성하기" ,
+
+    footer_op_zero = "회사소개" ,
+    footer_op_first = "공지사항" ,
+    footer_op_second = "이용약관" ,
+    footer_op_third = "개인정보처리방침" ,
+
+    footer_a = "대표이사" ,
+    footer_b = "사업자 등록번호" ,
+    footer_c = "제휴/문의" ,
+
+    footer_e = "대표 번호" ,
+    footer_f = "주소 : 서울 강서구 공항대로 103 마곡엠밸리9단지 807호" ,
+
+
+    footer_g = "통신판매신고번호 : 제 2023-서울영등포-0502호" ,
+    footer_h = "행정사업무신고번호 : 35200000202169" ,
+    footer_i = "(주)케이비자COYPRIGHT(C) 2023by (주)K-VISA" ,
+
+    footer_j = "대표번호" ,
+
+    footer_j_f = "1811-1942" ,
+    footer_k = "평일 오전 09시 ~ 오후 18시" ,
+    footer_l = "(점심시간 : 평일 오후 12시 ~ 오후 1시)" ,
 
 }
 
@@ -324,7 +347,28 @@ export enum Ch {
     de_end = "申请如果您提供的信息造假、遗漏部分事实，或因本人违反出入境相关法律法规，导致签证未获批准时，K-VISA 概不负责。" ,
 
     de_accept = "我已确认上述内容并同意相关条款" ,
-    process_enter = "提交谘询申请表单"
+    process_enter = "提交谘询申请表单" ,
 
+
+    footer_op_zero = "公司介绍" ,
+    footer_op_first = "公告事项" ,
+    footer_op_second = "使用条款" ,
+    footer_op_third = "个人信息处理方针" ,
+
+    footer_a = "代表理事" ,
+    footer_b = "营业执照号" ,
+    footer_c = "合作/谘询" ,
+
+    footer_e = "客服电话" ,
+    footer_f = "地址：首尔 江西区 机场大路103 807号" ,
+
+
+    footer_g = "通信销售许可证号：第 2023-首尔永登浦-0502号" ,
+    footer_h = "行政业务登记号：35200000202169" ,
+    footer_i = "K-VISA COPYRIGHT(C) 2023 by K-VISA" ,
+
+    footer_j = "客服电话" ,
+    footer_k = "平日 上午 09:00 ~ 下午 18:00" ,
+    footer_l = "（午休时间：平日 下午 12:00 ~ 下午 13:00）" ,
 
 }
