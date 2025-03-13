@@ -83,6 +83,17 @@ function Progress() {
         "호주", "뉴질랜드", "태국", "말레이시아", "싱가포르"
     ];
 
+    const suggestionsList_ch = [
+        "韩国", "中国", "印度尼西亚", "越南", "印度", "日本", "菲律宾",
+        "英国", "法国", "意大利", "德国", "希腊", "美国", "加拿大",
+        "墨西哥", "巴西", "阿根廷", "智利", "秘鲁", "哥伦比亚", "尼泊尔",
+        "西班牙", "葡萄牙", "荷兰", "比利时", "瑞士", "瑞典",
+        "挪威", "丹麦", "芬兰", "俄罗斯", "土耳其", "沙特阿拉伯",
+        "阿拉伯联合酋长国", "埃及", "南非", "尼日利亚", "肯尼亚",
+        "澳大利亚", "新西兰", "泰国", "马来西亚", "新加坡"
+    ];
+
+
     const finalData = work.map(user => ({
         questionId: user.id,
         question: user.question,
@@ -467,7 +478,11 @@ function Progress() {
                                                                     // 단문형 또는 장문형 입력 처리
                                                                     index === 0 ? (
 
-                                                                        <AutoComplete suggestions={suggestionsList}
+                                                                        <AutoComplete 
+                                                                        suggestions={
+                                                                            parm.get("language") === "0" ? 
+                                                                            suggestionsList : suggestionsList_ch
+                                                                        }
                                                                             selectedValue={world}
                                                                             onSelect={(value) => {
                                                                                 handleTextInputChange(user.id, value);
