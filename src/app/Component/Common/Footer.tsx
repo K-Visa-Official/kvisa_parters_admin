@@ -148,7 +148,7 @@ export default function Footer() {
                             </li>
                         </ul>
                         <div className={styles.contact} style={{ marginTop:"15px"}}>
-                            <p className={styles.telTitle}>{parm.get("language") === "0" ? Korean.footer_j : Ch?.footer_j}</p>
+                            <p className={styles.telTitle}>{parm.get("language") === "0" ? Korean.footer_e : Ch?.footer_e}</p>
                             <p className={styles.tel}><a href="tel:+821811-1942">1811-1942</a></p>
                             <p className={styles.hour}>
                             {parm.get("language") === "0" ? Korean.footer_k : Ch?.footer_k}

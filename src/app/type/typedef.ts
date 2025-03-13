@@ -186,7 +186,6 @@ export enum Korean {
     footer_h = "행정사업무신고번호 : 35200000202169" ,
     footer_i = "(주)케이비자COYPRIGHT(C) 2023by (주)K-VISA" ,
 
-    footer_j = "대표번호" ,
 
     footer_j_f = "1811-1942" ,
     footer_k = "평일 오전 09시 ~ 오후 18시" ,
@@ -367,7 +366,7 @@ export enum Ch {
     footer_h = "行政业务登记号：35200000202169" ,
     footer_i = "K-VISA COPYRIGHT(C) 2023 by K-VISA" ,
 
-    footer_j = "客服电话" ,
+    
     footer_k = "平日 上午 09:00 ~ 下午 18:00" ,
     footer_l = "（午休时间：平日 下午 12:00 ~ 下午 13:00）" ,
 
