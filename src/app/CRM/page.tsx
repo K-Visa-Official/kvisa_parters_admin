@@ -263,7 +263,7 @@ function CRM() {
                                 </div>
                                 :
                                 <div className={styles.crminner}>
-                                    <div style={{ width: width < 375 ? "100%" : "345px", display: "flex", justifyContent: "center", alignItems: "flex-start", flexDirection: "column" }}>
+                                    <div style={{ width: width < 375 ? "100%" : "100%", display: "flex", justifyContent: "center", alignItems: "flex-start", flexDirection: "column" }}>
 
                                         <div style={{ marginTop: "10px", color: "black", display: "flex", flexDirection: "row" }}>
                                             <Image

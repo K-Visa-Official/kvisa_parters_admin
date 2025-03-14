@@ -181,8 +181,11 @@ function Progress() {
                 if(finalData.filter(a => a.answer.trim() === "")[0].question.includes("국적")){
                     setAler("국적을 입력해주세요")
                 }
-                else if(finalData.filter(a => a.answer === "")[0].question.includes("비자는")){
-                    setAler("비자를 선택해주세요")
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("보유하고 있는 비자")){
+                    setAler("보유하고있는비자를 선택해주세요")
+                }
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("대행 원하는 비자")){
+                    setAler("변경희망하는비자를 선택해주세요")
                 }
                 else if(finalData.filter(a => a.answer === "")[0].question.includes("비자 및 서비스")){
                     setAler("비자를 선택해주세요")
@@ -216,36 +219,39 @@ function Progress() {
                 if(finalData.filter(a => a.answer.trim() === "")[0].question.includes("请问你的")){
                     setAler("请选择国籍")
                 }
-                else if(finalData.filter(a => a.answer === "")[0].question.includes("您现在持")){
-                    setAler("请选择签证类型")
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("您现在持有的签证")){
+                    setAler("未选择现持有的签证")
                 }
-                else if(finalData.filter(a => a.answer === "")[0].question.includes("请选择想要变更")){
-                    setAler("请选择签证类型")
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("请选择想要变更或代办的签证服务")){
+                    setAler("未选择想要变更的签证")
                 }
-                else if(finalData.filter(a => a.answer === "")[0].question.includes("请问您")){
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("请问您的年龄是")){
                     setAler("请选择年龄")
                 }
-                else if(finalData.filter(a => a.answer === "")[0].question.includes("请问您的年")){
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("请问您的年所得金额")){
                     setAler("请选择收入金额")
                 }
-                else if(finalData.filter(a => a.answer === "")[0].question.includes("您以目前的签")){
+
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("您以目前的签证，在韩国待多长时间了")){
                     setAler("请选择居留期限")
                 }
-                else if(finalData.filter(a => a.answer === "")[0].question.includes("目前签证")){
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("目前签证到期日期是")){
                     setAler("请选择签证到期日")
                 }
-                else if(finalData.filter(a => a.answer === "")[0].question.includes("以下有符合")){
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("以下有符合的状况，请全部勾选")){
                     setAler("请选择特殊事项")
                 }
-                else if(finalData.filter(a => a.answer === "")[0].question.includes("请留下您的姓")){
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("请留下您的姓名")){
                     setAler("请输入姓名")
                 }
-                else if(finalData.filter(a => a.answer === "")[0].question.includes("请留下您")){
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("请留下您的电话")){
                     setAler("请输入联系电话")
                 }
-                else if(finalData.filter(a => a.answer === "")[0].question.includes("方便联繫的")){
+
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("方便联繫的时间")){
                     setAler("请选择可联系时间")
                 }
+                
             }
             else{
                 setAler("답변을 선택해주세요")

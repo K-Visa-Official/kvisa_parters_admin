@@ -256,7 +256,7 @@
 }
 
 .probox {
-    width: 345px;
+    width: 100%;
     height: 611px;
     
     padding: 20px 10px;
@@ -266,7 +266,7 @@
 }
 
 .contenttal {
-    width: 326px;
+    width: 100%;
     height: 239px;
     border-radius: 5px;
     background-color: #fff;
