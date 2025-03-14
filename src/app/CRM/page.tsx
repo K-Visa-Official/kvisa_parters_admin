@@ -69,31 +69,35 @@ function CRM() {
         const fetchUser = async () => {
             try {
                 const member = parm.get("member");
-                if (member === "6") {
-                    if (userId === null) {
-                        router.replace("/404");
-                    }
+                const userId = parm.get("userId");
+    
+                // member가 "6"일 때 userId가 없으면 404로 리다이렉트
+                if (member === "6" && !userId) {
+                    router.replace("/404");
+                    return; // 더 이상 진행하지 않음
                 }
+    
+                // userId에 따라 데이터 가져오기
                 const data = await get_crm(
                     userId ? undefined : workNumber, 
-                    userId ? `${userId}^` : undefined, 
-                    // String(parm.get("language"))
-                  );
-                  
+                    userId ? `${userId}^` : undefined
+                );
+    
                 setLi(data);
-
+                console.log(data);
+                if (member === "6") setState(2); // state를 2로 설정
+    
             } catch (error) {
                 console.error("유저 데이터를 불러오는 중 오류 발생:", error);
             }
         };
+    
         fetchUser();
-    }, [state]);
+    }, [state, parm.get("userId")]);
 
-    useEffect(() => {
-        if (userId) {
-            setState(2)
-        }
-    }, [userId]);
+
+// console.log(li)
+// console.log(state)
 
     const sendMessage = () => {
         if (workNumber === "") {
