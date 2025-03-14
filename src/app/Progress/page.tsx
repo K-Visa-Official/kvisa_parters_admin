@@ -315,6 +315,7 @@ function Progress() {
 
     };
 
+    console.log(workdetail[0]?.choice)
 
     return (
         <>
@@ -473,7 +474,7 @@ function Progress() {
 
                                                 return (
                                                     <>
-                                                        {workdetail[0]?.choice === "맞춤형 비자상담 서비스" || "客製化签证谘询服务" ?
+                                                        {workdetail[0]?.choice === "맞춤형 비자상담 서비스" || workdetail[0]?.choice ===  "客製化签证谘询服务" ?
                                                             <div key={a.id} className={styles.answerWrapper}>
                                                                 {user.answer_type >= 2 ? (
                                                                     // 단문형 또는 장문형 입력 처리
