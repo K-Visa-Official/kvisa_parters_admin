@@ -30,7 +30,7 @@ function CRM() {
     const width = useWindowWidth()
     const arra = ["접수완료", "계약완료", "서류작성", "심사진행", "처리완료", "상담종료"]
     const arra_zh = ["提交完成", "合同完成", "资料准备", "审查进行中", "办理完成", "咨询结束"]
-    const userId = parm.get("userId");
+    // const userId = parm.get("userId");
     const languageMap = {
         Korean,
         Ch
