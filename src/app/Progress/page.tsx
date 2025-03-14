@@ -101,7 +101,6 @@ function Progress() {
         "澳大利亚", "新西兰", "泰国", "马来西亚", "新加坡"
     ];
 
-    console.log(workdetail[0])
 
     const finalData = work.map(user => ({
         questionId: user.id,
@@ -175,9 +174,10 @@ function Progress() {
     };
 
     const handleSubmit = async () => {
-        console.log(finalData.filter(a => a.answer === ""))
         if (finalData.filter(a => a.answer === "").length > 0) {
             if(workdetail[0]?.choice === "맞춤형 비자상담 서비스"){
+
+                console.log(finalData.filter(a => a.answer === "")[0])
                 if(finalData.filter(a => a.answer.trim() === "")[0].question.includes("국적")){
                     setAler("국적을 입력해주세요")
                 }
@@ -187,16 +187,16 @@ function Progress() {
                 else if(finalData.filter(a => a.answer === "")[0].question.includes("대행 원하는 비자")){
                     setAler("변경희망하는비자를 선택해주세요")
                 }
-                else if(finalData.filter(a => a.answer === "")[0].question.includes("비자 및 서비스")){
-                    setAler("비자를 선택해주세요")
-                }
+                // else if(finalData.filter(a => a.answer === "")[0].question.includes("비자 및 서비스")){
+                //     setAler("비자를 선택해주세요")
+                // }
                 else if(finalData.filter(a => a.answer === "")[0].question.includes("나이")){
                     setAler("나이를 선택해주세요")
                 }
                 else if(finalData.filter(a => a.answer === "")[0].question.includes("소득금액")){
                     setAler("소득금액을 선택해주세요")
                 }
-                else if(finalData.filter(a => a.answer === "")[0].question.includes("체류기간")){
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("체류한 기간")){
                     setAler("체류기간을 선택해주세요")
                 }
                 else if(finalData.filter(a => a.answer === "")[0].question.includes("비자 만료일")){
@@ -329,7 +329,6 @@ function Progress() {
 
     };
 
-    console.log(workdetail[0]?.choice)
 
     return (
         <>
