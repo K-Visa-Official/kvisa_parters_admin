@@ -34,10 +34,16 @@ function Certify() {
     const [second, setSecond] = useState<boolean>(false);
     const [third, setThird] = useState<boolean>(false);
     const [four, setFour] = useState<boolean>(false);
-
     const [state, setState] = useState<number>(1);  // 3분 타이머 설정 (180초)
     const [ac, setAc] = useState<boolean | false>(false);
-
+    const languageMap = {
+        Korean,
+        Ch
+    };
+    
+    const selectedLanguage = parm.get("language") === "0" ? "Korean" : "Ch"; // 예시로 "Korean"과 "Ch"를 사용
+    
+    const selectedLanguageData = languageMap[selectedLanguage as keyof typeof languageMap];
     const member = parm.get("member");
     const userId = parm.get("userId");
     const width = useWindowWidth(); // ✅ 현재 화면 width 가져오기
@@ -173,29 +179,29 @@ function Certify() {
                                     width: width < 375 ? "95%" : ""
                                 }}>
                                     <p style={{ fontSize: "20px", fontWeight: "bold", color: " #2f2f2f", marginTop: "30px" }}>
-                                        {parm.get("language") === "0" ? Korean.certi_first : Ch.certi_first}</p>
+                                        {selectedLanguageData.certi_first}</p>
 
                                     <p style={{ fontSize: "12px", color: "#84848f", marginTop: "26px" }}>
-                                        {parm.get("language") === "0" ? Korean.certi_name : Ch.certi_name}</p>
+                                        {selectedLanguageData.certi_name}</p>
                                     <FilterInputBox w={345} h={50} mt={10} bg={"#f5f6f9"} p={
-                                        parm.get("language") === "0" ? Korean.certi_name_input : Ch.certi_name_input
+                                        selectedLanguageData.certi_name_input
                                     } v={name} type={"text"}
                                         // src={"/admin/search.png"}
                                         onChange={(e) => setName(e.target.value)}
                                     />
                                     {name_active ?
                                         <p style={{ fontSize: "12px", color: "#ff1c8e", marginTop: "10px", fontWeight: "500" }}>
-                                            {parm.get("language") === "0" ? Korean.certi_noname : Ch.certi_noname}</p>
+                                            {selectedLanguageData.certi_noname}</p>
                                         :
                                         <></>
                                     }
-                                    <p style={{ fontSize: "12px", color: "#84848f", marginTop: "26px" }}>{parm.get("language") === "0" ? Korean.certi_tel : Ch.certi_tel}</p>
+                                    <p style={{ fontSize: "12px", color: "#84848f", marginTop: "26px" }}>{selectedLanguageData.certi_tel}</p>
                                     <div style={{
                                         width: width < 375 ? "100%" : "345px", height: "50px", marginTop: "10px", background: "#f5f6f9", display: "flex",
                                         flexDirection: width < 375 ? "column" : "row"
                                     }}>
                                         <FilterInputBox w={width < 375 ? 345 : 270} h={50} mt={0} bg={"#f5f6f9"} p={
-                                            parm.get("language") === "0" ? Korean.certi_tel_input : Ch.certi_tel_input
+                                            selectedLanguageData.certi_tel_input
                                         } v={tel} type={"tel"}
                                             // src={"/admin/search.png"} 
                                             onChange={(e) => setTel(e.target.value)}
@@ -214,16 +220,15 @@ function Certify() {
                                             )
                                             }>
                                                 {active ?
-                                                    parm.get("language") === "0" ? Korean.certi_return : Ch.certi_return
+                                                    selectedLanguageData.certi_return
                                                     :
-                                                    parm.get("language") === "0" ? Korean.certi_active : Ch.certi_active
-                                                }
+                                                    selectedLanguageData.certi_active}
                                             </div>
                                         </div>
                                     </div>
                                     {tel_active ?
                                         <p style={{ fontSize: "12px", color: "#ff1c8e", marginTop: "10px", fontWeight: "500" }}>
-                                            {parm.get("language") === "0" ? Korean.certi_tel_input : Ch.certi_tel_input}</p>
+                                            {selectedLanguageData.certi_tel_input}</p>
                                         :
                                         <></>
                                     }
@@ -232,7 +237,7 @@ function Certify() {
                                         <>
                                             <div style={{ width: width < 375 ? "100%" : "345px", height: "50px", marginTop: "10px", background: "#f5f6f9", display: "flex", flexDirection: "row" }}>
                                                 <FilterInputBox w={270} h={50} mt={0} bg={"#f5f6f9"} p={
-                                                    parm.get("language") === "0" ? Korean.certi_no : Ch.certi_no
+                                                    selectedLanguageData.certi_no
                                                 } v={ce} type={"number"}
                                                     // src={"/admin/search.png"} 
                                                     onChange={(e) => setCe(e.target.value)}
@@ -248,7 +253,7 @@ function Certify() {
                                             </div>
                                             {ce_active ?
                                                 <p style={{ fontSize: "12px", color: "#ff1c8e", marginTop: "10px", fontWeight: "500" }}>
-                                                    {parm.get("language") === "0" ? Korean.certi_nonumber : Ch.certi_nonumber}
+                                                    {selectedLanguageData.certi_nonumber}
                                                 </p>
                                                 :
                                                 <></>
@@ -262,7 +267,7 @@ function Certify() {
                                         marginTop: "100px", height: "60px", background: "linear-gradient(to left, #33405a, #112448)", color: "white",
                                         display: "flex", justifyContent: "center", alignItems: "center", fontSize: "18px", borderRadius: "5px"
                                     }} onClick={() => Certify()}>
-                                        {parm.get("language") === "0" ? Korean.certi_next : Ch.certi_next}
+                                        {selectedLanguageData.certi_next}
                                     </div>
 
                                 </div>
@@ -277,14 +282,15 @@ function Certify() {
                                     height={50}
                                     style={{ marginTop: "150px" }}
                                 />
-                                <p style={{ marginTop: "15px", fontWeight: "bold", fontSize: "20px", color: "black" }}> {parm.get("language") === "0" ? Korean.accept_eight : Ch.accept_eleven}
+                                <p style={{ marginTop: "15px", fontWeight: "bold", fontSize: "20px", color: "black" }}> 
+                                    {parm.get("language") === "0" ? Korean.accept_eight : Ch.accept_eleven}
                                     {/* 접수가 완료되었습니다 */}
                                 </p>
                                 <p style={{ marginTop: "10px", fontWeight: "500", fontSize: "13px", color: "#84848f" }}>
-                                    {parm.get("language") === "0" ? Korean.accept_nine : Ch.accept_nine}</p>
+                                    {selectedLanguageData.accept_nine}</p>
                                 <p style={{ marginTop: "20px", fontWeight: "500", fontSize: "14px", color: "#1c68ff", textAlign: "center" }}>
-                                    {parm.get("language") === "0" ? Korean.accept_ten : Ch.accept_ten}<br />
-                                    {parm.get("language") === "0" ? Korean.accept_ten_s : Ch.accept_ten_s}</p>
+                                    {selectedLanguageData.accept_ten}<br />
+                                    {selectedLanguageData.accept_ten_s}</p>
 
                                 <div style={{
                                     marginTop: "150px", width: "345px", height: "60px", color: "white", background: "linear-gradient(to left, #02f, #3d7dff)",
@@ -307,7 +313,7 @@ function Certify() {
                                         )
                                 )
                                 }>
-                                    {parm.get("language") === "0" ? Korean.accept_eleven : Ch.accept_eleven}
+                                    {selectedLanguageData.accept_eleven}
                                 </div>
 
                             </div>
@@ -321,7 +327,7 @@ function Certify() {
                             <div className={styles.acceptbox}>
                                 <div style={{ width: "100%", height: "30px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                                     <p style={{ fontSize: "20px", fontWeight: "bold", color: "#000" }}>
-                                        {parm.get("language") === "0" ? Korean.accept_first : Ch.accept_first}</p>
+                                        {selectedLanguageData.accept_first}</p>
                                     <Image
                                         aria-hidden
                                         src='/common/close.png'
@@ -351,7 +357,7 @@ function Certify() {
                                             )}
                                         />
                                         <p style={{ fontSize: "15px", fontWeight: "600", color: "#000", marginLeft: "10px" }}>
-                                            {parm.get("language") === "0" ? Korean.accept_second : Ch.accept_second}
+                                            {selectedLanguageData.accept_second}
                                         </p>
                                     </div>
                                     <Image
@@ -377,9 +383,9 @@ function Certify() {
                                             onClick={() => setFirst(!first)}
                                         />
                                         <p style={{ fontSize: "14px", fontWeight: "500", color: "#1c68ff", marginLeft: "10px" }}>
-                                            {parm.get("language") === "0" ? Korean.fi : Ch.fi}</p>
+                                            {selectedLanguageData.fi}</p>
                                         <p style={{ fontSize: "15px", fontWeight: "600", color: "#000", marginLeft: "5px" }}>
-                                            {parm.get("language") === "0" ? Korean.accept_third : Ch.accept_third}
+                                            {selectedLanguageData.accept_third}
                                         </p>
                                     </div>
                                     <Image
@@ -405,10 +411,10 @@ function Certify() {
                                             onClick={() => setSecond(!second)}
                                         />
                                         <p style={{ fontSize: "14px", fontWeight: "500", color: "#1c68ff", marginLeft: "10px" }}>
-                                            {parm.get("language") === "0" ? Korean.fi : Ch.fi}
+                                            {selectedLanguageData.fi}
                                         </p>
                                         <p style={{ fontSize: "15px", fontWeight: "600", color: "#000", marginLeft: "5px" }}>
-                                            {parm.get("language") === "0" ? Korean.accept_four : Ch.accept_four}</p>
+                                            {selectedLanguageData.accept_four}</p>
                                     </div>
                                     <Image
                                         aria-hidden
@@ -433,10 +439,10 @@ function Certify() {
                                             onClick={() => setThird(!third)}
                                         />
                                         <p style={{ fontSize: "14px", fontWeight: "500", color: "#1c68ff", marginLeft: "10px" }}>
-                                            {parm.get("language") === "0" ? Korean.fi : Ch.fi}
+                                            {selectedLanguageData.fi}
                                         </p>
                                         <p style={{ fontSize: "15px", fontWeight: "600", color: "#000", marginLeft: "5px" }}>
-                                            {parm.get("language") === "0" ? Korean.accept_five : Ch.accept_five}
+                                            {selectedLanguageData.accept_five}
                                         </p>
                                     </div>
                                     <Image
@@ -462,10 +468,10 @@ function Certify() {
                                             onClick={() => setFour(!four)}
                                         />
                                         <p style={{ fontSize: "14px", fontWeight: "500", color: "#84848f", marginLeft: "10px" }}>
-                                            {parm.get("language") === "0" ? Korean.fi_no : Ch.fi_no}
+                                            {selectedLanguageData.fi_no}
                                         </p>
                                         <p style={{ fontSize: "15px", fontWeight: "600", color: "#000", marginLeft: "5px" }}>
-                                            {parm.get("language") === "0" ? Korean.accept_six : Ch.accept_six}</p>
+                                            {selectedLanguageData.accept_six}</p>
                                     </div>
                                     <Image
                                         aria-hidden
@@ -491,7 +497,7 @@ function Certify() {
                                         :
                                         ""
                                 }>
-                                    {parm.get("language") === "0" ? Korean.accept_seven : Ch.accept_seven}
+                                    {selectedLanguageData.accept_seven}
                                     {/* 위 내용에 동의하고, 접수완료 */}
                                 </div>
 

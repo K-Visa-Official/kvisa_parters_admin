@@ -13,6 +13,14 @@ function Jbank() {
     const language = parm.get("language");
     const [pk, setPk] = useState<number | 1>(1);
     const [state, setState] = useState<number | 1>(1);
+    const languageMap = {
+        Korean,
+        Ch
+    };
+    
+    const selectedLanguage = parm.get("language") === "0" ? "Korean" : "Ch"; // 예시로 "Korean"과 "Ch"를 사용
+    
+    const selectedLanguageData = languageMap[selectedLanguage as keyof typeof languageMap];
 
     useEffect(() => {
         if (state === 2) {
@@ -34,14 +42,14 @@ function Jbank() {
                 <div className="inner">
 
                     <div className="tit-wrap mt-0">
-                        <h2 className="page-tit">{parm.get("language") === "0" ? Korean.title : Ch?.title}<br />
-                        {parm.get("language") === "0" ? Korean.title_second : Ch?.title_second}</h2>
+                        <h2 className="page-tit">{selectedLanguageData.title}<br />
+                        {selectedLanguageData.title_second}</h2>
                     </div>
 
                     <div className="txt-cont">
-                        <div className="main-tit">{parm.get("language") === "0" ? Korean.work_post_ko : Ch?.work_post_ko}</div>
-                        <p className="txt">{parm.get("language") === "0" ? Korean.cate_second : Ch?.cate_second}<br />
-                        {parm.get("language") === "0" ? Korean.cate_third : Ch?.cate_third}</p>
+                        <div className="main-tit">{selectedLanguageData.work_post_ko}</div>
+                        <p className="txt">{selectedLanguageData.cate_second}<br />
+                        {selectedLanguageData.cate_third}</p>
                     </div>
 
                     <div className="img-wrap" onClick={() => (
@@ -51,13 +59,13 @@ function Jbank() {
                         <div className="img blue">
                             <img src="/images/img_service1.png" alt="진행상황 확인하기 이미지"/>
                         </div>
-                        <a className="btn">{parm.get("language") === "0" ? Korean.go : Ch?.go}</a>
+                        <a className="btn">{selectedLanguageData.go}</a>
                     </div>
 
                     <div className="txt-cont">
-                        <div className="main-tit"> {parm.get("language") === "0" ? Korean.progress : Ch?.progress}
+                        <div className="main-tit"> {selectedLanguageData.progress}
                         </div>
-                        <p className="txt">{parm.get("language") === "0" ? Korean.progress_first : Ch?.progress_first}<br />{parm.get("language") === "0" ? Korean.progress_second : Ch?.progress_second}</p>
+                        <p className="txt">{selectedLanguageData.progress_first}<br />{selectedLanguageData.progress_second}</p>
                     </div>
 
                     <div className="img-wrap green"
@@ -67,7 +75,7 @@ function Jbank() {
                         <div className="img green">
                             <img src="/images/img_service2.png" alt="진행상황 확인하기 이미지" />
                         </div>
-                        <a href="#" className="btn">{parm.get("language") === "0" ? Korean.go : Ch?.go}</a>
+                        <a href="#" className="btn">{selectedLanguageData.go}</a>
                     </div>
 
                     {/* <div className="banner" onClick={() => (
@@ -88,7 +96,7 @@ function Jbank() {
               }}>
             <div className="inner fix-btn">
                 <div className="tit-wrap mb-0 mt-0">
-                    <h2 className="page-tit">{parm.get("language") === "0" ? Korean.detail_title : Ch?.detail_title}</h2>
+                    <h2 className="page-tit">{selectedLanguageData.detail_title}</h2>
                 </div>
     
                 <div className="img-wrap cont">
@@ -99,101 +107,101 @@ function Jbank() {
     
                 
                 <div className="tit-wrap">
-                    <h2 className="page-tit">{parm.get("language") === "0" ? Korean.detail_title_second : Ch?.detail_title_second}<br/>
-                    {parm.get("language") === "0" ? Korean.detail_title_third : Ch?.detail_title_third}</h2>
+                    <h2 className="page-tit">{selectedLanguageData.detail_title_second}<br/>
+                    {selectedLanguageData.detail_title_third}</h2>
                 </div>
     
                 <div className="info-wrap">
-                    <div className="tit">{parm.get("language") === "0" ? Korean.detail_intro : Ch?.detail_intro}</div>
+                    <div className="tit">{selectedLanguageData.detail_intro}</div>
                     <img src="/images/icon_detail1.png" alt="상품대상 아이콘"/>
-                    <p className="txt">{parm.get("language") === "0" ? Korean.detail_intro_detail : Ch?.detail_intro_detail}</p>
+                    <p className="txt">{selectedLanguageData.detail_intro_detail}</p>
                 </div>
     
                 <div className="info-wrap">
-                    <div className="tit">{parm.get("language") === "0" ? Korean.detail_intro_second : Ch?.detail_intro_second}</div>
+                    <div className="tit">{selectedLanguageData.detail_intro_second}</div>
                     <img src="/images/icon_detail2.png" alt="상품 소개 아이콘"/>
-                    <p className="txt">{parm.get("language") === "0" ? Korean.detail_intro_second_detail : Ch?.detail_intro_second_detail}</p>
+                    <p className="txt">{selectedLanguageData.detail_intro_second_detail}</p>
                 </div>
     
                 <div className="info-wrap">
-                    <div className="tit">{parm.get("language") === "0" ? Korean.detail_intro_third : Ch?.detail_intro_third}</div>
+                    <div className="tit">{selectedLanguageData.detail_intro_third}</div>
                     <img src="/images/icon_detail3.png" alt="업무처리 안내 아이콘"/>
-                    <p className="txt">{parm.get("language") === "0" ? Korean.detail_intro_third_detail : Ch?.detail_intro_third_detail}<br/>
-                    {parm.get("language") === "0" ? Korean.detail_intro_third_detail_se : Ch?.detail_intro_third_detail_se}</p>
+                    <p className="txt">{selectedLanguageData.detail_intro_third_detail}<br/>
+                    {selectedLanguageData.detail_intro_third_detail_se}</p>
                 </div>
                 
                 <div className="tit-wrap mb-24">
-                    <h2 className="page-tit">{parm.get("language") === "0" ? Korean.step_title : Ch?.step_title}</h2>
+                    <h2 className="page-tit">{selectedLanguageData.step_title}</h2>
                 </div>
     
                 <ol className="step-list">
                     <li>
                         <div className="tit">
                             <span className="badge">step 1</span>
-                            <span className="tit-s">{parm.get("language") === "0" ? Korean.step_first : Ch?.step_first}</span>
+                            <span className="tit-s">{selectedLanguageData.step_first}</span>
                         </div>
-                        <div className="desc">{parm.get("language") === "0" ? Korean.step_first_content : Ch?.step_first_content}</div>
+                        <div className="desc">{selectedLanguageData.step_first_content}</div>
                     </li>
                     <li>
                         <div className="tit">
                             <span className="badge">step 2</span>
-                            <span className="tit-s">{parm.get("language") === "0" ? Korean.step_second : Ch?.step_second}</span>
+                            <span className="tit-s">{selectedLanguageData.step_second}</span>
                         </div>
-                        <div className="desc">{parm.get("language") === "0" ? Korean.step_second_content : Ch?.step_second_content}</div>
+                        <div className="desc">{selectedLanguageData.step_second_content}</div>
                     </li>
                     <li>
                         <div className="tit">
                             <span className="badge">step 3</span>
-                            <span className="tit-s">{parm.get("language") === "0" ? Korean.step_third : Ch?.step_third}</span>
+                            <span className="tit-s">{selectedLanguageData.step_third}</span>
                         </div>
-                        <div className="desc">{parm.get("language") === "0" ? Korean.step_third_content : Ch?.step_third_content}</div>
+                        <div className="desc">{selectedLanguageData.step_third_content}</div>
                     </li>
                     <li>
                         <div className="tit">
                             <span className="badge">step 4</span>
-                            <span className="tit-s">{parm.get("language") === "0" ? Korean.step_four : Ch?.step_four} <span className="txt">
-                            {parm.get("language") === "0" ? Korean.step_four_se : Ch?.step_four_se} </span></span>
+                            <span className="tit-s">{selectedLanguageData.step_four} <span className="txt">
+                            {selectedLanguageData.step_four_se} </span></span>
                         </div>
-                        <div className="desc">{parm.get("language") === "0" ? Korean.step_four_content : Ch?.step_four_content}</div>
+                        <div className="desc">{selectedLanguageData.step_four_content}</div>
                     </li>
                     <li>
                         <div className="tit">
                             <span className="badge">step 5</span>
-                            <span className="tit-s">{parm.get("language") === "0" ? Korean.step_five : Ch?.step_five}</span>
+                            <span className="tit-s">{selectedLanguageData.step_five}</span>
                         </div>
-                        <div className="desc">{parm.get("language") === "0" ? Korean.step_five_content : Ch?.step_five_content} <br/>
-                        {parm.get("language") === "0" ? Korean.step_five_content_se : Ch?.step_five_content_se}</div>
+                        <div className="desc">{selectedLanguageData.step_five_content} <br/>
+                        {selectedLanguageData.step_five_content_se}</div>
                     </li>
                 </ol>
     
                 <div className="tit-wrap mb-24">
-                    <h2 className="page-tit">{parm.get("language") === "0" ? Korean.consult_data : Ch?.consult_data}<br/>{parm.get("language") === "0" ? Korean.consult_data_se : Ch?.consult_data_se}</h2>
+                    <h2 className="page-tit">{selectedLanguageData.consult_data}<br/>{selectedLanguageData.consult_data_se}</h2>
                 </div>
                 
                 <ul className="date-list">
                     <li>
-                        <span className="date">{parm.get("language") === "0" ? Korean.consult_first : Ch?.consult_first}</span>
+                        <span className="date">{selectedLanguageData.consult_first}</span>
                         <span className="gauge"><span style={{width:"2.4rem"}}></span></span>
                         <span className="percent">1%</span>
                     </li>
                     <li className="max">
-                        <span className="date">{parm.get("language") === "0" ? Korean.consult_second : Ch?.consult_second}</span>
+                        <span className="date">{selectedLanguageData.consult_second}</span>
                         <span className="gauge"><span style={{width:"50%"}}></span></span>
                         <span className="percent">55%</span>
                     </li>
                     <li>
-                        <span className="date">{parm.get("language") === "0" ? Korean.consult_third : Ch?.consult_third}</span>
+                        <span className="date">{selectedLanguageData.consult_third}</span>
                         <span className="gauge"><span style={{width:"25%"}}></span></span>
                         <span className="percent">25%</span>
                     </li>
                     <li>
-                        <span className="date">{parm.get("language") === "0" ? Korean.consult_four : Ch?.consult_four}</span>
+                        <span className="date">{selectedLanguageData.consult_four}</span>
                         <span className="gauge"><span style={{width:"19%"}}></span></span>
                         <span className="percent">19%</span>
                     </li>
                 </ul>
     
-                <div className="info">{parm.get("language") === "0" ? Korean.de_end : Ch?.de_end}</div>
+                <div className="info">{selectedLanguageData.de_end}</div>
     
                 <div className="btn-wrap">
                     <p className="txt-s">{parm.get("language") === "0" ? Korean.go_third : Ch?.de_accept}</p>
@@ -201,7 +209,7 @@ function Jbank() {
                      onClick={() => router.push(
                         `/Progress/?&progress=${pk}&language=${parm.get("language")}&member=${parm.get("member")}&userId=${parm.get("userId")}`
                     )}
-                    >{parm.get("language") === "0" ? Korean.process_enter : Ch?.process_enter}</button>
+                    >{selectedLanguageData.process_enter}</button>
                 </div>
             </div>
         </div>                

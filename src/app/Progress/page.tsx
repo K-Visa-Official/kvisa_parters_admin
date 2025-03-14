@@ -37,7 +37,15 @@ function Progress() {
     const [phone_second, setPhone_second] = useState<string>("");
     const [phone_third, setPhone_third] = useState<string>("");
     const [aler, setAler] = useState("");
+    const languageMap = {
+        Korean,
+        Ch
+    };
     
+    const selectedLanguage = parm.get("language") === "0" ? "Korean" : "Ch"; // 예시로 "Korean"과 "Ch"를 사용
+    
+    const selectedLanguageData = languageMap[selectedLanguage as keyof typeof languageMap];
+
     const isLeapYear = (year: number) => {
         return (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0));
     };
@@ -346,7 +354,7 @@ function Progress() {
 
                                         </div>
                                         <div style={{ width: "250px", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                        {parm.get("language") === "0" ? Korean.prce_end : Ch?.prce_end}
+                                        {selectedLanguageData.prce_end}
                                         </div>
                                         <div style={{ width: "30px", height: "100%", display: "flex", justifyContent: "flex-start", alignItems: "center", marginRight: "20px" }}>
                                             <Image aria-hidden src="/common/close.png" alt="닫기" width={30} height={30} style={{ cursor: "pointer" }}
@@ -386,7 +394,7 @@ function Progress() {
                                         // onClick={() => router.push(`/Progress/?&progress=${pk}`)}
                                         >
                                             <div className={styles.nextStep}>
-                                                {parm.get("language") === "0" ? Korean.ok : Ch?.ok}
+                                                {selectedLanguageData.ok}
                                             </div>
                                         </div>
                                     </div>
@@ -419,7 +427,7 @@ function Progress() {
                                         </p>
                                         <div style={{ display: "flex", justifyContent: "space-between", flexDirection: "row", marginTop: "10px", marginLeft: "24px" }}>
                                             <p style={{ fontSize: "13px", color: "#33405a" }}>
-                                                {parm.get("language") === "0" ? Korean.safety : Ch?.safety}
+                                                {selectedLanguageData.safety}
                                             </p>
                                             <p style={{ color: "black", marginRight: "15px", fontSize: "18px", fontWeight: "bold" }}>
                                                 {Math.floor((finalData.filter(a => a.answer != "").length / finalData.length) * 100)}%
@@ -812,7 +820,7 @@ function Progress() {
                                         width: "50%", height: "56px", background: "linear-gradient(91deg, #1c68ff 0%, #053cf0 100%)", borderRadius: "5px",
                                         fontSize: "15px", color: "white", display: "flex", justifyContent: "center", alignItems: "center", fontWeight: "bold"
                                     }} onClick={handleSubmit}>
-                                        {parm.get("language") === "0" ? Korean.enter : Ch?.enter}
+                                        {selectedLanguageData.enter}
 
                                     </div>
                                 </div>

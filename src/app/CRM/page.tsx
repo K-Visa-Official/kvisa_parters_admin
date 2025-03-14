@@ -31,6 +31,15 @@ function CRM() {
     const arra = ["접수완료", "계약완료", "서류작성", "심사진행", "처리완료", "상담종료"]
     const arra_zh = ["提交完成", "合同完成", "资料准备", "审查进行中", "办理完成", "咨询结束"]
     const userId = parm.get("userId");
+    const languageMap = {
+        Korean,
+        Ch
+    };
+    
+    const selectedLanguage = parm.get("language") === "0" ? "Korean" : "Ch"; // 예시로 "Korean"과 "Ch"를 사용
+    
+    const selectedLanguageData = languageMap[selectedLanguage as keyof typeof languageMap];
+
     // 타이머 관련 useEffect
     useEffect(() => {
         if (active) {
@@ -147,7 +156,7 @@ function CRM() {
                          fontFamily: parm.get("language") === "0" ? "'Spoqa Han Sans Neo', 'malgun', 'Apple SD Gothic Neo', Verdana, Arial, Helvetica, Geneva, Tahoma, sans-serif" : 
                          "Noto Sans, sans-serif",
                      }}>
-                        <div className={styles.innerbox}>
+                        <div className={styles.innerbox} style={{ width:"500px"}}>
                             <MoHeader setAc={setAc} />
 
                             {state === 1 ?
@@ -155,14 +164,14 @@ function CRM() {
                                     <div style={{ width: width < 375 ? "100%" : "345px", display: "flex", justifyContent: "center", alignItems: "flex-start", flexDirection: "column" }}>
 
                                         <p style={{ marginTop: "10px", color: "black" , fontWeight:"bold" }}>
-                                            {parm.get("language") === "0" ? Korean.bu_progress : Ch.bu_progress}
+                                            {selectedLanguageData.bu_progress}
                                         </p>
                                         <p style={{ marginTop: "6px", fontSize: "12px", color: "#84848f" }}>
-                                            {parm.get("language") === "0" ? Korean.bu_progress_first : Ch.bu_progress_first}<br />
-                                            {parm.get("language") === "0" ? Korean.bu_progress_second : Ch.bu_progress_second}
+                                            {selectedLanguageData.bu_progress_first}<br />
+                                            {selectedLanguageData.bu_progress_second}
                                         </p>
                                         <p style={{ marginTop: "40px", fontSize: "12px", color: "#84848f" }}>
-                                            {parm.get("language") === "0" ? Korean.bu_progress_tel : Ch.bu_progress_tel}
+                                            {selectedLanguageData.bu_progress_tel}
                                         </p>
                                     </div>
 
@@ -172,7 +181,7 @@ function CRM() {
                                     }}>
                                         <FilterInputBox
                                             w={270} h={50} mt={0} bg={"#f5f6f9"}
-                                            p={parm.get("language") === "0" ? Korean.bu_progress_tel : Ch.bu_progress_tel}
+                                            p={selectedLanguageData.bu_progress_tel}
                                             v={workNumber} type={"tel"}
                                             onChange={(e) => setWorkNumber(e.target.value)}
                                         />
@@ -188,26 +197,26 @@ function CRM() {
                                                 }}
                                                 onClick={sendMessage}
                                             >
-                                                {parm.get("language") === "0" ? Korean.certi_active : Ch.certi_active}
+                                                {selectedLanguageData.certi_active}
                                             </div>
                                         </div>
                                     </div>
 
                                     {firstActive && (
                                         <p style={{ fontSize: "12px", color: "#ff1c8e", marginTop: "10px", fontWeight: "500" }}>
-                                            {parm.get("language") === "0" ? Korean.certi_tel_input : Ch.certi_tel_input}
+                                            {selectedLanguageData.certi_tel_input}
                                         </p>
                                     )}
 
                                     <p style={{ marginTop: width < 375 ? "50px" : "10px", fontSize: "12px", color: "#1c68ff" }}>
-                                        {parm.get("language") === "0" ? Korean.bu_progress_ex : Ch.bu_progress_ex}
+                                        {selectedLanguageData.bu_progress_ex}
                                     </p>
 
                                     {active && (
                                         <div style={{ width: "345px", height: "50px", marginTop: "35px", background: "#f5f6f9", display: "flex", flexDirection: "row" }}>
                                             <FilterInputBox
                                                 w={270} h={50} mt={0} bg={"#f5f6f9"}
-                                                p={parm.get("language") === "0" ? Korean.certi_no : Ch.certi_no}
+                                                p={selectedLanguageData.certi_no}
                                                 v={ceNumber}
                                                 onChange={(e) => setCeNumber(e.target.value)}
                                             />
@@ -226,7 +235,7 @@ function CRM() {
 
                                     {secondActive && (
                                         <p style={{ fontSize: "12px", color: "#ff1c8e", marginTop: "10px", fontWeight: "500" }}>
-                                            {parm.get("language") === "0" ? Korean.certi_nonumber : Ch.certi_nonumber}
+                                            {selectedLanguageData.certi_nonumber}
                                         </p>
                                     )}
 
@@ -238,7 +247,7 @@ function CRM() {
                                             }}
                                             onClick={certify}
                                         >
-                                            {parm.get("language") === "0" ? Korean.certi_next : Ch.certi_next}
+                                            {selectedLanguageData.certi_next}
                                         </div>
                                     )}
 
@@ -266,7 +275,7 @@ function CRM() {
                                                 style={{ marginRight: "4px" }}
                                             />
                                             <p style={{ fontWeight:"bold"}}>
-                                                {parm.get("language") === "0" ? Korean.progress : Ch.progress}
+                                                {selectedLanguageData.progress}
                                             </p>
                                         </div>
 
@@ -278,10 +287,10 @@ function CRM() {
                                     {li?.map((user) => (
                                         <div className={styles.probox} key={user.id}>
                                             <p style={{ fontSize: "20px", color: "black", fontWeight: "600" }}>
-                                            {parm.get("language") === "0" ? Korean.crm_first : Ch.crm_first}
+                                            {selectedLanguageData.crm_first}
                                                 </p>
-                                            <p style={{ fontSize: "15px", color: "#84848f", fontWeight: "500", marginTop: "10px" }}>{parm.get("language") === "0" ? Korean.crm_second : Ch.crm_second}<br />
-                                            {parm.get("language") === "0" ? Korean.crm_third : Ch.crm_third}</p>
+                                            <p style={{ fontSize: "15px", color: "#84848f", fontWeight: "500", marginTop: "10px" }}>{selectedLanguageData.crm_second}<br />
+                                            {selectedLanguageData.crm_third}</p>
                                             <div style={{ display: "flex", flexDirection: "column", marginTop: "23px" }}>
                                                 <Image
                                                     aria-hidden
@@ -334,17 +343,17 @@ function CRM() {
                                                 </div>
 
                                                 <p style={{ marginTop: "10px", color: "#1c69ff", fontSize: "12px", fontWeight: "500" }}>
-                                                {parm.get("language") === "0" ? Korean.crm_four: Ch.crm_four}
+                                                {selectedLanguageData.crm_four}
                                                 </p>
 
                                                 <div className={styles.contenttal}>
                                                     <div className={styles.daybox}>
-                                                    {parm.get("language") === "0" ? Korean.crm_info_first: Ch.crm_info_first} : {formatDate(user.created_at)}
+                                                    {selectedLanguageData.crm_info_first} : {formatDate(user.created_at)}
                                                     </div>
 
                                                     <div style={{ width: "100%", height: "15px", fontSize: "13px", fontWeight: "500", display: "flex", flexDirection: "row", marginTop: "20px" }}>
                                                         <div style={{ width: "30%", color: "rgb(132, 132, 143)" }}>
-                                                            {parm.get("language") === "0" ? Korean.crm_info_second: Ch.crm_info_second}
+                                                            {selectedLanguageData.crm_info_second}
                                                         </div>
                                                         <div style={{ width: "70%", color: "black" }}>
                                                         {parm.get("language") === "0" ? 
@@ -358,7 +367,7 @@ function CRM() {
 
                                                     <div style={{ width: "100%", height: "15px", fontSize: "13px", fontWeight: "500", display: "flex", flexDirection: "row", marginTop: "20px" }}>
                                                         <div style={{ width: "30%", color: "rgb(132, 132, 143)" }}>
-                                                        {parm.get("language") === "0" ? Korean.crm_info_third: Ch.crm_info_third}
+                                                        {selectedLanguageData.crm_info_third}
                                                         </div>
                                                         <div style={{ width: "70%", color: "black" }}>
                                                             
@@ -369,7 +378,7 @@ function CRM() {
                                                     <div style={{ width: "100%", height: "15px", fontSize: "13px", fontWeight: "500", display: "flex", flexDirection: "row", marginTop: "20px" }}>
                                                         <div style={{ width: "30%", color: "rgb(132, 132, 143)" }}>
                                                             
-                                                        {parm.get("language") === "0" ? Korean.crm_info_four: Ch.crm_info_four}
+                                                        {selectedLanguageData.crm_info_four}
                                                         </div>
                                                         <div style={{ width: "70%", color: "black" }}>
                                                         {user.name.split("^")[0].replace(/.(.+)/, (match, p1) => match[0] + "*".repeat(p1.length))}
@@ -379,7 +388,7 @@ function CRM() {
                                                     <div style={{ width: "100%", height: "15px", fontSize: "13px", fontWeight: "500", display: "flex", flexDirection: "row", marginTop: "20px" }}>
                                                         <div style={{ width: "30%", color: "rgb(132, 132, 143)" }}>
                                                             
-                                                        {parm.get("language") === "0" ? Korean.certi_tel: Ch.certi_tel}
+                                                        {selectedLanguageData.certi_tel}
                                                         </div>
                                                         <div style={{ width: "70%", color: "black" }}>
                                                             {user.tel.replace(/(\d{3})-\d{4}-(\d{4})/, "$1-****-$2")}
@@ -389,7 +398,7 @@ function CRM() {
                                                     <div style={{ width: "100%", height: "15px", fontSize: "13px", fontWeight: "500", display: "flex", flexDirection: "row", marginTop: "20px" }}>
                                                         <div style={{ width: "30%", color: "rgb(132, 132, 143)" }}>
                                                             
-                                                        {parm.get("language") === "0" ? Korean.crm_info_six: Ch.crm_info_six}
+                                                        {selectedLanguageData.crm_info_six}
                                                         </div>
                                                         <div style={{ width: "70%", color: "black" }}>
                                                             {(() => {
@@ -419,7 +428,7 @@ function CRM() {
                                                     justifyContent: parm.get("userId") === null ? "space-between" : "center" }}>
                                                     <div className={styles.firstboxsd}>
                                                     <a href="tel:+821811-1942">
-                                                    {parm.get("language") === "0" ? Korean.work_tel: Ch.work_tel}<br />
+                                                    {selectedLanguageData.work_tel}<br />
                                                         1811-1942
                                                         </a>
                                                     </div>
@@ -428,7 +437,7 @@ function CRM() {
                                                     {parm.get("userId") === null ?
                                                      <div className={styles.secondboxsd}>
                                                         <a href="https://pf.kakao.com/_mYlIxj/chat">
-                                                            {parm.get("language") === "0" ? Korean.work_kakao: Ch.work_kakao}
+                                                            {selectedLanguageData.work_kakao}
                                                         </a>
                                                     </div>
                                                     :
@@ -440,7 +449,7 @@ function CRM() {
                                                 </div>
 
                                                 <p style={{ marginTop: "10px", color: "#1c69ff", fontSize: "12px", fontWeight: "500" }}>
-                                                {parm.get("language") === "0" ? Korean.work_time: Ch.work_time}
+                                                {selectedLanguageData.work_time}
                                                     {/* 업무시간 : 평일 9:00 ~ 18:00 ( 점심시간 : 12:00 ~13:00 ) */}
                                                 </p>
 

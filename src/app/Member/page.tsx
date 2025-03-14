@@ -21,7 +21,14 @@ function CaseStoriesDetailPage() {
     const [work, setWork] = useState<WorkResponse[] | []>([]);
     const [memberId, setMemberId] = useState<string | null>(null);
     const [ac, setAc] = useState<boolean | false>(false);
-
+    const languageMap = {
+        Korean,
+        Ch
+    };
+    
+    const selectedLanguage = parm.get("language") === "0" ? "Korean" : "Ch"; // 예시로 "Korean"과 "Ch"를 사용
+    
+    const selectedLanguageData = languageMap[selectedLanguage as keyof typeof languageMap];
 
     useEffect(() => {
         // if (typeof window !== "undefined") {
@@ -114,8 +121,8 @@ function CaseStoriesDetailPage() {
                             <div style={{ width:"100%" , display:"flex" , justifyContent:"flex-start" , alignItems:"center"}}>
                                 <p className={styles.title} 
                                 style={{  marginTop:parm.get("userId") === null ? "40px" : ""}}>
-                                    {parm.get("language") === "0" ? Korean.title : Ch.title} <br />
-                                    {parm.get("language") === "0" ? Korean.title_second : Ch.title_second}
+                                    {selectedLanguageData.title} <br />
+                                    {selectedLanguageData.title_second}
                                 </p>
                             </div>
 
@@ -141,7 +148,7 @@ function CaseStoriesDetailPage() {
                                                                 parm.get("member") === "10" ? "linear-gradient(#eb008b 0%, #3b058e 100%)"
                                                                 :""
                                                                 }}>
-                                                            {parm.get("language") === "0" ? Korean.go : Ch.go}
+                                                            {selectedLanguageData.go}
                                                             <Image
                                                                 aria-hidden
                                                                 src="/member/next_white.png"
@@ -166,11 +173,12 @@ function CaseStoriesDetailPage() {
 
                             <div style={{ width:"100%" , display:"flex" , justifyContent:"center" , alignItems:"flex-start" , flexDirection:"column"}}>
                             
-                            <p style={{ marginTop: "40px", fontSize: "20px", color: "black", fontWeight: "600" }}>{parm.get("language") === "0" ? Korean.progress : Ch.progress}</p>
+                            <p style={{ marginTop: "40px", fontSize: "20px", color: "black", fontWeight: "600" }}>
+                                {selectedLanguageData.progress}</p>
 
                             <p style={{ marginTop: "10px", fontSize: "18px", color: "#84848f", fontWeight: "500" }}>
-                                {parm.get("language") === "0" ? Korean.progress_first : Ch?.progress_first}<br />
-                                {parm.get("language") === "0" ? Korean.progress_second : Ch.progress_second}
+                                {selectedLanguageData.progress_first}<br />
+                                {selectedLanguageData.progress_second}
                             </p>
                             </div>
                             <div className={styles.post} onClick={() => router.push(
@@ -201,7 +209,7 @@ function CaseStoriesDetailPage() {
                                     parm.get("member") === "6" ? "#00B887" :
                                     ""
                                     }}>
-                                    {parm.get("language") === "0" ? Korean.go : Ch.go}
+                                    {selectedLanguageData.go}
                                     <Image
                                         aria-hidden
                                         src="/member/next_white.png"
@@ -261,7 +269,7 @@ function CaseStoriesDetailPage() {
                                 )}
                             >
                                 <p>
-                                    {parm.get("language") === "0" ? Korean.go_third : Ch.go_third}
+                                    {selectedLanguageData.go_third}
                                 </p>
                                 <div className={styles.nextStep}
                                     style={{ background: 
@@ -269,7 +277,7 @@ function CaseStoriesDetailPage() {
                                         parm.get("member") === "10" ? "linear-gradient(#eb008b 0%, #3b058e 100%)"
                                         :""
                                         }}>
-                                    {parm.get("language") === "0" ? Korean.go_second : Ch.go_second}
+                                    {selectedLanguageData.go_second}
                                 </div>
                             </div>
                         </>
