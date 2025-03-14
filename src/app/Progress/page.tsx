@@ -93,6 +93,7 @@ function Progress() {
         "澳大利亚", "新西兰", "泰国", "马来西亚", "新加坡"
     ];
 
+    console.log(workdetail[0])
 
     const finalData = work.map(user => ({
         questionId: user.id,
@@ -748,7 +749,19 @@ function Progress() {
                                                                 // 단일/복수 선택 처리
                                                                 <div
                                                                     className={styles.answerItem}
-                                                                    onClick={() => handleAnswerSelect(user.id, a.answer, user.answer_type)}
+                                                                    onClick={() => {
+                                                                        if (user.answer_type === 0) {
+                                                                            const targetElement = targetRefs.current[index+1];
+                                                                                if (targetElement) {
+                                                                                    // 화면의 가운데로 스크롤
+                                                                                    window.scrollTo({
+                                                                                        top: targetElement.offsetTop - (window.innerHeight / 2),
+                                                                                        behavior: 'smooth'
+                                                                                    });
+                                                                                }
+                                                                        }
+                                                                        handleAnswerSelect(user.id, a.answer, user.answer_type)
+                                                                    }}
                                                                     style={{
                                                                         marginTop: "16px", display: "flex", flexDirection: "row",
                                                                         color: isSelected ? "#1b67ff" : "#444", // 선택된 항목 글자 색
