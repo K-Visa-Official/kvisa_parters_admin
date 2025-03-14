@@ -84,6 +84,7 @@ function Certify() {
 
     }, [active, timer]);  // active나 timer가 변경될 때마다 실행
 
+  
     function send_mess() {
         if (name === "") {
             setName_active(true)
@@ -173,7 +174,7 @@ function Certify() {
                         <MoHeader setAc={setAc} />
 
                         {state === 1 ?
-                            <div className={styles.innerbox} style={{ height: "100%" }}>
+                            <div className={styles.innerbox} style={{ height: "100%" , marginTop:"60px"}}>
                                 <div style={{
                                     height: "100%", marginLeft: "15px", marginRight: "15px",
                                     width: width < 375 ? "95%" : ""

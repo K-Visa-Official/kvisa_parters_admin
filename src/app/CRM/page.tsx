@@ -36,6 +36,7 @@ function CRM() {
         Ch
     };
     
+    
     const selectedLanguage = parm.get("language") === "0" ? "Korean" : "Ch"; // 예시로 "Korean"과 "Ch"를 사용
     
     const selectedLanguageData = languageMap[selectedLanguage as keyof typeof languageMap];

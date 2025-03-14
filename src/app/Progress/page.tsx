@@ -43,8 +43,9 @@ function Progress() {
     };
     
     const selectedLanguage = parm.get("language") === "0" ? "Korean" : "Ch"; // 예시로 "Korean"과 "Ch"를 사용
-    
     const selectedLanguageData = languageMap[selectedLanguage as keyof typeof languageMap];
+    const currentMonth = new Date().getMonth() + 1;
+    const currentDay = new Date().getDate();
 
     const isLeapYear = (year: number) => {
         return (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0));
@@ -536,6 +537,7 @@ function Progress() {
 
                                                                                 {/* 월 선택 */}
                                                                                 <select value={month} onChange={(e) => (
+                                                                                    
                                                                                     setMonth(e.target.value),
 
                                                                                     year === "" || day === "" ? "" :
@@ -552,7 +554,9 @@ function Progress() {
                                                                                     }}>
                                                                                     <option value="">MM</option>
                                                                                     {months.map((m) => (
-                                                                                        <option key={m} value={m}>
+                                                                                        <option key={m} value={m}
+                                                                                        disabled={parseInt(m, 10) < currentMonth}
+                                                                                        >
                                                                                             {m}
                                                                                         </option>
                                                                                     ))}
@@ -578,7 +582,8 @@ function Progress() {
                                                                                 
                                                                                     <option value="">DD</option>
                                                                                     {days.map((d) => (
-                                                                                        <option key={d} value={d}>
+                                                                                        <option key={d} value={d}
+                                                                                        disabled={parseInt(d, 10) < currentDay}>
                                                                                             {d}
                                                                                         </option>
                                                                                     ))}
