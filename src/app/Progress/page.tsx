@@ -46,7 +46,8 @@ function Progress() {
     const selectedLanguageData = languageMap[selectedLanguage as keyof typeof languageMap];
     const currentMonth = new Date().getMonth() + 1;
     const currentDay = new Date().getDate();
-
+    const currentYear = new Date().getFullYear();
+    
     const isLeapYear = (year: number) => {
         return (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0));
     };
@@ -216,7 +217,7 @@ function Progress() {
                     setAler("연락가능한 시간을 선택해주세요")
                 }
             }
-            else if(workdetail[0]?.choice === "客製化签证谘询服务"){
+            else if(workdetail[0]?.choice === "客制化签证谘询服务"){
                 if(finalData.filter(a => a.answer.trim() === "")[0].question.includes("请问你的")){
                     setAler("请选择国籍")
                 }
@@ -249,7 +250,7 @@ function Progress() {
                     setAler("请输入联系电话")
                 }
 
-                else if(finalData.filter(a => a.answer === "")[0].question.includes("方便联繫的时间")){
+                else if(finalData.filter(a => a.answer === "")[0].question.includes("方便联系的时间")){
                     setAler("请选择可联系时间")
                 }
                 
@@ -488,7 +489,7 @@ function Progress() {
 
                                                 return (
                                                     <>
-                                                        {workdetail[0]?.choice === "맞춤형 비자상담 서비스" || workdetail[0]?.choice ===  "客製化签证谘询服务" ?
+                                                        {workdetail[0]?.choice === "맞춤형 비자상담 서비스" || workdetail[0]?.choice ===  "客制化签证谘询服务" ?
                                                             <div key={a.id} className={styles.answerWrapper}>
                                                                 {user.answer_type >= 2 ? (
                                                                     // 단문형 또는 장문형 입력 처리
@@ -555,7 +556,11 @@ function Progress() {
                                                                                     <option value="">MM</option>
                                                                                     {months.map((m) => (
                                                                                         <option key={m} value={m}
-                                                                                        disabled={parseInt(m, 10) < currentMonth}
+                                                                                        disabled={
+                                                                                            currentYear === parseInt(year, 10) ?
+                                                                                            parseInt(m, 10) < currentMonth : false
+                                                                                        }
+                                                                                        // disabled={(parseInt(month, 10) === currentMonth && parseInt(d, 10) < currentDay)}
                                                                                         >
                                                                                             {m}
                                                                                         </option>
@@ -583,7 +588,12 @@ function Progress() {
                                                                                     <option value="">DD</option>
                                                                                     {days.map((d) => (
                                                                                         <option key={d} value={d}
-                                                                                        disabled={parseInt(d, 10) < currentDay}>
+                                                                                        disabled={(
+                                                                                            currentYear === parseInt(year, 10) ?
+                                                                                                currentMonth === parseInt(month, 10) ?
+                                                                                                parseInt(d, 10) < currentDay : false
+                                                                                                : false
+                                                                                            )}>
                                                                                             {d}
                                                                                         </option>
                                                                                     ))}
