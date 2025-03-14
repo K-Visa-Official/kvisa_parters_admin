@@ -300,7 +300,7 @@ export enum Ch {
 
     detail_title  = "外国人客制化签证谘询" ,
     detail_title_second  = "什么是签证" , 
-    detail_title_third = "谘询服务？" ,
+    detail_title_third = "咨询服务？" ,
 
     detail_intro = "服务对象" ,
     detail_intro_detail = "需要签证变更/签证延期的外国人" ,
