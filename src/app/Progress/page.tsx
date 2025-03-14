@@ -167,11 +167,11 @@ function Progress() {
     };
 
     const handleSubmit = async () => {
-
+        console.log(finalData.filter(a => a.answer === ""))
         if (finalData.filter(a => a.answer === "").length > 0) {
             if(workdetail[0]?.choice === "맞춤형 비자상담 서비스"){
-                if(finalData.filter(a => a.answer === "")[0].question.includes("국적")){
-                    setAler("국적을 선택해주세요")
+                if(finalData.filter(a => a.answer.trim() === "")[0].question.includes("국적")){
+                    setAler("국적을 입력해주세요")
                 }
                 else if(finalData.filter(a => a.answer === "")[0].question.includes("비자는")){
                     setAler("비자를 선택해주세요")
@@ -205,7 +205,7 @@ function Progress() {
                 }
             }
             else if(workdetail[0]?.choice === "客製化签证谘询服务"){
-                if(finalData.filter(a => a.answer === "")[0].question.includes("请问你的")){
+                if(finalData.filter(a => a.answer.trim() === "")[0].question.includes("请问你的")){
                     setAler("请选择国籍")
                 }
                 else if(finalData.filter(a => a.answer === "")[0].question.includes("您现在持")){
